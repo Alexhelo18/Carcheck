@@ -39,5 +39,18 @@ const api = {
             method: "POST",
             body: JSON.stringify(prenotazione)
         });
+    },
+
+    async getPrenotazioni(filters = {}) {
+        const params = new URLSearchParams(filters);
+        const query = params.toString() ? `?${params.toString()}` : "";
+        return await this.request(`/prenotazioni${query}`);
+    },
+
+    async updatePrenotazione(id, data) {
+        return await this.request(`/prenotazioni/${id}`, {
+            method: "PATCH",
+            body: JSON.stringify(data)
+        });
     }
 };

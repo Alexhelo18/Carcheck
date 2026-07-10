@@ -18,8 +18,9 @@ function loadNavbar() {
 
             <div class="nav-right">
                 <a href="../pages/ricerca.html">Officine</a>
-                <a href="../pages/loginUser.html">Login</a>
-                <a href="../pages/registerUser.html" class="register-btn">Registrati</a>
+                <a href="../pages/dashboardUser.html">Area utente</a>
+                <a href="../pages/dashboardOfficina.html">Area officina</a>
+                <a href="../pages/loginUser.html" class="register-btn">Login</a>
             </div>
         </nav>
 
@@ -32,13 +33,17 @@ function loadNavbar() {
                 <span class="tab-icon">C</span>
                 <span>Cerca</span>
             </a>
-            <a href="../pages/prenotazione.html">
+            <a href="../pages/ricerca.html">
                 <span class="tab-icon">+</span>
                 <span>Prenota</span>
             </a>
-            <a href="../pages/loginUser.html">
+            <a href="../pages/dashboardUser.html">
                 <span class="tab-icon">P</span>
-                <span>Profilo</span>
+                <span>Utente</span>
+            </a>
+            <a href="../pages/dashboardOfficina.html">
+                <span class="tab-icon">M</span>
+                <span>Officina</span>
             </a>
         </nav>
     `;

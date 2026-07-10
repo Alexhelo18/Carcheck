@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CarCheck | Area utente</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div id="navbar"></div>
+
+    <main class="page-shell">
+        <section class="dashboard-hero">
+            <div>
+                <p class="eyebrow">Area utente</p>
+                <h1 id="userGreeting">Le tue prenotazioni</h1>
+                <p>Controlla gli appuntamenti e scegli una nuova data dal calendario.</p>
+            </div>
+            <a href="../pages/ricerca.html" class="btn-primary">Prenota un servizio</a>
+        </section>
+
+        <section class="dashboard-grid">
+            <div class="dashboard-panel">
+                <div class="panel-heading">
+                    <h2>Calendario</h2>
+                    <button type="button" id="nextBookingBtn">Nuova prenotazione</button>
+                </div>
+                <div id="userCalendar" class="calendar-grid"></div>
+            </div>
+
+            <div class="dashboard-panel">
+                <div class="panel-heading">
+                    <h2>Appuntamenti</h2>
+                </div>
+                <div id="userBookings" class="booking-list"></div>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer"></div>
+
+    <script src="../components/navbar.js"></script>
+    <script src="../components/footer.js"></script>
+    <script src="../js/api.js"></script>
+    <script src="../js/dashboard.js"></script>
+</body>
+
+</html>

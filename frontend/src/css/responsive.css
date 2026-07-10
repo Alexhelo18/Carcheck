@@ -114,7 +114,7 @@
         bottom: 12px;
         z-index: 1200;
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(5, 1fr);
         gap: 4px;
         padding: 8px;
         border: 1px solid rgba(220, 226, 236, 0.9);
@@ -131,7 +131,7 @@
         gap: 2px;
         border-radius: 18px;
         color: var(--muted);
-        font-size: 0.72rem;
+        font-size: 0.68rem;
         font-weight: 700;
         text-decoration: none;
     }
@@ -218,9 +218,21 @@
     .search-panel,
     .booking-card,
     .detail-main,
-    .detail-side {
+    .detail-side,
+    .dashboard-panel {
         padding: 20px;
         border-radius: 22px;
+    }
+
+    .dashboard-hero {
+        display: grid;
+        padding: 22px;
+        border-radius: 24px;
+    }
+
+    .dashboard-grid,
+    .booking-item {
+        grid-template-columns: 1fr;
     }
 
     .search-panel {
@@ -343,8 +355,27 @@
     .booking-card,
     .detail-main,
     .detail-side,
-    .officina-card {
+    .officina-card,
+    .dashboard-panel {
         padding: 16px;
+    }
+
+    .dashboard-hero {
+        padding: 20px;
+    }
+
+    .panel-heading {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .calendar-grid {
+        gap: 6px;
+    }
+
+    .calendar-day {
+        border-radius: 10px;
+        font-size: 0.86rem;
     }
 
     .card-topline,

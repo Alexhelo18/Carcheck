@@ -15,6 +15,21 @@ async function loadBookingPage() {
         title.textContent = `Prenota da ${officina.nome}`;
     }
 
+    const session = JSON.parse(localStorage.getItem("carcheckUser") || "null");
+
+    if (session && session.tipo === "utente") {
+        const nomeInput = form.querySelector('[name="nome"]');
+        const emailInput = form.querySelector('[name="email"]');
+
+        if (nomeInput && session.nome) {
+            nomeInput.value = session.nome;
+        }
+
+        if (emailInput && session.email) {
+            emailInput.value = session.email;
+        }
+    }
+
     form.addEventListener("submit", async (event) => {
         event.preventDefault();
         message.textContent = "";
@@ -22,6 +37,7 @@ async function loadBookingPage() {
         const formData = new FormData(form);
         const prenotazione = {
             officinaId: Number(officinaId),
+            officinaNome: officina ? officina.nome : "",
             nome: formData.get("nome"),
             email: formData.get("email"),
             servizio: formData.get("servizio"),

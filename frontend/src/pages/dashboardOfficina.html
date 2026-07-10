@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CarCheck | Area meccanico</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div id="navbar"></div>
+
+    <main class="page-shell">
+        <section class="dashboard-hero mechanic">
+            <div>
+                <p class="eyebrow">Area meccanico</p>
+                <h1 id="mechanicGreeting">Prenotazioni ricevute</h1>
+                <p>Gestisci richieste, orari e stato degli appuntamenti della tua officina.</p>
+            </div>
+            <a href="../pages/registerOfficina.html" class="btn-secondary">Profilo officina</a>
+        </section>
+
+        <section class="dashboard-panel">
+            <div class="panel-heading">
+                <h2>Richieste clienti</h2>
+                <select id="bookingStatusFilter">
+                    <option value="">Tutte</option>
+                    <option value="in attesa">In attesa</option>
+                    <option value="confermata">Confermate</option>
+                    <option value="rifiutata">Rifiutate</option>
+                </select>
+            </div>
+            <div id="mechanicBookings" class="booking-list mechanic-list"></div>
+        </section>
+    </main>
+
+    <div id="footer"></div>
+
+    <script src="../components/navbar.js"></script>
+    <script src="../components/footer.js"></script>
+    <script src="../js/api.js"></script>
+    <script src="../js/dashboard.js"></script>
+</body>
+
+</html>
