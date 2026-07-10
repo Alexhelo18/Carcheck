@@ -1,0 +1,2 @@
+-- File pronto per inserire dati reali iniziali.
+-- Aggiungi qui INSERT di officine, servizi e utenti verificati.

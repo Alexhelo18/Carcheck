@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CarCheck | Prenota</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div id="navbar"></div>
+
+    <main class="page-shell narrow">
+        <section class="booking-card">
+            <p class="eyebrow">Prenotazione online</p>
+            <h1 id="bookingTitle">Prenota un servizio</h1>
+
+            <form id="bookingForm" class="stack-form">
+                <label>
+                    Nome e cognome
+                    <input name="nome" type="text" required placeholder="Mario Rossi">
+                </label>
+                <label>
+                    Email
+                    <input name="email" type="email" required placeholder="mario@email.com">
+                </label>
+                <label>
+                    Servizio
+                    <select name="servizio" required>
+                        <option value="">Seleziona servizio</option>
+                        <option>Tagliando</option>
+                        <option>Cambio gomme</option>
+                        <option>Revisione</option>
+                        <option>Diagnosi elettronica</option>
+                        <option>Freni</option>
+                    </select>
+                </label>
+                <label>
+                    Data
+                    <input name="data" type="date" required>
+                </label>
+                <label>
+                    Orario
+                    <select name="orario" required>
+                        <option value="">Seleziona orario</option>
+                        <option>09:00</option>
+                        <option>10:30</option>
+                        <option>12:00</option>
+                        <option>15:00</option>
+                        <option>16:30</option>
+                    </select>
+                </label>
+                <label>
+                    Note
+                    <textarea name="note" rows="4" placeholder="Descrivi il problema o il servizio richiesto"></textarea>
+                </label>
+                <button type="submit">Conferma prenotazione</button>
+            </form>
+
+            <p id="bookingMessage" class="form-message"></p>
+        </section>
+    </main>
+
+    <div id="footer"></div>
+
+    <script src="../components/navbar.js"></script>
+    <script src="../components/footer.js"></script>
+    <script src="../js/api.js"></script>
+    <script src="../js/prenotazioni.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CarCheck | Ricerca officine</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div id="navbar"></div>
+
+    <main class="page-shell">
+        <section class="search-panel">
+            <div>
+                <p class="eyebrow">Cerca e confronta</p>
+                <h1>Officine disponibili</h1>
+            </div>
+            <form class="filter-bar" id="searchForm">
+                <input id="searchCity" type="text" placeholder="Citta">
+                <input id="searchService" type="text" placeholder="Servizio">
+                <select id="searchRating">
+                    <option value="">Tutte le valutazioni</option>
+                    <option value="4.5">Da 4.5 stelle</option>
+                    <option value="4">Da 4 stelle</option>
+                    <option value="3.5">Da 3.5 stelle</option>
+                </select>
+                <button type="submit">Filtra</button>
+            </form>
+        </section>
+
+        <section>
+            <div id="resultsCounter" class="results-counter"></div>
+            <div class="results-layout">
+                <div id="officine-container" class="officine-grid"></div>
+                <aside class="map-panel">
+                    <iframe
+                        id="resultsMap"
+                        title="Mappa officine"
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"
+                        src="https://www.google.com/maps?q=officine%20meccaniche%20Italia&output=embed">
+                    </iframe>
+                </aside>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer"></div>
+
+    <script src="../components/navbar.js"></script>
+    <script src="../components/footer.js"></script>
+    <script src="../components/cardOfficina.js"></script>
+    <script src="../js/api.js"></script>
+    <script src="../js/ui.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,369 @@
+@media (max-width: 1100px) {
+    .navbar {
+        grid-template-columns: auto minmax(180px, 1fr) auto;
+        gap: 18px;
+        padding: 0 28px;
+    }
+
+    .results-layout {
+        grid-template-columns: minmax(0, 1fr) 330px;
+    }
+}
+
+@media (max-width: 920px) {
+    .navbar {
+        grid-template-columns: 1fr;
+        gap: 14px;
+        padding: 16px 24px;
+    }
+
+    .nav-logo {
+        justify-content: center;
+    }
+
+    .nav-center,
+    .nav-right {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .nav-right {
+        flex-wrap: wrap;
+        gap: 10px 16px;
+    }
+
+    .search-bar {
+        max-width: 520px;
+    }
+
+    .hero {
+        min-height: 480px;
+        padding: 64px 22px;
+    }
+
+    .hero-search,
+    .filter-bar,
+    .search-panel,
+    .results-layout,
+    .detail-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .officine-grid,
+    .results-layout .officine-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .detail-side,
+    .map-panel {
+        position: static;
+    }
+
+    .map-panel {
+        order: -1;
+    }
+
+    .map-panel iframe {
+        height: 360px;
+    }
+}
+
+@media (max-width: 700px) {
+    body {
+        padding-bottom: 84px;
+    }
+
+    .navbar {
+        position: sticky;
+        top: 0;
+        grid-template-columns: auto 1fr;
+        padding: 12px 16px;
+        border-bottom: 1px solid rgba(220, 226, 236, 0.8);
+        box-shadow: 0 8px 24px rgba(11, 45, 109, 0.08);
+    }
+
+    .nav-logo {
+        justify-content: flex-start;
+        font-size: 1.15rem;
+    }
+
+    .logo-img {
+        width: 38px;
+        height: 38px;
+    }
+
+    .nav-center {
+        justify-content: flex-end;
+    }
+
+    .search-bar {
+        height: 42px;
+        border-radius: 999px;
+        padding: 10px 15px;
+        background: #f5f7fa;
+    }
+
+    .nav-right {
+        display: none;
+    }
+
+    .mobile-tabbar {
+        position: fixed;
+        left: 12px;
+        right: 12px;
+        bottom: 12px;
+        z-index: 1200;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 4px;
+        padding: 8px;
+        border: 1px solid rgba(220, 226, 236, 0.9);
+        border-radius: 24px;
+        background: rgba(255, 255, 255, 0.94);
+        box-shadow: 0 18px 42px rgba(11, 45, 109, 0.18);
+        backdrop-filter: blur(14px);
+    }
+
+    .mobile-tabbar a {
+        min-height: 54px;
+        display: grid;
+        place-items: center;
+        gap: 2px;
+        border-radius: 18px;
+        color: var(--muted);
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-decoration: none;
+    }
+
+    .mobile-tabbar a.active,
+    .mobile-tabbar a:active {
+        background: #edf3ff;
+        color: var(--blue);
+    }
+
+    .tab-icon {
+        width: 24px;
+        height: 24px;
+        display: inline-grid;
+        place-items: center;
+        border-radius: 999px;
+        font-size: 0.8rem;
+        line-height: 1;
+        background: #f5f7fa;
+    }
+
+    .mobile-tabbar a.active .tab-icon {
+        color: white;
+        background: var(--blue);
+    }
+
+    .nav-right a {
+        font-size: 0.92rem;
+    }
+
+    .nav-right .register-btn {
+        padding: 9px 13px;
+    }
+
+    .hero {
+        min-height: auto;
+        margin: 12px 14px 0;
+        padding: 34px 18px 22px;
+        border-radius: 28px;
+        align-items: flex-end;
+        overflow: hidden;
+    }
+
+    .hero h1 {
+        font-size: 2.05rem;
+        line-height: 1.12;
+        text-align: left;
+    }
+
+    .hero p {
+        margin-bottom: 24px;
+        font-size: 1rem;
+        text-align: left;
+    }
+
+    .hero-search {
+        padding: 10px;
+        border-radius: 22px;
+        box-shadow: 0 18px 42px rgba(0, 0, 0, 0.22);
+    }
+
+    .hero-content {
+        text-align: left;
+    }
+
+    .hero .eyebrow {
+        text-align: left;
+    }
+
+    .popular-section,
+    .page-shell,
+    .page-shell.narrow {
+        width: min(100% - 28px, 1160px);
+    }
+
+    .popular-section {
+        padding: 38px 0;
+    }
+
+    .page-shell {
+        padding: 28px 0 44px;
+    }
+
+    .search-panel,
+    .booking-card,
+    .detail-main,
+    .detail-side {
+        padding: 20px;
+        border-radius: 22px;
+    }
+
+    .search-panel {
+        margin-top: 10px;
+        border: 0;
+        box-shadow: 0 12px 28px rgba(11, 45, 109, 0.08);
+    }
+
+    .officine-grid,
+    .results-layout .officine-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .officina-card {
+        min-height: 0;
+        padding: 18px;
+        border: 0;
+        border-radius: 22px;
+        box-shadow: 0 12px 28px rgba(11, 45, 109, 0.08);
+    }
+
+    .card-actions {
+        grid-template-columns: 1fr;
+    }
+
+    .btn-primary,
+    .btn-secondary,
+    button {
+        border-radius: 16px;
+    }
+
+    .hero-search input,
+    .filter-bar input,
+    .filter-bar select,
+    .stack-form input,
+    .stack-form select,
+    .stack-form textarea {
+        border-radius: 16px;
+        min-height: 48px;
+    }
+
+    .map-panel,
+    .map-card {
+        border-radius: 22px;
+    }
+
+    .map-panel iframe {
+        height: 300px;
+    }
+
+    .map-card iframe {
+        height: 260px;
+    }
+}
+
+@media (max-width: 430px) {
+    .nav-center {
+        display: flex;
+    }
+
+    .nav-right {
+        display: none;
+    }
+
+    .nav-right a {
+        min-height: 42px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        text-align: center;
+    }
+
+    .nav-right .register-btn {
+        grid-column: 1 / -1;
+        border-color: var(--blue);
+    }
+
+    .hero {
+        margin: 10px 10px 0;
+        padding: 30px 16px 18px;
+    }
+
+    .hero h1 {
+        font-size: 1.78rem;
+    }
+
+    .hero-search,
+    .filter-bar,
+    .stack-form {
+        gap: 10px;
+    }
+
+    .hero-search input,
+    .filter-bar input,
+    .filter-bar select,
+    .stack-form input,
+    .stack-form select,
+    .stack-form textarea {
+        padding: 13px 14px;
+        font-size: 0.95rem;
+    }
+
+    button,
+    .btn-primary,
+    .btn-secondary {
+        width: 100%;
+        min-height: 44px;
+        padding: 11px 14px;
+    }
+
+    .popular-section,
+    .page-shell,
+    .page-shell.narrow {
+        width: min(100% - 20px, 1160px);
+    }
+
+    .search-panel,
+    .booking-card,
+    .detail-main,
+    .detail-side,
+    .officina-card {
+        padding: 16px;
+    }
+
+    .card-topline,
+    .review div {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .score-box span {
+        font-size: 2.4rem;
+    }
+
+    .map-panel iframe,
+    .map-card iframe {
+        height: 240px;
+    }
+
+    .site-footer {
+        padding: 22px 14px;
+        font-size: 0.9rem;
+    }
+}
