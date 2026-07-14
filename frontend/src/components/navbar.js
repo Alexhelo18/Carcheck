@@ -31,6 +31,11 @@ function loadNavbar() {
                 <path d="M3 10.5 12 4l9 6.5V21H3V10.5Z"></path>
                 <path d="M7 21v-7h10v7M8.5 10.5h7"></path>
             </svg>
+        `,
+        account: `
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 5v14M5 12h14"></path>
+            </svg>
         `
     };
 
@@ -62,15 +67,31 @@ function loadNavbar() {
                 </a>
             `
             : `
-                <a href="../pages/loginUser.html">
-                    <span class="tab-icon">${icon.user}</span>
-                    <span>Utente</span>
-                </a>
-                <a href="../pages/loginOfficina.html">
-                    <span class="tab-icon">${icon.garage}</span>
-                    <span>Officina</span>
-                </a>
+                <button type="button" class="mobile-account-btn" id="mobileAccountBtn">
+                    <span class="tab-icon">${icon.account}</span>
+                    <span>Account</span>
+                </button>
             `;
+    const mobileAccountPanel = session ? "" : `
+        <div class="mobile-account-panel" id="mobileAccountPanel" aria-hidden="true">
+            <a href="../pages/loginUser.html">
+                <span class="tab-icon">${icon.user}</span>
+                <span>Accedi utente</span>
+            </a>
+            <a href="../pages/registerUser.html">
+                <span class="tab-icon">${icon.account}</span>
+                <span>Registrati utente</span>
+            </a>
+            <a href="../pages/loginOfficina.html">
+                <span class="tab-icon">${icon.garage}</span>
+                <span>Accedi officina</span>
+            </a>
+            <a href="../pages/registerOfficina.html">
+                <span class="tab-icon">${icon.account}</span>
+                <span>Registra officina</span>
+            </a>
+        </div>
+    `;
 
     navbar.innerHTML = `
         <nav class="navbar">
@@ -105,6 +126,7 @@ function loadNavbar() {
             </a>
             ${mobilePrivateLinks}
         </nav>
+        ${mobileAccountPanel}
     `;
 
     const navSearch = document.getElementById("navSearch");
@@ -121,6 +143,17 @@ function loadNavbar() {
         logoutBtn.addEventListener("click", () => {
             localStorage.removeItem("carcheckUser");
             window.location.href = "../pages/home.html";
+        });
+    }
+
+    const mobileAccountBtn = document.getElementById("mobileAccountBtn");
+    const mobileAccountPanelElement = document.getElementById("mobileAccountPanel");
+
+    if (mobileAccountBtn && mobileAccountPanelElement) {
+        mobileAccountBtn.addEventListener("click", () => {
+            const isOpen = mobileAccountPanelElement.classList.toggle("open");
+            mobileAccountPanelElement.setAttribute("aria-hidden", String(!isOpen));
+            mobileAccountBtn.classList.toggle("active", isOpen);
         });
     }
 

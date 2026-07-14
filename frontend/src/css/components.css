@@ -79,6 +79,10 @@
     display: none;
 }
 
+.mobile-account-panel {
+    display: none;
+}
+
 .officine-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -166,7 +170,7 @@
     justify-content: center;
     border-radius: 8px;
     color: white;
-    background: #117a51;
+    background: var(--accent-dark);
     font-weight: 700;
 }
 
@@ -232,7 +236,7 @@
 
 .score-box span {
     display: block;
-    color: #117a51;
+    color: var(--accent-dark);
     font-size: 3rem;
     font-weight: 700;
 }
@@ -261,7 +265,7 @@
 }
 
 .review span {
-    color: #c29100;
+    color: var(--accent-dark);
 }
 
 .review p {
@@ -283,7 +287,7 @@
 
 .form-message {
     margin: 16px 0 0;
-    color: #117a51;
+    color: var(--accent-dark);
     font-weight: 700;
 }
 
@@ -311,11 +315,11 @@
 }
 
 .dashboard-hero.mechanic {
-    background: linear-gradient(135deg, #172033, #117a51);
+    background: linear-gradient(135deg, #172033, var(--accent-dark));
 }
 
 .dashboard-hero .eyebrow {
-    color: var(--yellow);
+    color: #9be7e5;
 }
 
 .dashboard-hero h1,
@@ -402,8 +406,8 @@
 
 .calendar-day.booked {
     color: white;
-    background: #117a51;
-    border-color: #117a51;
+    background: var(--accent-dark);
+    border-color: var(--accent-dark);
 }
 
 .booking-list {
@@ -435,8 +439,8 @@
     width: fit-content;
     padding: 6px 10px;
     border-radius: 999px;
-    color: #0f5132;
-    background: #dff5e8;
+    color: var(--accent-dark);
+    background: var(--accent-soft);
     font-size: 0.8rem;
     font-weight: 700;
 }
