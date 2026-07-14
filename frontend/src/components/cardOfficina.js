@@ -1,7 +1,7 @@
 function createOfficinaCard(officina) {
     const serviziList = Array.isArray(officina.servizi) ? officina.servizi : [];
     const recensioniList = Array.isArray(officina.recensioni) ? officina.recensioni : [];
-    const servizi = serviziList.slice(0, 3).map((servizio) => `<span>${servizio}</span>`).join("");
+    const servizi = serviziList.slice(0, 3).map((servizio) => `<span>${typeof servizio === "string" ? servizio : servizio.nome}</span>`).join("");
     const rating = Number(officina.rating || 0);
     const indirizzo = [
         officina.via || officina.indirizzo || "Indirizzo in aggiornamento",

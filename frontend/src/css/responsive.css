@@ -349,6 +349,16 @@
         grid-template-columns: 1fr;
     }
 
+    .two-columns,
+    .service-editor {
+        grid-template-columns: 1fr;
+    }
+
+    .booking-summary dl div {
+        grid-template-columns: 1fr;
+        gap: 3px;
+    }
+
     .search-panel {
         margin-top: 10px;
         border: 0;
@@ -555,6 +565,14 @@
     .calendar-day {
         border-radius: 10px;
         font-size: 0.86rem;
+    }
+
+    .booking-progress {
+        gap: 6px;
+    }
+
+    .slot-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     .card-topline,

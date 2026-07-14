@@ -20,47 +20,94 @@
         <section class="booking-card">
             <p class="eyebrow">Prenotazione online</p>
             <h1 id="bookingTitle">Prenota un servizio</h1>
+            <div class="booking-progress" aria-label="Avanzamento prenotazione">
+                <span class="active">Servizio</span>
+                <span>Veicolo</span>
+                <span>Data</span>
+                <span>Riepilogo</span>
+            </div>
 
-            <form id="bookingForm" class="stack-form">
-                <label>
-                    Nome e cognome
-                    <input name="nome" type="text" required placeholder="Mario Rossi">
-                </label>
-                <label>
-                    Email
-                    <input name="email" type="email" required placeholder="mario@email.com">
-                </label>
-                <label>
-                    Servizio
-                    <select name="servizio" required>
-                        <option value="">Seleziona servizio</option>
-                        <option>Tagliando</option>
-                        <option>Cambio gomme</option>
-                        <option>Revisione</option>
-                        <option>Diagnosi elettronica</option>
-                        <option>Freni</option>
-                    </select>
-                </label>
-                <label>
-                    Data
-                    <input name="data" type="date" required>
-                </label>
-                <label>
-                    Orario
-                    <select name="orario" required>
-                        <option value="">Seleziona orario</option>
-                        <option>09:00</option>
-                        <option>10:30</option>
-                        <option>12:00</option>
-                        <option>15:00</option>
-                        <option>16:30</option>
-                    </select>
-                </label>
-                <label>
-                    Note
-                    <textarea name="note" rows="4" placeholder="Descrivi il problema o il servizio richiesto"></textarea>
-                </label>
-                <button type="submit">Conferma prenotazione</button>
+            <form id="bookingForm" class="stack-form booking-wizard" novalidate>
+                <section class="booking-step active" data-step="1">
+                    <h2>Servizio</h2>
+                    <label>
+                        Nome e cognome
+                        <input name="nome" type="text" required placeholder="Mario Rossi" autocomplete="name">
+                        <span class="field-error" data-error-for="nome"></span>
+                    </label>
+                    <label>
+                        Email
+                        <input name="email" type="email" required placeholder="mario@email.com" autocomplete="email">
+                        <span class="field-error" data-error-for="email"></span>
+                    </label>
+                    <label>
+                        Servizio
+                        <select name="serviceId" id="serviceSelect" required>
+                            <option value="">Seleziona servizio</option>
+                        </select>
+                        <span class="field-hint" id="serviceHint">I servizi vengono caricati dall'officina selezionata.</span>
+                        <span class="field-error" data-error-for="serviceId"></span>
+                    </label>
+                </section>
+
+                <section class="booking-step" data-step="2">
+                    <h2>Veicolo</h2>
+                    <div class="form-grid two-columns">
+                        <label>Marca <input name="vehicleBrand" type="text" required autocomplete="off"><span class="field-error" data-error-for="vehicleBrand"></span></label>
+                        <label>Modello <input name="vehicleModel" type="text" required autocomplete="off"><span class="field-error" data-error-for="vehicleModel"></span></label>
+                        <label>Anno <input name="vehicleYear" type="number" min="1950" max="2035" required><span class="field-error" data-error-for="vehicleYear"></span></label>
+                        <label>Targa <input name="vehiclePlate" type="text" required autocomplete="off"><span class="field-error" data-error-for="vehiclePlate"></span></label>
+                        <label>Alimentazione
+                            <select name="vehicleFuel" required>
+                                <option value="">Seleziona</option>
+                                <option>Benzina</option>
+                                <option>Diesel</option>
+                                <option>Ibrida</option>
+                                <option>Elettrica</option>
+                                <option>GPL</option>
+                                <option>Metano</option>
+                            </select>
+                            <span class="field-error" data-error-for="vehicleFuel"></span>
+                        </label>
+                        <label>Chilometraggio <input name="vehicleMileage" type="number" min="0" step="1000" required><span class="field-error" data-error-for="vehicleMileage"></span></label>
+                    </div>
+                    <label>Versione o motorizzazione <input name="vehicleVersion" type="text"></label>
+                </section>
+
+                <section class="booking-step" data-step="3">
+                    <h2>Data e orario</h2>
+                    <label>
+                        Data
+                        <input name="data" id="bookingDate" type="date" required>
+                        <span class="field-error" data-error-for="data"></span>
+                    </label>
+                    <div>
+                        <span class="field-hint">Orari disponibili</span>
+                        <div id="slotList" class="slot-list" aria-live="polite"></div>
+                        <input name="orario" id="selectedSlot" type="hidden" required>
+                        <span class="field-error" data-error-for="orario"></span>
+                    </div>
+                </section>
+
+                <section class="booking-step" data-step="4">
+                    <h2>Informazioni e riepilogo</h2>
+                    <label>Descrizione del problema <textarea name="customerNotes" rows="4" placeholder="Descrivi il problema o il servizio richiesto"></textarea></label>
+                    <label>Spie accese o segnali rilevati <input name="warningLights" type="text" placeholder="Es. spia motore, freni, batteria"></label>
+                    <label>Note aggiuntive <textarea name="extraNotes" rows="3"></textarea></label>
+                    <label class="checkbox-row">
+                        <input name="vehicleConsent" type="checkbox" required>
+                        <span>Acconsento a condividere i dati del veicolo con l'officina scelta.</span>
+                    </label>
+                    <span class="field-error" data-error-for="vehicleConsent"></span>
+                    <div id="bookingSummary" class="booking-summary"></div>
+                    <p class="notice-box">Prezzo indicativo. L'importo finale potra essere confermato dall'officina dopo la verifica del veicolo.</p>
+                </section>
+
+                <div class="step-actions">
+                    <button type="button" id="bookingBack" class="btn-secondary">Indietro</button>
+                    <button type="button" id="bookingNext">Continua</button>
+                    <button type="submit" id="bookingSubmit" class="hidden">Conferma prenotazione</button>
+                </div>
             </form>
 
             <p id="bookingMessage" class="form-message"></p>

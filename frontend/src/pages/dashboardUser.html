@@ -38,6 +38,14 @@
             <div class="dashboard-panel">
                 <div class="panel-heading">
                     <h2>Appuntamenti</h2>
+                    <select id="userBookingFilter">
+                        <option value="">Tutti</option>
+                        <option value="PENDING">In attesa</option>
+                        <option value="RESCHEDULE_PROPOSED">Modifiche proposte</option>
+                        <option value="CONFIRMED">Confermati</option>
+                        <option value="COMPLETED">Completati</option>
+                        <option value="CANCELLED_BY_USER">Annullati</option>
+                    </select>
                 </div>
                 <div id="userBookings" class="booking-list"></div>
             </div>

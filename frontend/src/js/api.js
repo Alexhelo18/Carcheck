@@ -10,7 +10,15 @@ const api = {
         });
 
         if (!res.ok) {
-            const error = new Error("Richiesta non riuscita");
+            let payload = {};
+
+            try {
+                payload = await res.json();
+            } catch (err) {
+                payload = {};
+            }
+
+            const error = new Error(payload.message || "Richiesta non riuscita");
             error.status = res.status;
             throw error;
         }
@@ -37,7 +45,7 @@ const api = {
     },
 
     async createPrenotazione(prenotazione) {
-        return await this.request("/prenotazioni", {
+        return await this.request("/bookings", {
             method: "POST",
             body: JSON.stringify(prenotazione)
         });
@@ -54,5 +62,70 @@ const api = {
             method: "PATCH",
             body: JSON.stringify(data)
         });
+    },
+
+    async getWorkshopServices(workshopId) {
+        return await this.request(`/workshops/${workshopId}/services`);
+    },
+
+    async saveWorkshopServices(workshopId, services) {
+        return await this.request(`/workshops/${workshopId}/services`, {
+            method: "PUT",
+            body: JSON.stringify({ services })
+        });
+    },
+
+    async getAvailability(workshopId, serviceId, date) {
+        const params = new URLSearchParams({ serviceId, date });
+        return await this.request(`/workshops/${workshopId}/availability?${params.toString()}`);
+    },
+
+    async getWorkshopAgenda(workshopId) {
+        return await this.request(`/workshops/${workshopId}/agenda`);
+    },
+
+    async saveWorkshopAgenda(workshopId, settings) {
+        return await this.request(`/workshops/${workshopId}/agenda`, {
+            method: "PUT",
+            body: JSON.stringify(settings)
+        });
+    },
+
+    async createCalendarBlock(workshopId, block) {
+        return await this.request(`/workshops/${workshopId}/calendar-blocks`, {
+            method: "POST",
+            body: JSON.stringify(block)
+        });
+    },
+
+    async getBooking(id) {
+        return await this.request(`/bookings/${id}`);
+    },
+
+    async bookingAction(id, action, data = {}) {
+        return await this.request(`/bookings/${id}/${action}`, {
+            method: "PATCH",
+            body: JSON.stringify(data)
+        });
+    },
+
+    async proposeReschedule(id, proposal) {
+        return await this.request(`/bookings/${id}/reschedule-proposals`, {
+            method: "POST",
+            body: JSON.stringify(proposal)
+        });
+    },
+
+    async respondReschedule(id, proposalId, action) {
+        return await this.request(`/bookings/${id}/reschedule-proposals/${proposalId}/${action}`, {
+            method: "PATCH",
+            body: JSON.stringify({})
+        });
+    },
+
+    async getNotifications(filters = {}) {
+        const params = new URLSearchParams(filters);
+        const query = params.toString() ? `?${params.toString()}` : "";
+        return await this.request(`/notifications${query}`);
     }
 };

@@ -28,15 +28,71 @@
 
         <section class="dashboard-panel">
             <div class="panel-heading">
-                <h2>Richieste clienti</h2>
+                <h2>Gestione prenotazioni</h2>
                 <select id="bookingStatusFilter">
                     <option value="">Tutte</option>
-                    <option value="in attesa">In attesa</option>
-                    <option value="confermata">Confermate</option>
-                    <option value="rifiutata">Rifiutate</option>
+                    <option value="PENDING">Richieste in attesa</option>
+                    <option value="CONFIRMED">Confermate</option>
+                    <option value="RESCHEDULE_PROPOSED">Modifica proposta</option>
+                    <option value="CHECKED_IN">Veicolo arrivato</option>
+                    <option value="IN_PROGRESS">In corso</option>
+                    <option value="COMPLETED">Completate</option>
+                    <option value="CANCELLED_BY_USER">Cancellate utente</option>
+                    <option value="NO_SHOW">No-show</option>
                 </select>
             </div>
             <div id="mechanicBookings" class="booking-list mechanic-list"></div>
+        </section>
+
+        <section class="dashboard-grid">
+            <div class="dashboard-panel">
+                <div class="panel-heading">
+                    <h2>Agenda officina</h2>
+                </div>
+                <form id="agendaForm" class="stack-form compact-form">
+                    <label>Intervallo slot
+                        <select name="slotIntervalMinutes">
+                            <option value="15">15 minuti</option>
+                            <option value="30">30 minuti</option>
+                            <option value="45">45 minuti</option>
+                            <option value="60">60 minuti</option>
+                        </select>
+                    </label>
+                    <label>Anticipo minimo ore <input name="minAdvanceHours" type="number" min="0" value="12"></label>
+                    <label>Limite prenotazione giorni <input name="maxFutureDays" type="number" min="1" value="45"></label>
+                    <label>Preparazione tra appuntamenti minuti <input name="preparationMinutes" type="number" min="0" value="0"></label>
+                    <label>Capacita contemporanea <input name="concurrentCapacity" type="number" min="1" value="3"></label>
+                    <button type="submit">Salva agenda</button>
+                    <p class="form-message" id="agendaMessage" aria-live="polite"></p>
+                </form>
+            </div>
+
+            <div class="dashboard-panel">
+                <div class="panel-heading">
+                    <h2>Blocchi manuali</h2>
+                </div>
+                <form id="calendarBlockForm" class="stack-form compact-form">
+                    <label>Titolo <input name="title" type="text" required></label>
+                    <label>Inizio <input name="startAt" type="datetime-local" required></label>
+                    <label>Fine <input name="endAt" type="datetime-local" required></label>
+                    <label>Capacita bloccata <input name="capacityBlocked" type="number" min="1" value="1"></label>
+                    <label>Nota <textarea name="note" rows="2"></textarea></label>
+                    <button type="submit">Aggiungi blocco</button>
+                    <p class="form-message" id="blockMessage" aria-live="polite"></p>
+                </form>
+            </div>
+        </section>
+
+        <section class="dashboard-panel">
+            <div class="panel-heading">
+                <h2>Servizi offerti</h2>
+                <button type="button" id="addServiceBtn">Aggiungi servizio</button>
+            </div>
+            <form id="servicesForm" class="stack-form">
+                <div id="servicesEditor" class="services-editor"></div>
+                <button type="submit">Salva servizi</button>
+                <p class="form-message" id="servicesMessage" aria-live="polite"></p>
+            </form>
         </section>
     </main>
 

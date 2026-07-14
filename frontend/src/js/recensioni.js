@@ -33,7 +33,7 @@ async function loadOfficinaDetail() {
         return;
     }
 
-    const servizi = (officina.servizi || []).map((servizio) => `<span>${servizio}</span>`).join("");
+    const servizi = (officina.servizi || []).map((servizio) => `<span>${typeof servizio === "string" ? servizio : servizio.nome}</span>`).join("");
     const recensioni = (officina.recensioni || []).map((recensione) => {
         const voto = Number(recensione.voto || 0);
 
@@ -43,6 +43,7 @@ async function loadOfficinaDetail() {
                     <strong>${recensione.autore}</strong>
                     <span>${"★".repeat(voto)}${"☆".repeat(5 - voto)}</span>
                 </div>
+                ${recensione.verified ? `<span class="status-pill">Recensione verificata</span>` : ""}
                 <p>${recensione.testo}</p>
             </article>
         `;

@@ -401,6 +401,10 @@
     gap: 16px;
 }
 
+.compact-form {
+    gap: 12px;
+}
+
 .stack-form label,
 .user-registration-fields,
 .workshop-registration-fields,
@@ -427,6 +431,120 @@
     color: var(--muted);
     font-size: 0.84rem;
     font-weight: 500;
+}
+
+.form-grid {
+    display: grid;
+    gap: 14px;
+}
+
+.two-columns {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.booking-progress {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+    margin: 18px 0 20px;
+}
+
+.booking-progress span {
+    min-height: 8px;
+    border-radius: 999px;
+    color: transparent;
+    background: var(--line);
+    overflow: hidden;
+}
+
+.booking-progress span.active {
+    background: var(--blue);
+}
+
+.booking-step {
+    display: none;
+    gap: 16px;
+}
+
+.booking-step.active {
+    display: grid;
+}
+
+.booking-step h2 {
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+.slot-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(92px, 1fr));
+    gap: 10px;
+    margin-top: 8px;
+}
+
+.slot-button {
+    min-height: 44px;
+    border: 1px solid var(--line);
+    color: var(--ink);
+    background: white;
+}
+
+.slot-button.selected,
+.slot-button:focus-visible {
+    border-color: var(--blue);
+    color: white;
+    background: var(--blue);
+}
+
+.booking-summary {
+    padding: 16px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: #f8fafc;
+}
+
+.booking-summary h3 {
+    margin: 0 0 12px;
+}
+
+.booking-summary dl {
+    display: grid;
+    gap: 10px;
+    margin: 0;
+}
+
+.booking-summary dl div {
+    display: grid;
+    grid-template-columns: 150px minmax(0, 1fr);
+    gap: 12px;
+}
+
+.booking-summary dt {
+    color: var(--muted);
+    font-weight: 700;
+}
+
+.booking-summary dd {
+    margin: 0;
+}
+
+.services-editor {
+    display: grid;
+    gap: 14px;
+}
+
+.service-editor {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    padding: 16px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: #f8fafc;
+}
+
+.service-editor .wide {
+    grid-column: 1 / -1;
 }
 
 .password-field {
