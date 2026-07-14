@@ -276,7 +276,8 @@ function bindAdminUi() {
         await adminRequest("/logout", { method: "POST", body: JSON.stringify({}) }).catch(() => {});
         localStorage.removeItem("carcheckAdminToken");
         localStorage.removeItem("carcheckAdmin");
-        window.location.reload();
+        localStorage.removeItem("carcheckUser");
+        window.location.href = "../pages/login.html";
     });
 }
 
