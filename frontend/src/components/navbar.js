@@ -5,6 +5,35 @@ function loadNavbar() {
         return;
     }
 
+    const icon = {
+        home: `
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M3 10.8 12 3l9 7.8v9.7a.5.5 0 0 1-.5.5h-5.2v-6.2H8.7V21H3.5a.5.5 0 0 1-.5-.5z"></path>
+            </svg>
+        `,
+        search: `
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M10.8 18.1a7.3 7.3 0 1 1 0-14.6 7.3 7.3 0 0 1 0 14.6Zm5.2-1.8 4.5 4.5"></path>
+            </svg>
+        `,
+        calendar: `
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M7 3v3M17 3v3M4.5 9h15M6 5h12a2 2 0 0 1 2 2v11.5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z"></path>
+            </svg>
+        `,
+        user: `
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 12a4.2 4.2 0 1 0 0-8.4 4.2 4.2 0 0 0 0 8.4ZM4.8 20.4a7.2 7.2 0 0 1 14.4 0"></path>
+            </svg>
+        `,
+        garage: `
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M3 10.5 12 4l9 6.5V21H3V10.5Z"></path>
+                <path d="M7 21v-7h10v7M8.5 10.5h7"></path>
+            </svg>
+        `
+    };
+
     const session = JSON.parse(localStorage.getItem("carcheckUser") || "null");
     const dashboardLink = session && session.tipo === "officina"
         ? `<a href="../pages/dashboardOfficina.html">Area officina</a>`
@@ -18,24 +47,28 @@ function loadNavbar() {
             <a href="../pages/loginOfficina.html">Accedi officina</a>
             <a href="../pages/registerUser.html" class="register-btn">Registrati</a>
         `;
-    const mobileAreaLink = session && session.tipo === "officina"
+    const mobilePrivateLinks = session && session.tipo === "officina"
         ? `
             <a href="../pages/dashboardOfficina.html">
-                <span class="tab-icon">M</span>
+                <span class="tab-icon">${icon.garage}</span>
                 <span>Officina</span>
             </a>
         `
         : session && session.tipo === "utente"
             ? `
                 <a href="../pages/dashboardUser.html">
-                    <span class="tab-icon">P</span>
+                    <span class="tab-icon">${icon.user}</span>
                     <span>Utente</span>
                 </a>
             `
             : `
                 <a href="../pages/loginUser.html">
-                    <span class="tab-icon">L</span>
-                    <span>Login</span>
+                    <span class="tab-icon">${icon.user}</span>
+                    <span>Utente</span>
+                </a>
+                <a href="../pages/loginOfficina.html">
+                    <span class="tab-icon">${icon.garage}</span>
+                    <span>Officina</span>
                 </a>
             `;
 
@@ -59,18 +92,18 @@ function loadNavbar() {
 
         <nav class="mobile-tabbar" aria-label="Navigazione mobile">
             <a href="../pages/home.html">
-                <span class="tab-icon">H</span>
+                <span class="tab-icon">${icon.home}</span>
                 <span>Home</span>
             </a>
             <a href="../pages/ricerca.html">
-                <span class="tab-icon">C</span>
+                <span class="tab-icon">${icon.search}</span>
                 <span>Cerca</span>
             </a>
             <a href="../pages/ricerca.html">
-                <span class="tab-icon">+</span>
+                <span class="tab-icon">${icon.calendar}</span>
                 <span>Prenota</span>
             </a>
-            ${mobileAreaLink}
+            ${mobilePrivateLinks}
         </nav>
     `;
 
