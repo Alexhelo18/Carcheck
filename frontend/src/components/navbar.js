@@ -48,9 +48,8 @@ function loadNavbar() {
     const authLinks = session
         ? `<button type="button" class="nav-logout" id="logoutBtn">Esci</button>`
         : `
-            <a href="../pages/loginUser.html">Accedi utente</a>
-            <a href="../pages/loginOfficina.html">Accedi officina</a>
-            <a href="../pages/registerUser.html" class="register-btn">Registrati</a>
+            <a href="../pages/login.html">Accedi</a>
+            <a href="../pages/register.html" class="register-btn">Registrati</a>
         `;
     const mobilePrivateLinks = session && session.tipo === "officina"
         ? `
@@ -74,21 +73,13 @@ function loadNavbar() {
             `;
     const mobileAccountPanel = session ? "" : `
         <div class="mobile-account-panel" id="mobileAccountPanel" aria-hidden="true">
-            <a href="../pages/loginUser.html">
+            <a href="../pages/login.html">
                 <span class="tab-icon">${icon.user}</span>
-                <span>Accedi utente</span>
+                <span>Accedi</span>
             </a>
-            <a href="../pages/registerUser.html">
+            <a href="../pages/register.html">
                 <span class="tab-icon">${icon.account}</span>
-                <span>Registrati utente</span>
-            </a>
-            <a href="../pages/loginOfficina.html">
-                <span class="tab-icon">${icon.garage}</span>
-                <span>Accedi officina</span>
-            </a>
-            <a href="../pages/registerOfficina.html">
-                <span class="tab-icon">${icon.account}</span>
-                <span>Registra officina</span>
+                <span>Registrati</span>
             </a>
         </div>
     `;
@@ -158,6 +149,11 @@ function loadNavbar() {
     }
 
     const currentPage = window.location.pathname.split("/").pop();
+
+    if (mobileAccountBtn && ["login.html", "register.html"].includes(currentPage)) {
+        mobileAccountBtn.classList.add("active");
+    }
+
     document.querySelectorAll(".mobile-tabbar a").forEach((link) => {
         const linkPage = link.getAttribute("href").split("/").pop();
 

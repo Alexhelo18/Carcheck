@@ -3,7 +3,6 @@ function getSession() {
 }
 
 function renderAccessGate(container, role) {
-    const loginPage = role === "officina" ? "loginOfficina.html" : "loginUser.html";
     const label = role === "officina" ? "officina" : "utente";
 
     container.innerHTML = `
@@ -11,7 +10,7 @@ function renderAccessGate(container, role) {
             <p class="eyebrow">Accesso richiesto</p>
             <h2>Questa area e riservata agli account ${label}</h2>
             <p>Accedi con il profilo corretto per vedere questa interfaccia.</p>
-            <a href="../pages/${loginPage}" class="btn-primary">Vai al login</a>
+            <a href="../pages/login.html" class="btn-primary">Vai al login</a>
         </div>
     `;
 }

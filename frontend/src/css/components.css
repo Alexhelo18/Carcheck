@@ -51,14 +51,16 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    gap: 16px;
+    gap: 12px;
     min-width: 0;
 }
 
 .nav-right a {
     color: var(--ink);
+    font-size: 0.94rem;
     font-weight: 600;
     text-decoration: none;
+    white-space: nowrap;
 }
 
 .nav-right .register-btn {
@@ -66,6 +68,10 @@
     background: var(--blue);
     padding: 10px 16px;
     border-radius: 8px;
+}
+
+.nav-right .register-mechanic-btn {
+    background: var(--accent);
 }
 
 .nav-logout {
@@ -81,6 +87,73 @@
 
 .mobile-account-panel {
     display: none;
+}
+
+.auth-role-switch {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin: 22px 0;
+    padding: 6px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: #f8fafc;
+}
+
+.auth-role-switch button {
+    min-height: 44px;
+    border-radius: 8px;
+    color: var(--muted);
+    background: transparent;
+}
+
+.auth-role-switch button.active {
+    color: white;
+    background: var(--blue);
+}
+
+.hidden {
+    display: none !important;
+}
+
+.mechanic-options {
+    display: grid;
+    gap: 10px;
+    margin: 0;
+    padding: 16px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: #f8fafc;
+}
+
+.mechanic-options legend {
+    padding: 0 6px;
+    color: var(--ink);
+    font-weight: 700;
+}
+
+.mechanic-options p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.9rem;
+}
+
+.mechanic-options label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 46px;
+    padding: 10px 12px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: white;
+    cursor: pointer;
+}
+
+.mechanic-options input {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--accent);
 }
 
 .officine-grid {
@@ -319,7 +392,7 @@
 }
 
 .dashboard-hero .eyebrow {
-    color: #9be7e5;
+    color: #c7d2fe;
 }
 
 .dashboard-hero h1,

@@ -1,9 +1,9 @@
 :root {
     --blue: #0b2d6d;
     --blue-light: #17479f;
-    --accent: #0f8b8d;
-    --accent-dark: #0a6f73;
-    --accent-soft: #e4f5f5;
+    --accent: #4f46e5;
+    --accent-dark: #3730a3;
+    --accent-soft: #eef2ff;
     --ink: #172033;
     --muted: #687286;
     --line: #dce2ec;
@@ -64,7 +64,7 @@ textarea {
 }
 
 .hero .eyebrow {
-    color: #9be7e5;
+    color: #c7d2fe;
 }
 
 .hero h1 {

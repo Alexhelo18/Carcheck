@@ -1,8 +1,14 @@
 @media (max-width: 1100px) {
     .navbar {
-        grid-template-columns: auto minmax(180px, 1fr) auto;
-        gap: 18px;
-        padding: 0 28px;
+        grid-template-columns: auto minmax(180px, 1fr);
+        gap: 16px;
+        padding: 14px 28px;
+    }
+
+    .nav-right {
+        grid-column: 1 / -1;
+        justify-content: center;
+        flex-wrap: wrap;
     }
 
     .results-layout {
@@ -212,8 +218,8 @@
 
     .mobile-account-panel a {
         min-height: 58px;
-        display: flex;
-        align-items: center;
+        display: grid;
+        place-items: center;
         gap: 10px;
         padding: 10px;
         border: 1px solid var(--line);
@@ -223,6 +229,7 @@
         font-size: 0.78rem;
         font-weight: 700;
         text-decoration: none;
+        text-align: center;
     }
 
     .nav-right a {

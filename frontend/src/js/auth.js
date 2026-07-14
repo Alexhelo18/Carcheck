@@ -1,16 +1,80 @@
 function getAuthPayload(form) {
     const formData = new FormData(form);
     const type = form.dataset.type || "";
+    const isMechanic = type.includes("officina");
+    const specializzazioni = formData.getAll("specializzazioni");
+    const serviziExtra = String(formData.get("servizi") || "")
+        .split(",")
+        .map((servizio) => servizio.trim())
+        .filter(Boolean);
+    const servizi = [...new Set([...specializzazioni, ...serviziExtra])];
 
     return {
-        nome: formData.get("nome"),
+        nome: isMechanic ? formData.get("nomeOfficina") : formData.get("nome"),
         citta: formData.get("citta"),
         indirizzo: formData.get("indirizzo"),
-        servizi: formData.get("servizi"),
+        servizi,
         email: formData.get("email"),
         password: formData.get("password"),
-        tipo: type.includes("officina") ? "officina" : "utente"
+        tipo: isMechanic ? "officina" : "utente"
     };
+}
+
+function setRole(form, role) {
+    const mode = form.dataset.mode || (form.dataset.type || "").split(" ")[0];
+    const isMechanic = role === "officina";
+    const card = form.closest(".booking-card");
+    const eyebrow = card.querySelector("#authEyebrow");
+    const title = card.querySelector("#authTitle");
+    const mechanicFields = form.querySelectorAll(".mechanic-field");
+    const userFields = form.querySelectorAll(".user-field");
+
+    form.dataset.type = `${mode} ${role}`;
+
+    if (eyebrow) {
+        eyebrow.textContent = isMechanic ? "Area officina" : mode === "login" ? "Area utente" : "Nuovo account";
+    }
+
+    if (title) {
+        title.textContent = mode === "login"
+            ? isMechanic ? "Accedi come officina" : "Accedi"
+            : isMechanic ? "Registra la tua officina" : "Registrati";
+    }
+
+    mechanicFields.forEach((field) => {
+        field.classList.toggle("hidden", !isMechanic);
+        field.querySelectorAll("input").forEach((input) => {
+            input.required = isMechanic && ["nomeOfficina", "citta"].includes(input.name);
+        });
+    });
+
+    userFields.forEach((field) => {
+        field.classList.toggle("hidden", isMechanic);
+        field.querySelectorAll("input").forEach((input) => {
+            input.required = !isMechanic;
+        });
+    });
+}
+
+function loadAuthSwitches() {
+    document.querySelectorAll("[data-auth-switch]").forEach((switcher) => {
+        const card = switcher.closest(".booking-card");
+        const form = card.querySelector(".auth-form");
+
+        switcher.addEventListener("click", (event) => {
+            const button = event.target.closest("[data-role]");
+
+            if (!button) {
+                return;
+            }
+
+            switcher.querySelectorAll("[data-role]").forEach((item) => {
+                item.classList.toggle("active", item === button);
+            });
+
+            setRole(form, button.dataset.role);
+        });
+    });
 }
 
 function loadAuthForms() {
@@ -41,10 +105,7 @@ function loadAuthForms() {
                             nome: payload.nome,
                             citta: payload.citta,
                             indirizzo: payload.indirizzo,
-                            servizi: String(payload.servizi || "")
-                                .split(",")
-                                .map((servizio) => servizio.trim())
-                                .filter(Boolean),
+                            servizi: payload.servizi,
                             descrizione: "Profilo officina in aggiornamento."
                         })
                     });
@@ -72,4 +133,5 @@ function loadAuthForms() {
     });
 }
 
+loadAuthSwitches();
 loadAuthForms();
