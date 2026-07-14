@@ -8,6 +8,10 @@ CREATE TABLE utenti (
     email VARCHAR(150) NOT NULL UNIQUE,
     password_hash VARCHAR(255) NOT NULL,
     tipo VARCHAR(20) NOT NULL DEFAULT 'utente',
+    verified BOOLEAN DEFAULT 0,
+    status VARCHAR(40) DEFAULT 'ACTIVE',
+    last_login_at DATETIME,
+    is_demo BOOLEAN DEFAULT 0,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -21,6 +25,12 @@ CREATE TABLE officine (
     indirizzo VARCHAR(180) NOT NULL,
     descrizione TEXT,
     rating DECIMAL(2, 1) DEFAULT 0,
+    status VARCHAR(40) DEFAULT 'PENDING_VERIFICATION',
+    verification_status VARCHAR(40) DEFAULT 'PENDING_VERIFICATION',
+    profile_completed BOOLEAN DEFAULT 0,
+    verified_at DATETIME,
+    verified_by INTEGER,
+    is_demo BOOLEAN DEFAULT 0,
     proprietario_id INTEGER,
     FOREIGN KEY (proprietario_id) REFERENCES utenti(id)
 );
@@ -39,6 +49,7 @@ CREATE TABLE servizi (
     capacity_required INTEGER DEFAULT 1,
     manual_approval_required BOOLEAN DEFAULT 1,
     customer_fields TEXT,
+    is_demo BOOLEAN DEFAULT 0,
     FOREIGN KEY (officina_id) REFERENCES officine(id)
 );
 
@@ -120,6 +131,7 @@ CREATE TABLE prenotazioni (
     cancelled_at DATETIME,
     cancelled_by VARCHAR(40),
     cancellation_reason TEXT,
+    is_demo BOOLEAN DEFAULT 0,
     FOREIGN KEY (utente_id) REFERENCES utenti(id),
     FOREIGN KEY (officina_id) REFERENCES officine(id),
     FOREIGN KEY (veicolo_id) REFERENCES veicoli(id),
@@ -207,8 +219,85 @@ CREATE TABLE recensioni (
     voto INTEGER NOT NULL CHECK (voto BETWEEN 1 AND 5),
     testo TEXT NOT NULL,
     verified BOOLEAN DEFAULT 0,
+    status VARCHAR(40) DEFAULT 'PUBLISHED',
+    is_demo BOOLEAN DEFAULT 0,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (utente_id) REFERENCES utenti(id),
+    FOREIGN KEY (officina_id) REFERENCES officine(id),
+    FOREIGN KEY (booking_id) REFERENCES prenotazioni(id)
+);
+
+CREATE TABLE admin_users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nome VARCHAR(120) NOT NULL,
+    email VARCHAR(150) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    role VARCHAR(40) NOT NULL CHECK (role IN ('SUPPORT', 'ADMIN', 'SUPER_ADMIN')),
+    status VARCHAR(40) DEFAULT 'ACTIVE',
+    two_factor_enabled BOOLEAN DEFAULT 0,
+    last_login_at DATETIME,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    is_demo BOOLEAN DEFAULT 0
+);
+
+CREATE TABLE admin_audit_logs (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    admin_id INTEGER,
+    admin_email VARCHAR(150),
+    action VARCHAR(120) NOT NULL,
+    resource VARCHAR(120) NOT NULL,
+    previous_state TEXT,
+    next_state TEXT,
+    reason TEXT,
+    ip_address VARCHAR(80),
+    user_agent TEXT,
+    outcome VARCHAR(40),
+    correlation_id VARCHAR(120),
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (admin_id) REFERENCES admin_users(id)
+);
+
+CREATE TABLE admin_settings (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    setting_key VARCHAR(120) NOT NULL UNIQUE,
+    setting_type VARCHAR(40) NOT NULL,
+    setting_value TEXT,
+    previous_value TEXT,
+    updated_by INTEGER,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (updated_by) REFERENCES admin_users(id)
+);
+
+CREATE TABLE reports (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    category VARCHAR(120) NOT NULL,
+    priority VARCHAR(40) DEFAULT 'media',
+    status VARCHAR(40) DEFAULT 'OPEN',
+    author VARCHAR(150),
+    linked_resource VARCHAR(120),
+    description TEXT,
+    assignee VARCHAR(150),
+    decision TEXT,
+    resolved_at DATETIME,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    is_demo BOOLEAN DEFAULT 0
+);
+
+CREATE TABLE support_tickets (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    category VARCHAR(120) NOT NULL,
+    priority VARCHAR(40) DEFAULT 'media',
+    status VARCHAR(40) DEFAULT 'OPEN',
+    assignee VARCHAR(150),
+    user_id INTEGER,
+    officina_id INTEGER,
+    booking_id INTEGER,
+    first_response_minutes INTEGER,
+    resolution_minutes INTEGER,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    resolved_at DATETIME,
+    is_demo BOOLEAN DEFAULT 0,
+    FOREIGN KEY (user_id) REFERENCES utenti(id),
     FOREIGN KEY (officina_id) REFERENCES officine(id),
     FOREIGN KEY (booking_id) REFERENCES prenotazioni(id)
 );

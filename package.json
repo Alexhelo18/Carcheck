@@ -4,7 +4,9 @@
     "private": true,
     "scripts": {
         "build": "npm install --prefix backend",
-        "start": "node backend/src/app.js"
+        "start": "node backend/src/app.js",
+        "seed:demo": "npm run seed:demo --prefix backend",
+        "test": "npm test --prefix backend"
     },
     "engines": {
         "node": ">=18"

@@ -1,11 +1,16 @@
+const { readDemoStore } = require("../data/demoStore");
+
 const officine = [];
 
 function index(req, res) {
-    res.json(officine);
+    const demoOfficine = readDemoStore().workshops || [];
+    const ids = new Set(officine.map((item) => Number(item.id)));
+    res.json([...officine, ...demoOfficine.filter((item) => !ids.has(Number(item.id)))]);
 }
 
 function show(req, res) {
-    const officina = officine.find((item) => item.id === Number(req.params.id));
+    const officina = officine.find((item) => item.id === Number(req.params.id))
+        || (readDemoStore().workshops || []).find((item) => item.id === Number(req.params.id));
 
     if (!officina) {
         return res.status(404).json({ message: "Officina non trovata" });

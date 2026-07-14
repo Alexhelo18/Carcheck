@@ -1,4 +1,5 @@
 const { officine } = require("./officinaController");
+const { readDemoStore } = require("../data/demoStore");
 const {
     bookingPolicy,
     PLATFORM_BOOKING_FEE_CENTS,
@@ -101,6 +102,12 @@ function overlaps(aStart, aEnd, bStart, bEnd) {
 }
 
 function ensureWorkshopSettings(workshopId) {
+    const demoSettings = readDemoStore().workshopSettings || {};
+
+    if (!workshopSettings[workshopId] && demoSettings[workshopId]) {
+        workshopSettings[workshopId] = demoSettings[workshopId];
+    }
+
     if (!workshopSettings[workshopId]) {
         workshopSettings[workshopId] = {
             timezone: "Europe/Rome",
@@ -141,6 +148,12 @@ function normalizeService(input, workshopId, index = 0) {
 }
 
 function ensureWorkshopServices(workshopId) {
+    const demoServices = (readDemoStore().services || []).filter((service) => Number(service.workshopId) === Number(workshopId));
+
+    if (!workshopServices[workshopId] && demoServices.length) {
+        workshopServices[workshopId] = demoServices.map((service, index) => normalizeService(service, workshopId, index));
+    }
+
     if (!workshopServices[workshopId]) {
         const officina = officine.find((item) => Number(item.id) === Number(workshopId));
         const fromWorkshop = Array.isArray(officina?.servizi)
@@ -156,7 +169,8 @@ function ensureWorkshopServices(workshopId) {
 }
 
 function findWorkshop(workshopId) {
-    return officine.find((item) => Number(item.id) === Number(workshopId));
+    return officine.find((item) => Number(item.id) === Number(workshopId))
+        || (readDemoStore().workshops || []).find((item) => Number(item.id) === Number(workshopId));
 }
 
 function findService(workshopId, serviceIdOrName) {
@@ -237,7 +251,11 @@ function getSessions(day) {
 }
 
 function getBlockingIntervals(workshopId, startAt, endAt) {
-    const bookingIntervals = prenotazioni
+    const demoBookings = readDemoStore().bookings || [];
+    const allBookings = [...prenotazioni, ...demoBookings.filter((demo) => !prenotazioni.some((booking) => Number(booking.id) === Number(demo.id)))];
+    const demoBlocks = readDemoStore().calendarBlocks || [];
+    const allBlocks = [...calendarBlocks, ...demoBlocks.filter((demo) => !calendarBlocks.some((block) => Number(block.id) === Number(demo.id)))];
+    const bookingIntervals = allBookings
         .filter((booking) => Number(booking.workshopId) === Number(workshopId))
         .filter((booking) => ACTIVE_HOLD_STATUSES.includes(booking.status))
         .map((booking) => ({
@@ -257,7 +275,7 @@ function getBlockingIntervals(workshopId, startAt, endAt) {
         }))
         .filter((interval) => overlaps(startAt, endAt, interval.startAt, interval.endAt));
 
-    const manualBlocks = calendarBlocks
+    const manualBlocks = allBlocks
         .filter((block) => Number(block.workshopId) === Number(workshopId))
         .map((block) => ({
             startAt: new Date(block.startAt),
@@ -418,7 +436,9 @@ function index(req, res) {
     expirePendingBookings();
 
     const { email, officinaId, status, from, to } = req.query;
-    const results = prenotazioni.filter((booking) => {
+    const demoBookings = readDemoStore().bookings || [];
+    const allBookings = [...prenotazioni, ...demoBookings.filter((demo) => !prenotazioni.some((booking) => Number(booking.id) === Number(demo.id)))];
+    const results = allBookings.filter((booking) => {
         const emailMatch = !email || booking.userEmail === email;
         const workshopMatch = !officinaId || Number(booking.workshopId) === Number(officinaId);
         const statusMatch = !status || booking.status === status;
@@ -471,7 +491,10 @@ function getAgenda(req, res) {
 
     return res.json({
         settings: ensureWorkshopSettings(req.params.id),
-        blocks: calendarBlocks.filter((block) => Number(block.workshopId) === Number(req.params.id))
+        blocks: [
+            ...calendarBlocks,
+            ...(readDemoStore().calendarBlocks || [])
+        ].filter((block) => Number(block.workshopId) === Number(req.params.id))
     });
 }
 

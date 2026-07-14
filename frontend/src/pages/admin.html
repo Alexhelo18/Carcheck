@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex">
+    <title>Admin | CarCheck</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="admin-body">
+    <main class="admin-shell" id="adminApp">
+        <section class="admin-login" id="adminLoginPanel">
+            <div class="booking-card">
+                <p class="eyebrow">Admin CarCheck</p>
+                <h1>Accesso amministrativo</h1>
+                <p class="muted">Area riservata a SUPPORT, ADMIN e SUPER_ADMIN.</p>
+                <form id="adminLoginForm" class="stack-form">
+                    <label>Email <input name="email" type="email" required autocomplete="username"></label>
+                    <label>Password <input name="password" type="password" required autocomplete="current-password"></label>
+                    <button type="submit">Accedi</button>
+                    <p class="form-message" id="adminLoginMessage" aria-live="polite"></p>
+                </form>
+            </div>
+        </section>
+
+        <section class="admin-dashboard hidden" id="adminDashboard">
+            <aside class="admin-sidebar" id="adminSidebar">
+                <a href="../pages/home.html" class="admin-brand">CarCheck Admin</a>
+                <nav aria-label="Navigazione admin">
+                    <button data-admin-section="overview" class="active">Panoramica</button>
+                    <button data-admin-section="analytics">Analytics</button>
+                    <button data-admin-section="users">Utenti</button>
+                    <button data-admin-section="workshops">Officine</button>
+                    <button data-admin-section="bookings">Prenotazioni</button>
+                    <button data-admin-section="fees">Commissioni</button>
+                    <button data-admin-section="reviews">Recensioni</button>
+                    <button data-admin-section="reports">Segnalazioni</button>
+                    <button data-admin-section="tickets">Assistenza</button>
+                    <button data-admin-section="content">Contenuti</button>
+                    <button data-admin-section="settings">Configurazioni</button>
+                    <button data-admin-section="admins">Amministratori</button>
+                    <button data-admin-section="audit">Registro attività</button>
+                    <button data-admin-section="security">Sicurezza</button>
+                </nav>
+            </aside>
+
+            <div class="admin-main">
+                <header class="admin-topbar">
+                    <button type="button" id="adminMenuBtn" class="btn-secondary">Menu</button>
+                    <div>
+                        <p class="eyebrow" id="adminBreadcrumb">Admin / Panoramica</p>
+                        <h1 id="adminTitle">Panoramica</h1>
+                    </div>
+                    <label class="admin-search">Ricerca globale <input id="adminSearch" type="search" placeholder="Utenti, officine, booking, fee"></label>
+                    <select id="adminRange">
+                        <option value="today">Oggi</option>
+                        <option value="7d" selected>Ultimi 7 giorni</option>
+                        <option value="30d">Ultimi 30 giorni</option>
+                        <option value="month">Mese corrente</option>
+                        <option value="year">Anno corrente</option>
+                    </select>
+                    <div class="admin-profile">
+                        <span id="adminEnvironment">Demo</span>
+                        <strong id="adminName">Admin</strong>
+                        <button type="button" id="adminLogout" class="btn-secondary">Logout</button>
+                    </div>
+                </header>
+
+                <div class="admin-notifications" id="adminNotifications"></div>
+                <section id="adminContent" class="admin-content"></section>
+            </div>
+        </section>
+    </main>
+    <script src="../js/admin.js"></script>
+</body>
+</html>

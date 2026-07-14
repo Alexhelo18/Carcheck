@@ -1081,3 +1081,236 @@
     position: absolute;
     left: -9999px;
 }
+
+.admin-body {
+    min-height: 100vh;
+    background: #eef3f8;
+}
+
+.admin-shell {
+    min-height: 100vh;
+}
+
+.admin-login {
+    display: grid;
+    place-items: center;
+    min-height: 100vh;
+    padding: 24px;
+}
+
+.admin-login .booking-card {
+    width: min(460px, 100%);
+}
+
+.admin-dashboard {
+    display: grid;
+    grid-template-columns: 270px minmax(0, 1fr);
+    min-height: 100vh;
+}
+
+.admin-sidebar {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    padding: 22px;
+    color: white;
+    background: var(--blue);
+    overflow-y: auto;
+}
+
+.admin-brand {
+    display: block;
+    margin-bottom: 22px;
+    color: white;
+    font-size: 1.15rem;
+    font-weight: 800;
+    text-decoration: none;
+}
+
+.admin-sidebar nav {
+    display: grid;
+    gap: 7px;
+}
+
+.admin-sidebar button {
+    justify-content: flex-start;
+    min-height: 40px;
+    border: 1px solid transparent;
+    padding: 9px 12px;
+    color: rgba(255, 255, 255, 0.82);
+    background: transparent;
+    text-align: left;
+}
+
+.admin-sidebar button.active,
+.admin-sidebar button:hover,
+.admin-sidebar button:focus-visible {
+    color: white;
+    border-color: rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.admin-main {
+    display: grid;
+    align-content: start;
+    gap: 18px;
+    padding: 22px;
+}
+
+.admin-topbar {
+    display: grid;
+    grid-template-columns: auto minmax(180px, 1fr) minmax(220px, 340px) auto auto;
+    gap: 14px;
+    align-items: center;
+    padding: 18px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: white;
+    box-shadow: var(--shadow-sm);
+}
+
+.admin-topbar h1,
+.admin-topbar p {
+    margin: 0;
+}
+
+.admin-search {
+    display: grid;
+    gap: 4px;
+    color: var(--muted);
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.admin-search input,
+.admin-topbar select {
+    min-height: 42px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 10px 12px;
+}
+
+.admin-profile {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+}
+
+.admin-profile span {
+    padding: 6px 10px;
+    border-radius: 999px;
+    color: var(--blue);
+    background: var(--accent-soft);
+    font-weight: 800;
+}
+
+.admin-notifications {
+    display: grid;
+    gap: 8px;
+}
+
+.admin-notifications p {
+    margin: 0;
+    padding: 12px 14px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: white;
+    color: var(--muted);
+}
+
+.admin-content {
+    display: grid;
+    gap: 18px;
+}
+
+.admin-kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.admin-kpi {
+    display: grid;
+    gap: 8px;
+    padding: 18px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: white;
+    box-shadow: var(--shadow-sm);
+}
+
+.admin-kpi span {
+    color: var(--muted);
+    font-size: 0.88rem;
+    font-weight: 700;
+}
+
+.admin-kpi strong {
+    font-size: 1.6rem;
+}
+
+.admin-table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: white;
+    box-shadow: var(--shadow-sm);
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 820px;
+}
+
+.admin-table th,
+.admin-table td {
+    padding: 13px 14px;
+    border-bottom: 1px solid var(--line);
+    text-align: left;
+    vertical-align: top;
+}
+
+.admin-table th {
+    color: var(--muted);
+    font-size: 0.82rem;
+    text-transform: uppercase;
+}
+
+.admin-metric-list {
+    display: grid;
+    gap: 10px;
+}
+
+.admin-metric-list p {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    margin: 0;
+}
+
+.admin-chart-bars {
+    display: grid;
+    gap: 10px;
+}
+
+.admin-chart-bars span {
+    display: block;
+    min-height: 38px;
+    border-radius: 10px;
+    padding: 9px 12px;
+    color: white;
+    background: linear-gradient(90deg, var(--blue) min(100%, calc(var(--value) / 100)), var(--accent-soft) 0);
+    font-weight: 700;
+}
+
+.admin-json {
+    max-height: 460px;
+    overflow: auto;
+    padding: 16px;
+    border-radius: 12px;
+    background: #0f172a;
+    color: white;
+}

@@ -1,3 +1,6 @@
+const { readDemoStore } = require("../data/demoStore");
+const { verifyPassword } = require("../utils/password");
+
 const utenti = [];
 
 function register(req, res) {
@@ -21,6 +24,33 @@ function register(req, res) {
 }
 
 function login(req, res) {
+    const demoUser = readDemoStore().users.find((utente) => (
+        utente.email === req.body.email &&
+        utente.tipo === (req.body.tipo || "utente") &&
+        utente.status === "ACTIVE"
+    ));
+
+    if (demoUser) {
+        if (!verifyPassword(req.body.password, demoUser.passwordHash)) {
+            return res.status(401).json({ message: "Credenziali non valide" });
+        }
+
+        return res.json({
+            ok: true,
+            utente: {
+                id: demoUser.id,
+                email: demoUser.email,
+                nome: demoUser.nome,
+                cognome: demoUser.cognome,
+                tipo: demoUser.tipo,
+                role: demoUser.role,
+                verified: demoUser.verified,
+                officinaId: demoUser.officinaId,
+                is_demo: demoUser.is_demo
+            }
+        });
+    }
+
     res.json({
         ok: true,
         utente: {
@@ -33,5 +63,6 @@ function login(req, res) {
 
 module.exports = {
     register,
-    login
+    login,
+    utenti
 };

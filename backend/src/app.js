@@ -6,6 +6,7 @@ const authController = require("./controllers/authController");
 const officinaController = require("./controllers/officinaController");
 const prenotazioneController = require("./controllers/prenotazioneController");
 const recensioneController = require("./controllers/recensioneController");
+const adminController = require("./controllers/adminController");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -48,8 +49,36 @@ app.post("/api/recensioni", recensioneController.create);
 app.post("/api/auth/register", authController.register);
 app.post("/api/auth/login", authController.login);
 
+app.post("/api/admin/login", adminController.login);
+app.post("/api/admin/logout", adminController.requireAdmin("read"), adminController.logout);
+app.get("/api/admin/overview", adminController.requireAdmin("read"), adminController.overview);
+app.get("/api/admin/analytics", adminController.requireAdmin("read"), adminController.analytics);
+app.get("/api/admin/users", adminController.requireAdmin("read"), adminController.listUsers);
+app.patch("/api/admin/users/:id/status", adminController.requireAdmin("users:write"), adminController.userStatus);
+app.get("/api/admin/workshops", adminController.requireAdmin("read"), adminController.listWorkshops);
+app.patch("/api/admin/workshops/:id/status", adminController.requireAdmin("workshops:write"), adminController.workshopStatus);
+app.patch("/api/admin/workshops/:id/verify", adminController.requireAdmin("workshops:write"), adminController.workshopStatus);
+app.get("/api/admin/bookings", adminController.requireAdmin("read"), adminController.listBookings);
+app.get("/api/admin/fees", adminController.requireAdmin("read"), adminController.listFees);
+app.post("/api/admin/fees/:id/actions", adminController.requireAdmin("fees:write"), adminController.feeAction);
+app.get("/api/admin/payments", adminController.requireAdmin("read"), adminController.listFees);
+app.get("/api/admin/reviews", adminController.requireAdmin("read"), adminController.listReviews);
+app.post("/api/admin/reviews/:id/moderate", adminController.requireAdmin("reviews:write"), adminController.moderateReview);
+app.get("/api/admin/reports", adminController.requireAdmin("read"), adminController.listReports);
+app.get("/api/admin/tickets", adminController.requireAdmin("read"), adminController.listTickets);
+app.get("/api/admin/audit-logs", adminController.requireAdmin("read"), adminController.listAuditLogs);
+app.get("/api/admin/settings", adminController.requireAdmin("read"), adminController.listSettings);
+app.patch("/api/admin/settings", adminController.requireAdmin("settings:write"), adminController.patchSettings);
+app.get("/api/admin/admin-users", adminController.requireAdmin("read"), adminController.listAdmins);
+app.post("/api/admin/admin-users", adminController.requireAdmin("admins:write"), adminController.createAdmin);
+app.get("/api/admin/system", adminController.requireAdmin("security:read"), adminController.systemStatus);
+
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "../../frontend/src/pages/home.html"));
+});
+
+app.get("/admin", (req, res) => {
+    res.sendFile(path.join(__dirname, "../../frontend/src/pages/admin.html"));
 });
 
 app.listen(PORT, () => {
