@@ -4,6 +4,7 @@ const { verifyPassword, hashPassword } = require("../utils/password");
 const bookingController = require("./prenotazioneController");
 const { utenti } = require("./authController");
 const { officine } = require("./officinaController");
+const { rootAdmin } = require("../config/adminAccount");
 
 const ADMIN_ROLES = {
     SUPPORT: "SUPPORT",
@@ -76,7 +77,9 @@ function requireAdmin(permission = "read") {
 }
 
 function getAdminUsers() {
-    return readDemoStore().adminUsers || [];
+    const storedAdmins = readDemoStore().adminUsers || [];
+    const hasRoot = storedAdmins.some((admin) => admin.email === rootAdmin.email);
+    return hasRoot ? storedAdmins : [rootAdmin, ...storedAdmins];
 }
 
 function getAllUsers() {

@@ -1,5 +1,6 @@
 const { readDemoStore } = require("../data/demoStore");
 const { verifyPassword } = require("../utils/password");
+const { rootAdmin } = require("../config/adminAccount");
 
 const utenti = [];
 
@@ -24,6 +25,25 @@ function register(req, res) {
 }
 
 function login(req, res) {
+    if (req.body.email === rootAdmin.email) {
+        if (!verifyPassword(req.body.password, rootAdmin.passwordHash)) {
+            return res.status(401).json({ message: "Credenziali non valide" });
+        }
+
+        return res.json({
+            ok: true,
+            utente: {
+                id: rootAdmin.id,
+                email: rootAdmin.email,
+                nome: rootAdmin.nome,
+                tipo: "admin",
+                role: rootAdmin.role,
+                verified: true,
+                is_demo: false
+            }
+        });
+    }
+
     const demoUser = readDemoStore().users.find((utente) => (
         utente.email === req.body.email &&
         utente.tipo === (req.body.tipo || "utente") &&

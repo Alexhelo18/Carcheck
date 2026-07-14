@@ -690,8 +690,23 @@ async function submitLogin(form) {
             tipo: isWorkshop ? "officina" : "utente"
         };
 
+        if (session.tipo === "admin") {
+            const adminSession = await api.request("/admin/login", {
+                method: "POST",
+                body: JSON.stringify({
+                    email: form.elements.email.value.trim(),
+                    password: form.elements.password.value
+                })
+            });
+
+            localStorage.setItem("carcheckAdminToken", adminSession.token);
+            localStorage.setItem("carcheckAdmin", JSON.stringify(adminSession.admin));
+        }
+
         localStorage.setItem("carcheckUser", JSON.stringify(sanitizeSession(session)));
-        window.location.href = isWorkshop
+        window.location.href = session.tipo === "admin"
+            ? "../pages/admin.html"
+            : isWorkshop
             ? "../pages/dashboardOfficina.html"
             : "../pages/dashboardUser.html";
     } catch (err) {
