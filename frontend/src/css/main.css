@@ -1,9 +1,9 @@
 :root {
     --blue: #0b2d6d;
     --blue-light: #17479f;
-    --accent: #4f46e5;
-    --accent-dark: #3730a3;
-    --accent-soft: #eef2ff;
+    --accent: #334155;
+    --accent-dark: #1f2937;
+    --accent-soft: #eef3f8;
     --ink: #172033;
     --muted: #687286;
     --line: #dce2ec;
@@ -64,7 +64,7 @@ textarea {
 }
 
 .hero .eyebrow {
-    color: #c7d2fe;
+    color: #d8e2ee;
 }
 
 .hero h1 {
@@ -141,11 +141,11 @@ button,
 
 .hero-search button {
     color: white;
-    background: var(--accent);
+    background: var(--blue);
 }
 
 .hero-search button:hover {
-    background: var(--accent-dark);
+    background: var(--blue-light);
 }
 
 .btn-secondary {

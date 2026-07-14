@@ -3,6 +3,12 @@ function createOfficinaCard(officina) {
     const recensioniList = Array.isArray(officina.recensioni) ? officina.recensioni : [];
     const servizi = serviziList.slice(0, 3).map((servizio) => `<span>${servizio}</span>`).join("");
     const rating = Number(officina.rating || 0);
+    const indirizzo = [
+        officina.via || officina.indirizzo || "Indirizzo in aggiornamento",
+        officina.cap,
+        officina.citta,
+        officina.nazione
+    ].filter(Boolean).join(", ");
 
     return `
         <article class="officina-card">
@@ -11,7 +17,7 @@ function createOfficinaCard(officina) {
                 <span>${recensioniList.length} recensioni</span>
             </div>
             <h3>${officina.nome || "Officina"}</h3>
-            <p class="muted">${officina.indirizzo || "Indirizzo in aggiornamento"}, ${officina.citta || ""}</p>
+            <p class="muted">${indirizzo}</p>
             <p>${officina.descrizione || "Descrizione in aggiornamento."}</p>
             <div class="tag-list">${servizi || "<span>Servizi in aggiornamento</span>"}</div>
             <div class="card-actions">

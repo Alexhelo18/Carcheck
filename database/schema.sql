@@ -10,6 +10,9 @@ CREATE TABLE utenti (
 CREATE TABLE officine (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     nome VARCHAR(120) NOT NULL,
+    nazione VARCHAR(80),
+    via VARCHAR(180),
+    cap VARCHAR(12),
     citta VARCHAR(80) NOT NULL,
     indirizzo VARCHAR(180) NOT NULL,
     descrizione TEXT,

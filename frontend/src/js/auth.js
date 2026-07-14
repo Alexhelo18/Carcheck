@@ -10,9 +10,14 @@ function getAuthPayload(form) {
     const servizi = [...new Set([...specializzazioni, ...serviziExtra])];
 
     return {
-        nome: isMechanic ? formData.get("nomeOfficina") : formData.get("nome"),
+        nome: isMechanic ? formData.get("nomeOfficina") || formData.get("nome") : formData.get("nome"),
+        nazione: formData.get("nazione"),
+        via: formData.get("via"),
+        cap: formData.get("cap"),
         citta: formData.get("citta"),
-        indirizzo: formData.get("indirizzo"),
+        indirizzo: [formData.get("via"), formData.get("cap"), formData.get("citta"), formData.get("nazione")]
+            .filter(Boolean)
+            .join(", "),
         servizi,
         email: formData.get("email"),
         password: formData.get("password"),
@@ -44,7 +49,7 @@ function setRole(form, role) {
     mechanicFields.forEach((field) => {
         field.classList.toggle("hidden", !isMechanic);
         field.querySelectorAll("input").forEach((input) => {
-            input.required = isMechanic && ["nomeOfficina", "citta"].includes(input.name);
+            input.required = isMechanic && ["nomeOfficina", "nazione", "via", "cap", "citta"].includes(input.name);
         });
     });
 
@@ -103,6 +108,9 @@ function loadAuthForms() {
                         method: "POST",
                         body: JSON.stringify({
                             nome: payload.nome,
+                            nazione: payload.nazione,
+                            via: payload.via,
+                            cap: payload.cap,
                             citta: payload.citta,
                             indirizzo: payload.indirizzo,
                             servizi: payload.servizi,

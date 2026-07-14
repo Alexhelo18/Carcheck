@@ -2,6 +2,16 @@ function getMapsEmbedUrl(query) {
     return `https://www.google.com/maps?q=${encodeURIComponent(query)}&output=embed`;
 }
 
+function getOfficinaAddress(officina) {
+    return [
+        officina.nome,
+        officina.via || officina.indirizzo,
+        officina.cap,
+        officina.citta,
+        officina.nazione
+    ].filter(Boolean).join(", ");
+}
+
 async function loadOfficinaDetail() {
     const container = document.getElementById("officina-detail");
 
@@ -38,13 +48,13 @@ async function loadOfficinaDetail() {
         `;
     }).join("");
 
-    const addressQuery = `${officina.nome} ${officina.indirizzo} ${officina.citta}`;
+    const addressQuery = getOfficinaAddress(officina);
 
     container.innerHTML = `
         <section class="detail-main">
             <p class="eyebrow">${officina.citta}</p>
             <h1>${officina.nome}</h1>
-            <p class="muted">${officina.indirizzo}</p>
+            <p class="muted">${addressQuery}</p>
             <p>${officina.descrizione || "Informazioni officina in aggiornamento."}</p>
             <div class="tag-list">${servizi || "<span>Servizi in aggiornamento</span>"}</div>
 

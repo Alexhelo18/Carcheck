@@ -21,9 +21,18 @@
             <h1>Registra la tua officina</h1>
             <form class="stack-form auth-form" data-type="registrazione officina">
                 <label>Nome officina <input name="nome" type="text" required></label>
+                <label>Nazione <input name="nazione" type="text" required placeholder="Italia"></label>
+                <label>Via <input name="via" type="text" required placeholder="Via Roma 10"></label>
+                <label>CAP <input name="cap" type="text" required placeholder="00100"></label>
                 <label>Citta <input name="citta" type="text" required></label>
-                <label>Indirizzo <input name="indirizzo" type="text" placeholder="Via Roma 10"></label>
-                <label>Servizi <input name="servizi" type="text" placeholder="Tagliando, cambio gomme, revisione"></label>
+                <fieldset class="mechanic-options">
+                    <legend>Specializzazioni</legend>
+                    <p>Puoi selezionare una o più categorie principali.</p>
+                    <label><input name="specializzazioni" type="checkbox" value="Meccanico"> Meccanico</label>
+                    <label><input name="specializzazioni" type="checkbox" value="Elettrauto"> Elettrauto</label>
+                    <label><input name="specializzazioni" type="checkbox" value="Gommista"> Gommista</label>
+                </fieldset>
+                <label>Altri servizi <input name="servizi" type="text" placeholder="Tagliando, revisione, diagnosi elettronica"></label>
                 <label>Email <input name="email" type="email" required></label>
                 <label>Password <input name="password" type="password" required></label>
                 <button type="submit">Crea profilo officina</button>

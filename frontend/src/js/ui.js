@@ -7,19 +7,36 @@ function normalize(value) {
 }
 
 function getMapsEmbedUrl(query) {
-    const search = encodeURIComponent(query || "officine meccaniche Italia");
+    const search = encodeURIComponent(query);
     return `https://www.google.com/maps?q=${search}&output=embed`;
 }
 
-function updateResultsMap(city, service) {
+function getOfficinaAddress(officina) {
+    return [
+        officina.nome,
+        officina.via || officina.indirizzo,
+        officina.cap,
+        officina.citta,
+        officina.nazione
+    ].filter(Boolean).join(", ");
+}
+
+function updateResultsMap(officine) {
     const map = document.getElementById("resultsMap");
 
     if (!map) {
         return;
     }
 
-    const parts = [service || "officine meccaniche", city].filter(Boolean);
-    map.src = getMapsEmbedUrl(parts.join(" "));
+    if (!officine.length) {
+        map.removeAttribute("src");
+        map.title = "Nessuna officina registrata da mostrare";
+        return;
+    }
+
+    const query = officine.map(getOfficinaAddress).join(" ");
+    map.src = getMapsEmbedUrl(query);
+    map.title = `Mappa di ${officine.length} officine registrate`;
 }
 
 function filterOfficine(officine, filters) {
@@ -85,7 +102,6 @@ async function loadSearch() {
 
     cityInput.value = params.get("citta") || "";
     serviceInput.value = params.get("servizio") || "";
-    updateResultsMap(cityInput.value.trim(), serviceInput.value.trim());
 
     const updateResults = async () => {
         const officine = await api.getOfficine();
@@ -96,7 +112,7 @@ async function loadSearch() {
         });
 
         counter.textContent = `${filtered.length} officine trovate`;
-        updateResultsMap(cityInput.value.trim(), serviceInput.value.trim());
+        updateResultsMap(filtered);
         renderOfficine(filtered);
     };
 
