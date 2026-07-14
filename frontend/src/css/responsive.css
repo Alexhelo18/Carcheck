@@ -275,6 +275,14 @@
         box-shadow: 0 18px 42px rgba(0, 0, 0, 0.22);
     }
 
+    .hero-search button {
+        align-self: stretch;
+        width: 100%;
+        min-width: 0;
+        height: auto;
+        min-height: 50px;
+    }
+
     .hero-content {
         text-align: left;
     }
@@ -305,6 +313,24 @@
     .access-gate {
         padding: 18px;
         border-radius: 18px;
+    }
+
+    .booking-card {
+        display: grid;
+        gap: 14px;
+    }
+
+    .booking-card .eyebrow,
+    .booking-card h1 {
+        margin-bottom: 0;
+    }
+
+    .booking-card .stack-form {
+        gap: 14px;
+    }
+
+    .booking-card .stack-form label {
+        gap: 7px;
     }
 
     .dashboard-hero {
@@ -353,6 +379,7 @@
     }
 
     .hero-search input,
+    .hero-search select,
     .filter-bar input,
     .filter-bar select,
     .stack-form input,
@@ -360,6 +387,15 @@
     .stack-form textarea {
         border-radius: 16px;
         min-height: 48px;
+    }
+
+    .stack-form input[type="date"],
+    .hero-search input[type="date"] {
+        display: flex;
+        align-items: center;
+        line-height: 1.2;
+        -webkit-appearance: none;
+        appearance: none;
     }
 
     .auth-role-switch {
@@ -440,6 +476,7 @@
     }
 
     .hero-search input,
+    .hero-search select,
     .filter-bar input,
     .filter-bar select,
     .stack-form input,
@@ -447,6 +484,20 @@
     .stack-form textarea {
         padding: 13px 14px;
         font-size: 0.95rem;
+    }
+
+    .booking-card {
+        gap: 12px;
+        border-radius: 20px;
+    }
+
+    .booking-card .stack-form {
+        gap: 12px;
+    }
+
+    .booking-card h1 {
+        font-size: 1.45rem;
+        line-height: 1.2;
     }
 
     button,
