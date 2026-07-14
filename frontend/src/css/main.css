@@ -166,8 +166,14 @@ button,
 }
 
 .hero-search button {
+    align-self: end;
+    min-width: 210px;
+    min-height: 51px;
+    height: 51px;
+    padding-inline: 24px;
     color: white;
     background: var(--blue);
+    white-space: nowrap;
 }
 
 .hero-search button:hover {
