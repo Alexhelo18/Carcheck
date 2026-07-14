@@ -1,10 +1,27 @@
 const { readDemoStore } = require("../data/demoStore");
-const { verifyPassword } = require("../utils/password");
+const { hashPassword, verifyPassword } = require("../utils/password");
 const { rootAdmin } = require("../config/adminAccount");
 
 const utenti = [];
 
+function safeUser(utente) {
+    const { passwordHash, ...safe } = utente;
+    return safe;
+}
+
 function register(req, res) {
+    const email = String(req.body.email || "").trim().toLowerCase();
+    const tipo = req.body.tipo || "utente";
+    const alreadyRegistered = utenti.some((utente) => utente.email === email && utente.tipo === tipo);
+
+    if (!email || !req.body.password) {
+        return res.status(400).json({ message: "Email e password sono obbligatorie." });
+    }
+
+    if (alreadyRegistered) {
+        return res.status(409).json({ message: "Account gia registrato." });
+    }
+
     const utente = {
         id: utenti.length + 1,
         nome: req.body.nome,
@@ -16,16 +33,22 @@ function register(req, res) {
         marketing: Boolean(req.body.marketing),
         ragioneSociale: req.body.ragioneSociale || "",
         partitaIva: req.body.partitaIva || "",
-        email: req.body.email,
-        tipo: req.body.tipo || "utente"
+        email,
+        passwordHash: hashPassword(req.body.password),
+        tipo,
+        status: "ACTIVE",
+        verified: true
     };
 
     utenti.push(utente);
-    res.status(201).json({ ok: true, utente });
+    res.status(201).json({ ok: true, utente: safeUser(utente) });
 }
 
 function login(req, res) {
-    if (req.body.email === rootAdmin.email) {
+    const email = String(req.body.email || "").trim().toLowerCase();
+    const tipo = req.body.tipo || "utente";
+
+    if (email === rootAdmin.email) {
         if (!verifyPassword(req.body.password, rootAdmin.passwordHash)) {
             return res.status(401).json({ message: "Credenziali non valide" });
         }
@@ -45,8 +68,8 @@ function login(req, res) {
     }
 
     const demoUser = readDemoStore().users.find((utente) => (
-        utente.email === req.body.email &&
-        utente.tipo === (req.body.tipo || "utente") &&
+        utente.email === email &&
+        utente.tipo === tipo &&
         utente.status === "ACTIVE"
     ));
 
@@ -71,13 +94,19 @@ function login(req, res) {
         });
     }
 
-    res.json({
+    const registeredUser = utenti.find((utente) => (
+        utente.email === email &&
+        utente.tipo === tipo &&
+        utente.status === "ACTIVE"
+    ));
+
+    if (!registeredUser || !verifyPassword(req.body.password, registeredUser.passwordHash)) {
+        return res.status(401).json({ message: "Email o password non corrette." });
+    }
+
+    return res.json({
         ok: true,
-        utente: {
-            email: req.body.email,
-            nome: req.body.nome || "",
-            tipo: req.body.tipo || "utente"
-        }
+        utente: safeUser(registeredUser)
     });
 }
 
