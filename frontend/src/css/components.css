@@ -7,7 +7,8 @@
     align-items: center;
     padding: 0 48px;
     background: white;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    border-bottom: 1px solid rgba(220, 226, 236, 0.75);
+    box-shadow: 0 8px 24px rgba(11, 45, 109, 0.06);
     position: sticky;
     top: 0;
     z-index: 1000;
@@ -38,7 +39,7 @@
 .search-bar {
     width: 100%;
     border: 1px solid var(--line);
-    border-radius: 8px;
+    border-radius: 999px;
     padding: 12px 16px;
     outline: none;
 }
@@ -67,7 +68,7 @@
     color: white;
     background: var(--blue);
     padding: 10px 16px;
-    border-radius: 8px;
+    border-radius: 999px;
 }
 
 .nav-right .register-mechanic-btn {
@@ -96,13 +97,13 @@
     margin: 22px 0;
     padding: 6px;
     border: 1px solid var(--line);
-    border-radius: 12px;
+    border-radius: 14px;
     background: #f8fafc;
 }
 
 .auth-role-switch button {
     min-height: 44px;
-    border-radius: 8px;
+    border-radius: 10px;
     color: var(--muted);
     background: transparent;
 }
@@ -154,7 +155,7 @@
     margin: 0;
     padding: 16px;
     border: 1px solid var(--line);
-    border-radius: 12px;
+    border-radius: 14px;
     background: #f8fafc;
 }
 
@@ -177,7 +178,7 @@
     min-height: 46px;
     padding: 10px 12px;
     border: 1px solid var(--line);
-    border-radius: 10px;
+    border-radius: 12px;
     background: white;
     cursor: pointer;
 }
@@ -253,8 +254,15 @@
     gap: 14px;
     padding: 22px;
     border: 1px solid var(--line);
-    border-radius: 8px;
+    border-radius: 12px;
     background: white;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.officina-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
 }
 
 .officina-card h3 {
@@ -282,7 +290,7 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    border-radius: 8px;
+    border-radius: 10px;
     color: white;
     background: var(--accent-dark);
     font-weight: 700;
@@ -296,7 +304,7 @@
 
 .tag-list span {
     padding: 7px 10px;
-    border-radius: 8px;
+    border-radius: 999px;
     color: var(--blue);
     background: #edf3ff;
     font-size: 0.85rem;
@@ -320,8 +328,9 @@
 .detail-main,
 .detail-side {
     border: 1px solid var(--line);
-    border-radius: 8px;
+    border-radius: 12px;
     background: white;
+    box-shadow: var(--shadow-sm);
 }
 
 .detail-main {
@@ -343,7 +352,7 @@
 .score-box {
     margin-bottom: 16px;
     padding: 22px;
-    border-radius: 8px;
+    border-radius: 12px;
     text-align: center;
     background: #f5f7fa;
 }
@@ -368,7 +377,7 @@
 .review {
     padding: 18px;
     border: 1px solid var(--line);
-    border-radius: 8px;
+    border-radius: 12px;
 }
 
 .review div {
@@ -410,6 +419,7 @@
     color: #b42318;
     font-size: 0.82rem;
     font-weight: 600;
+    line-height: 1.35;
 }
 
 .field-hint,
@@ -430,6 +440,7 @@
     padding: 10px 12px;
     color: var(--blue);
     background: #edf3ff;
+    white-space: nowrap;
 }
 
 .checkbox-row {
@@ -492,7 +503,7 @@
 
 .file-preview span {
     padding: 7px 10px;
-    border-radius: 8px;
+    border-radius: 999px;
     color: var(--blue);
     background: #edf3ff;
     font-size: 0.84rem;
@@ -505,7 +516,7 @@
     margin: 0;
     padding: 16px;
     border: 1px solid var(--line);
-    border-radius: 12px;
+    border-radius: 14px;
 }
 
 .opening-hours legend {
@@ -561,7 +572,8 @@
     align-items: center;
     margin-bottom: 24px;
     padding: 28px;
-    border-radius: 8px;
+    border-radius: 14px;
+    box-shadow: var(--shadow-md);
     color: white;
     background: linear-gradient(135deg, var(--blue), var(--blue-light));
 }
@@ -594,8 +606,9 @@
 .dashboard-panel {
     padding: 24px;
     border: 1px solid var(--line);
-    border-radius: 8px;
+    border-radius: 12px;
     background: white;
+    box-shadow: var(--shadow-sm);
 }
 
 .panel-heading {
@@ -643,7 +656,7 @@
     display: grid;
     place-items: center;
     border: 1px solid var(--line);
-    border-radius: 8px;
+    border-radius: 10px;
     color: var(--ink);
     text-decoration: none;
     background: #f8fafc;
@@ -673,7 +686,7 @@
     gap: 16px;
     padding: 18px;
     border: 1px solid var(--line);
-    border-radius: 8px;
+    border-radius: 12px;
     background: #fbfcff;
 }
 
@@ -719,3 +732,4 @@
 .access-gate p {
     margin: 0 0 12px;
 }
+    border-radius: 999px;

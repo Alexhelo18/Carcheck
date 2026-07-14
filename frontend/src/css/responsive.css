@@ -44,7 +44,7 @@
 
     .hero {
         min-height: 480px;
-        padding: 64px 22px;
+        padding: 58px 22px;
     }
 
     .hero-search,
@@ -58,6 +58,14 @@
     .officine-grid,
     .results-layout .officine-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .booking-card,
+    .search-panel,
+    .dashboard-panel,
+    .detail-main,
+    .detail-side {
+        box-shadow: var(--shadow-sm);
     }
 
     .detail-side,
@@ -76,7 +84,7 @@
 
 @media (max-width: 700px) {
     body {
-        padding-bottom: 84px;
+        padding-bottom: 92px;
     }
 
     .navbar {
@@ -124,14 +132,14 @@
         gap: 4px;
         padding: 8px;
         border: 1px solid rgba(220, 226, 236, 0.9);
-        border-radius: 24px;
+        border-radius: 22px;
         background: rgba(255, 255, 255, 0.94);
         box-shadow: 0 18px 42px rgba(11, 45, 109, 0.18);
         backdrop-filter: blur(14px);
     }
 
     .mobile-tabbar a {
-        min-height: 54px;
+        min-height: 52px;
         display: grid;
         place-items: center;
         gap: 2px;
@@ -143,7 +151,7 @@
     }
 
     .mobile-account-btn {
-        min-height: 54px;
+        min-height: 52px;
         display: grid;
         place-items: center;
         gap: 2px;
@@ -244,7 +252,7 @@
         min-height: auto;
         margin: 12px 14px 0;
         padding: 34px 18px 22px;
-        border-radius: 28px;
+        border-radius: 24px;
         align-items: flex-end;
         overflow: hidden;
     }
@@ -263,7 +271,7 @@
 
     .hero-search {
         padding: 10px;
-        border-radius: 22px;
+        border-radius: 18px;
         box-shadow: 0 18px 42px rgba(0, 0, 0, 0.22);
     }
 
@@ -295,8 +303,8 @@
     .detail-side,
     .dashboard-panel,
     .access-gate {
-        padding: 20px;
-        border-radius: 22px;
+        padding: 18px;
+        border-radius: 18px;
     }
 
     .dashboard-hero {
@@ -330,7 +338,7 @@
         min-height: 0;
         padding: 18px;
         border: 0;
-        border-radius: 22px;
+        border-radius: 18px;
         box-shadow: 0 12px 28px rgba(11, 45, 109, 0.08);
     }
 
@@ -341,7 +349,7 @@
     .btn-primary,
     .btn-secondary,
     button {
-        border-radius: 16px;
+        border-radius: 14px;
     }
 
     .hero-search input,
@@ -352,6 +360,19 @@
     .stack-form textarea {
         border-radius: 16px;
         min-height: 48px;
+    }
+
+    .auth-role-switch {
+        margin: 18px 0;
+    }
+
+    .service-options,
+    .mechanic-options {
+        padding: 12px;
+    }
+
+    .opening-hours {
+        padding: 12px;
     }
 
     .map-panel,
@@ -398,7 +419,7 @@
     }
 
     .hero h1 {
-        font-size: 1.78rem;
+        font-size: 1.72rem;
     }
 
     .hero-search,
@@ -436,6 +457,10 @@
         padding: 11px 14px;
     }
 
+    .mobile-account-panel {
+        grid-template-columns: 1fr;
+    }
+
     .popular-section,
     .page-shell,
     .page-shell.narrow {
@@ -450,6 +475,17 @@
     .dashboard-panel,
     .access-gate {
         padding: 16px;
+    }
+
+    .auth-description,
+    .auth-register-link,
+    .form-message {
+        font-size: 0.92rem;
+    }
+
+    .mechanic-options label,
+    .hours-row {
+        font-size: 0.92rem;
     }
 
     .dashboard-hero {
