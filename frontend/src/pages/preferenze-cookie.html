@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Gestisci le preferenze cookie di CarCheck.">
+    <meta property="og:title" content="Preferenze Cookie | CarCheck">
+    <meta property="og:description" content="Scegli quali categorie di cookie opzionali autorizzare.">
+    <title>Preferenze Cookie | CarCheck</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="navbar"></div>
+    <main id="main-content" class="page-shell info-page">
+        <section class="info-hero">
+            <p class="eyebrow">Cookie</p>
+            <h1>Preferenze cookie</h1>
+            <p>Salva le tue preferenze sui cookie opzionali. I cookie tecnici restano sempre attivi perché necessari al funzionamento del sito.</p>
+        </section>
+        <section class="info-content">
+            <section class="info-section">
+                <form id="cookiePreferencesForm" class="stack-form" novalidate>
+                    <div class="cookie-options" aria-live="polite"></div>
+                    <div class="form-actions">
+                        <button id="acceptAllCookies" type="button">Accetta tutto</button>
+                        <button id="rejectOptionalCookies" type="button" class="btn-secondary">Solo necessari</button>
+                        <button type="submit">Salva preferenze</button>
+                    </div>
+                    <p class="form-message" aria-live="polite"></p>
+                </form>
+            </section>
+            <section class="legal-section">
+                <h2>Nota tecnica</h2>
+                <p>Le preferenze vengono memorizzate sul dispositivo. Quando saranno collegati strumenti analytics o marketing, gli script dovranno rispettare questa scelta.</p>
+            </section>
+        </section>
+    </main>
+    <div id="footer"></div>
+    <script src="../components/navbar.js"></script>
+    <script src="../components/footer.js"></script>
+    <script src="../js/infoForms.js"></script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Lavora con CarCheck o proponi una collaborazione.">
+    <meta property="og:title" content="Lavora con noi | CarCheck">
+    <meta property="og:description" content="Invia una candidatura o una proposta di collaborazione per CarCheck.">
+    <title>Lavora con noi | CarCheck</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="navbar"></div>
+    <main id="main-content" class="page-shell info-page">
+        <section class="info-hero">
+            <p class="eyebrow">Team</p>
+            <h1>Lavora con noi</h1>
+            <p>Raccontaci chi sei e come vorresti contribuire alla crescita di CarCheck.</p>
+        </section>
+        <section class="info-layout">
+            <aside class="info-index">
+                <a href="#aree">Aree</a>
+                <a href="#candidatura">Candidatura</a>
+                <a href="#privacy">Privacy</a>
+            </aside>
+            <div class="info-content">
+                <section id="aree" class="info-section">
+                    <h2>Aree di interesse</h2>
+                    <div class="info-grid">
+                        <article class="contact-card"><h3>Prodotto</h3><p>Design, sviluppo e miglioramento dell'esperienza utenti/officine.</p></article>
+                        <article class="contact-card"><h3>Operations</h3><p>Supporto alle officine, qualità dei profili e gestione prenotazioni.</p></article>
+                        <article class="contact-card"><h3>Partnership</h3><p>Collaborazioni commerciali e crescita del network di officine.</p></article>
+                        <article class="contact-card"><h3>Assistenza</h3><p>Supporto agli automobilisti e gestione delle richieste operative.</p></article>
+                    </div>
+                </section>
+                <section id="candidatura" class="info-section">
+                    <h2>Invia candidatura</h2>
+                    <form id="careerForm" class="stack-form" novalidate>
+                        <label class="honeypot">Sito web <input name="website" type="text" tabindex="-1" autocomplete="off"></label>
+                        <label>Nome <input name="nome" type="text" required><span class="field-error" data-error-for="nome"></span></label>
+                        <label>Cognome <input name="cognome" type="text" required><span class="field-error" data-error-for="cognome"></span></label>
+                        <label>Email <input name="email" type="email" required><span class="field-error" data-error-for="email"></span></label>
+                        <label>Messaggio <textarea name="messaggio" rows="5" required></textarea><span class="field-error" data-error-for="messaggio"></span></label>
+                        <label>CV o portfolio <input name="cv" type="file"><span class="field-error" data-error-for="cv"></span></label>
+                        <label class="checkbox-row"><input name="privacy" type="checkbox" required><span>Accetto l'Informativa Privacy.</span></label>
+                        <span class="field-error" data-error-for="privacy"></span>
+                        <button type="submit">Invia candidatura</button>
+                        <p class="form-message" aria-live="polite"></p>
+                    </form>
+                </section>
+                <section id="privacy" class="legal-section">
+                    <h2>Trattamento candidatura</h2>
+                    <p>I dati inviati sono usati per valutare la candidatura o la proposta. Il backend dovrà gestire conservazione, cancellazione e allegati secondo la policy privacy definitiva.</p>
+                </section>
+            </div>
+        </section>
+    </main>
+    <div id="footer"></div>
+    <script src="../components/navbar.js"></script>
+    <script src="../components/footer.js"></script>
+    <script src="../js/api.js"></script>
+    <script src="../js/infoForms.js"></script>
+</body>
+</html>

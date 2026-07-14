@@ -525,16 +525,31 @@
         padding: 22px 14px;
         font-size: 0.9rem;
     }
+
+    .footer-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .footer-meta {
+        align-items: flex-start;
+        flex-direction: column;
+    }
 }
 
 @media (max-width: 920px) {
     .workshop-section,
-    .trust-layout {
+    .trust-layout,
+    .info-layout {
         grid-template-columns: 1fr;
     }
 
+    .info-index {
+        position: static;
+    }
+
     .steps-grid,
-    .benefits-grid {
+    .benefits-grid,
+    .info-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 }
@@ -547,19 +562,28 @@
     }
 
     .steps-grid,
-    .benefits-grid {
+    .benefits-grid,
+    .info-grid {
         grid-template-columns: 1fr;
     }
 
     .hero-actions,
-    .workshop-actions {
+    .workshop-actions,
+    .info-actions {
         justify-content: stretch;
     }
 
     .hero-actions .btn-primary,
     .hero-actions .btn-secondary,
-    .workshop-actions .btn-primary {
+    .workshop-actions .btn-primary,
+    .info-actions .btn-primary,
+    .info-actions .btn-secondary {
         width: 100%;
+    }
+
+    .footer-grid,
+    .footer-meta {
+        width: min(100% - 28px, 1160px);
     }
 
     .workshop-section {
@@ -570,6 +594,13 @@
     .info-card {
         min-height: 0;
         padding: 18px;
+    }
+
+    .info-hero,
+    .info-section,
+    .legal-section {
+        padding: 20px;
+        border-radius: 18px;
     }
 }
 
@@ -583,5 +614,14 @@
         display: grid;
         grid-template-columns: 1fr;
         gap: 10px;
+    }
+
+    .footer-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-actions button,
+    .form-actions .btn-secondary {
+        width: 100%;
     }
 }

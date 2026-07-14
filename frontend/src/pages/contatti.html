@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Contatta CarCheck per assistenza, prenotazioni, officine, privacy, segnalazioni o richieste commerciali.">
+    <meta property="og:title" content="Contatti | CarCheck">
+    <meta property="og:description" content="Invia una richiesta al team CarCheck.">
+    <title>Contatti | CarCheck</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="navbar"></div>
+    <main id="main-content" class="page-shell info-page">
+        <section class="info-hero">
+            <p class="eyebrow">Contatti</p>
+            <h1>Come possiamo aiutarti?</h1>
+            <p>Usa il modulo per richieste su prenotazioni, officine, problemi tecnici, privacy o collaborazioni.</p>
+        </section>
+        <section class="info-layout">
+            <aside class="info-index">
+                <a href="#modulo">Modulo contatto</a>
+                <a href="#diretti">Contatti diretti</a>
+                <a href="#categorie">Aree di assistenza</a>
+            </aside>
+            <div class="info-content">
+                <section id="modulo" class="info-section">
+                    <h2>Invia una richiesta</h2>
+                    <form id="contactForm" class="stack-form" novalidate>
+                        <label class="honeypot">Sito web <input name="website" type="text" tabindex="-1" autocomplete="off"></label>
+                        <label>Nome <input name="nome" type="text" required><span class="field-error" data-error-for="nome"></span></label>
+                        <label>Cognome <input name="cognome" type="text" required><span class="field-error" data-error-for="cognome"></span></label>
+                        <label>Email <input name="email" type="email" required><span class="field-error" data-error-for="email"></span></label>
+                        <label>Tipo di richiesta
+                            <select name="tipoRichiesta" required>
+                                <option value="">Seleziona</option>
+                                <option>Problema con una prenotazione</option>
+                                <option>Richiesta automobilista</option>
+                                <option>Richiesta officina</option>
+                                <option>Problema tecnico</option>
+                                <option>Segnalazione recensione</option>
+                                <option>Privacy e dati personali</option>
+                                <option>Collaborazione commerciale</option>
+                                <option>Altro</option>
+                            </select>
+                            <span class="field-error" data-error-for="tipoRichiesta"></span>
+                        </label>
+                        <label>Oggetto <input name="oggetto" type="text" required><span class="field-error" data-error-for="oggetto"></span></label>
+                        <label>Messaggio <textarea name="messaggio" rows="5" required></textarea><span class="field-error" data-error-for="messaggio"></span></label>
+                        <label>Numero prenotazione <input name="numeroPrenotazione" type="text"></label>
+                        <label>Nome officina <input name="nomeOfficina" type="text"></label>
+                        <label>Allegato facoltativo <input name="allegato" type="file"><span class="field-error" data-error-for="allegato"></span></label>
+                        <label class="checkbox-row"><input name="privacy" type="checkbox" required><span>Accetto l'Informativa Privacy</span></label>
+                        <span class="field-error" data-error-for="privacy"></span>
+                        <button type="submit">Invia richiesta</button>
+                        <p class="form-message" aria-live="polite"></p>
+                    </form>
+                </section>
+                <section id="diretti" class="info-section">
+                    <h2>Contatti diretti</h2>
+                    <div class="contact-card">
+                        <p>Email supporto: <span data-config="supportEmail">[EMAIL SUPPORTO DA COMPLETARE]</span></p>
+                        <p>Email privacy: <span data-config="privacyEmail">[EMAIL PRIVACY DA COMPLETARE]</span></p>
+                        <p>Tempi medi di risposta: [DA CONFIGURARE].</p>
+                    </div>
+                </section>
+                <section id="categorie" class="info-section">
+                    <h2>Aree di assistenza</h2>
+                    <p>Gestiamo richieste automobilisti, richieste officine, problemi tecnici e comunicazioni privacy/legali tramite canali dedicati configurabili.</p>
+                </section>
+            </div>
+        </section>
+    </main>
+    <div id="footer"></div>
+    <script src="../components/navbar.js"></script>
+    <script src="../components/footer.js"></script>
+    <script src="../js/api.js"></script>
+    <script src="../js/infoForms.js"></script>
+</body>
+</html>

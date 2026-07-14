@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Segnala contenuti, recensioni o profili non conformi su CarCheck.">
+    <meta property="og:title" content="Segnalazioni | CarCheck">
+    <meta property="og:description" content="Modulo per segnalare contenuti non conformi o problemi sulla piattaforma.">
+    <title>Segnalazioni | CarCheck</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="navbar"></div>
+    <main id="main-content" class="page-shell info-page">
+        <section class="info-hero">
+            <p class="eyebrow">Sicurezza</p>
+            <h1>Segnalazioni</h1>
+            <p>Usa questo modulo per segnalare recensioni, profili officina, contenuti o comportamenti che ritieni non conformi.</p>
+        </section>
+        <section class="info-layout">
+            <aside class="info-index">
+                <a href="#modulo">Modulo</a>
+                <a href="#tempi">Tempi</a>
+                <a href="#privacy">Privacy</a>
+            </aside>
+            <div class="info-content">
+                <section id="modulo" class="info-section">
+                    <h2>Invia una segnalazione</h2>
+                    <form id="reportForm" class="stack-form" novalidate>
+                        <label class="honeypot">Sito web <input name="website" type="text" tabindex="-1" autocomplete="off"></label>
+                        <label>Categoria
+                            <select name="categoria" required>
+                                <option value="">Seleziona</option>
+                                <option>Recensione non conforme</option>
+                                <option>Profilo officina non corretto</option>
+                                <option>Contenuto offensivo</option>
+                                <option>Problema sicurezza</option>
+                                <option>Altro</option>
+                            </select>
+                            <span class="field-error" data-error-for="categoria"></span>
+                        </label>
+                        <label>URL o riferimento <input name="riferimento" type="text" required><span class="field-error" data-error-for="riferimento"></span></label>
+                        <label>Descrizione <textarea name="descrizione" rows="5" required></textarea><span class="field-error" data-error-for="descrizione"></span></label>
+                        <label>Email <input name="email" type="email" required><span class="field-error" data-error-for="email"></span></label>
+                        <label>Allegato facoltativo <input name="allegato" type="file"><span class="field-error" data-error-for="allegato"></span></label>
+                        <label class="checkbox-row"><input name="buonaFede" type="checkbox" required><span>Dichiaro di inviare la segnalazione in buona fede.</span></label>
+                        <span class="field-error" data-error-for="buonaFede"></span>
+                        <label class="checkbox-row"><input name="privacy" type="checkbox" required><span>Accetto l'Informativa Privacy.</span></label>
+                        <span class="field-error" data-error-for="privacy"></span>
+                        <button type="submit">Invia segnalazione</button>
+                        <p class="form-message" aria-live="polite"></p>
+                    </form>
+                </section>
+                <section id="tempi" class="legal-section">
+                    <h2>Tempi di gestione</h2>
+                    <p>Le segnalazioni vengono valutate secondo priorità, gravità e completezza delle informazioni ricevute. I tempi definitivi vanno configurati in base al processo interno.</p>
+                </section>
+                <section id="privacy" class="legal-section">
+                    <h2>Trattamento dati</h2>
+                    <p>I dati inseriti sono usati per analizzare la segnalazione e ricontattarti se necessario. Non inserire informazioni sensibili non indispensabili.</p>
+                </section>
+            </div>
+        </section>
+    </main>
+    <div id="footer"></div>
+    <script src="../components/navbar.js"></script>
+    <script src="../components/footer.js"></script>
+    <script src="../js/api.js"></script>
+    <script src="../js/infoForms.js"></script>
+</body>
+</html>
