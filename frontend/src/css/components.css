@@ -112,6 +112,38 @@
     background: var(--blue);
 }
 
+.auth-description {
+    margin: 10px 0 0;
+    color: var(--muted);
+    line-height: 1.6;
+}
+
+.login-options {
+    display: flex;
+    justify-content: space-between;
+    gap: 14px;
+    align-items: center;
+}
+
+.login-options a,
+.auth-register-link a {
+    color: var(--blue);
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.auth-register-link {
+    margin: 16px 0 0;
+    color: var(--muted);
+}
+
+.auth-form input:focus,
+.auth-form button:focus-visible,
+.auth-role-switch button:focus-visible {
+    outline: 3px solid rgba(23, 71, 159, 0.24);
+    outline-offset: 2px;
+}
+
 .hidden {
     display: none !important;
 }

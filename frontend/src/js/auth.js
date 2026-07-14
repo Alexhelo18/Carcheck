@@ -92,6 +92,18 @@ function sanitizeSession(data) {
     return session;
 }
 
+async function login(credentials, accountType) {
+    return api.request("/auth/login", {
+        method: "POST",
+        body: JSON.stringify({
+            email: credentials.email,
+            password: credentials.password,
+            remember: credentials.remember,
+            tipo: accountType === "workshop" ? "officina" : "utente"
+        })
+    });
+}
+
 function getOpeningHours(formData) {
     const days = ["lunedi", "martedi", "mercoledi", "giovedi", "venerdi", "sabato", "domenica"];
 
@@ -116,6 +128,14 @@ function setError(form, name, message) {
 function clearErrors(form) {
     form.querySelectorAll(".field-error").forEach((error) => {
         error.textContent = "";
+    });
+}
+
+function clearFieldErrorOnInput(form) {
+    form.querySelectorAll("input").forEach((input) => {
+        input.addEventListener("input", () => {
+            setError(form, input.name, "");
+        });
     });
 }
 
@@ -198,6 +218,38 @@ function validateUserRegistration(form) {
     ].every(Boolean);
 }
 
+function validateLoginForm(form) {
+    clearErrors(form);
+    const emailField = form.elements.email;
+    const passwordField = form.elements.password;
+    const email = String(emailField.value || "").trim();
+    const password = String(passwordField.value || "");
+    let firstInvalid = null;
+    let valid = true;
+
+    if (!email) {
+        setError(form, "email", "Inserisci la tua email.");
+        firstInvalid = emailField;
+        valid = false;
+    } else if (!EMAIL_RE.test(email)) {
+        setError(form, "email", "Inserisci un indirizzo email valido.");
+        firstInvalid = emailField;
+        valid = false;
+    }
+
+    if (!password) {
+        setError(form, "password", "Inserisci la password.");
+        firstInvalid = firstInvalid || passwordField;
+        valid = false;
+    }
+
+    if (firstInvalid) {
+        firstInvalid.focus();
+    }
+
+    return valid;
+}
+
 function validateWorkshopStep(form, step) {
     clearErrors(form);
 
@@ -277,17 +329,39 @@ function setRole(form, role) {
     const card = form.closest(".booking-card");
     const eyebrow = card.querySelector("#authEyebrow");
     const title = card.querySelector("#authTitle");
+    const description = card.querySelector("#authDescription");
+    const registerLink = card.querySelector("#authRegisterLink");
 
     form.dataset.type = `${mode} ${role}`;
-    form.querySelector(".user-registration-fields")?.classList.toggle("hidden", isMechanic);
-    form.querySelector(".workshop-registration-fields")?.classList.toggle("hidden", !isMechanic);
+    clearErrors(form);
+
+    if (mode === "registrazione") {
+        form.querySelector(".user-registration-fields")?.classList.toggle("hidden", isMechanic);
+        form.querySelector(".workshop-registration-fields")?.classList.toggle("hidden", !isMechanic);
+    }
 
     if (eyebrow) {
-        eyebrow.textContent = isMechanic ? "Partner CarCheck" : "Nuovo account";
+        eyebrow.textContent = mode === "login"
+            ? isMechanic ? "Area officina" : "Area utente"
+            : isMechanic ? "Partner CarCheck" : "Nuovo account";
     }
 
     if (title) {
-        title.textContent = isMechanic ? "Registra la tua officina" : "Registrati";
+        title.textContent = mode === "login"
+            ? isMechanic ? "Accedi come officina" : "Accedi"
+            : isMechanic ? "Registra la tua officina" : "Registrati";
+    }
+
+    if (description && mode === "login") {
+        description.textContent = isMechanic
+            ? "Accedi per gestire appuntamenti, clienti, servizi e disponibilità della tua officina."
+            : "Accedi per gestire le tue prenotazioni, le recensioni e i dati dei tuoi veicoli.";
+    }
+
+    if (registerLink && mode === "login") {
+        registerLink.innerHTML = isMechanic
+            ? `Non hai ancora registrato la tua officina? <a href="../pages/register.html">Registrati come officina.</a>`
+            : `Non hai ancora un account? <a href="../pages/register.html">Registrati come automobilista.</a>`;
     }
 }
 
@@ -305,6 +379,7 @@ function loadAuthSwitches() {
 
             switcher.querySelectorAll("[data-role]").forEach((item) => {
                 item.classList.toggle("active", item === button);
+                item.setAttribute("aria-selected", String(item === button));
             });
 
             setRole(form, button.dataset.role);
@@ -318,7 +393,9 @@ function setSubmitting(button, isSubmitting, text) {
     }
 
     button.disabled = isSubmitting;
-    button.textContent = isSubmitting ? "Invio in corso..." : text;
+    button.textContent = isSubmitting
+        ? text === "Accedi" ? "Accesso in corso..." : "Invio in corso..."
+        : text;
 }
 
 function loadPasswordToggles() {
@@ -329,7 +406,63 @@ function loadPasswordToggles() {
 
             input.type = show ? "text" : "password";
             button.textContent = show ? "Nascondi" : "Mostra";
+            button.setAttribute("aria-label", show ? "Nascondi password" : "Mostra password");
+            input.focus();
         });
+    });
+}
+
+function redirectIfAlreadyAuthenticated() {
+    const form = document.querySelector(".login-form");
+
+    if (!form) {
+        return;
+    }
+
+    const session = JSON.parse(localStorage.getItem("carcheckUser") || "null");
+
+    if (!session) {
+        return;
+    }
+
+    window.location.href = session.tipo === "officina"
+        ? "../pages/dashboardOfficina.html"
+        : "../pages/dashboardUser.html";
+}
+
+function loadLoginPageMessages() {
+    const form = document.querySelector(".login-form");
+
+    if (!form) {
+        return;
+    }
+
+    const params = new URLSearchParams(window.location.search);
+    const message = form.parentElement.querySelector(".form-message");
+    const reason = params.get("message");
+
+    if (reason === "session-expired") {
+        message.textContent = "La sessione è scaduta. Effettua nuovamente l'accesso.";
+    } else if (reason === "logout") {
+        message.textContent = "Hai effettuato correttamente il logout.";
+    } else if (reason === "auth-required") {
+        message.textContent = "Devi accedere per visualizzare questa pagina.";
+    }
+}
+
+function loadForgotPasswordLink() {
+    const link = document.getElementById("forgotPasswordLink");
+
+    if (!link) {
+        return;
+    }
+
+    link.addEventListener("click", (event) => {
+        event.preventDefault();
+        const form = link.closest(".booking-card").querySelector(".login-form");
+        const message = form.parentElement.querySelector(".form-message");
+
+        message.textContent = "Se esiste un account associato a questa email, riceverai le istruzioni per reimpostare la password.";
     });
 }
 
@@ -500,8 +633,78 @@ async function submitLegacyAuth(form) {
     }
 }
 
+function getLoginErrorMessage(error) {
+    const status = error.status || error.code;
+
+    if (status === 401 || status === 404 || status === "invalid_credentials") {
+        return "Email o password non corrette.";
+    }
+
+    if (status === 403 || status === "wrong_role") {
+        return "Questo account non può accedere a questa area.";
+    }
+
+    if (status === 423 || status === "suspended") {
+        return "Questo account è stato sospeso.";
+    }
+
+    if (status === "unverified") {
+        return "Questo account non è ancora stato verificato.";
+    }
+
+    if (status === 410 || status === "deleted") {
+        return "Questo account non è più disponibile.";
+    }
+
+    if (status === 429) {
+        return "Hai effettuato troppi tentativi. Riprova tra qualche minuto.";
+    }
+
+    if (status >= 500) {
+        return "Servizio temporaneamente non disponibile.";
+    }
+
+    return "Si è verificato un problema di connessione. Riprova.";
+}
+
+async function submitLogin(form) {
+    const submitBtn = form.querySelector(".submit-btn");
+    const message = form.parentElement.querySelector(".form-message");
+    const isWorkshop = (form.dataset.type || "").includes("officina");
+
+    if (!validateLoginForm(form)) {
+        return;
+    }
+
+    setSubmitting(submitBtn, true, "Accedi");
+    message.textContent = "";
+
+    try {
+        const result = await login({
+            email: form.elements.email.value.trim(),
+            password: form.elements.password.value,
+            remember: form.elements.remember.checked
+        }, isWorkshop ? "workshop" : "user");
+        const session = result.utente || {
+            email: form.elements.email.value.trim(),
+            tipo: isWorkshop ? "officina" : "utente"
+        };
+
+        localStorage.setItem("carcheckUser", JSON.stringify(sanitizeSession(session)));
+        window.location.href = isWorkshop
+            ? "../pages/dashboardOfficina.html"
+            : "../pages/dashboardUser.html";
+    } catch (err) {
+        message.textContent = getLoginErrorMessage(err);
+    } finally {
+        setSubmitting(submitBtn, false, "Accedi");
+    }
+}
+
 function loadAuthForms() {
     document.querySelectorAll(".auth-form").forEach((form) => {
+        clearFieldErrorOnInput(form);
+
         form.addEventListener("submit", async (event) => {
             event.preventDefault();
 
@@ -512,13 +715,21 @@ function loadAuthForms() {
                 return;
             }
 
+            if (mode === "login" && form.classList.contains("login-form")) {
+                await submitLogin(form);
+                return;
+            }
+
             await submitLegacyAuth(form);
         });
     });
 }
 
+redirectIfAlreadyAuthenticated();
 loadAuthSwitches();
 loadPasswordToggles();
+loadLoginPageMessages();
+loadForgotPasswordLink();
 loadWorkshopSteps();
 loadRegistrationEnhancements();
 loadAuthForms();

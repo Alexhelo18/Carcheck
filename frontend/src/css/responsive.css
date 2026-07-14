@@ -413,6 +413,11 @@
         grid-template-columns: 1fr;
     }
 
+    .login-options {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
     .hero-search input,
     .filter-bar input,
     .filter-bar select,

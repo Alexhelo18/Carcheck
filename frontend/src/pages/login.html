@@ -20,18 +20,40 @@
         <section class="booking-card">
             <p class="eyebrow" id="authEyebrow">Area utente</p>
             <h1 id="authTitle">Accedi</h1>
+            <p class="auth-description" id="authDescription">
+                Accedi per gestire le tue prenotazioni, le recensioni e i dati dei tuoi veicoli.
+            </p>
 
-            <div class="auth-role-switch" data-auth-switch>
-                <button type="button" class="active" data-role="utente">Utente</button>
-                <button type="button" data-role="officina">Officina</button>
+            <div class="auth-role-switch" data-auth-switch role="tablist" aria-label="Tipo di account">
+                <button type="button" class="active" data-role="utente" role="tab" aria-selected="true">Utente</button>
+                <button type="button" data-role="officina" role="tab" aria-selected="false">Officina</button>
             </div>
 
-            <form class="stack-form auth-form" data-mode="login" data-type="login utente">
-                <label>Email <input name="email" type="email" required></label>
-                <label>Password <input name="password" type="password" required></label>
-                <button type="submit">Entra</button>
+            <form class="stack-form auth-form login-form" data-mode="login" data-type="login utente" novalidate>
+                <label for="loginEmail">Email
+                    <input id="loginEmail" name="email" type="email" autocomplete="email" required>
+                    <span class="field-error" data-error-for="email"></span>
+                </label>
+                <label for="loginPassword">Password
+                    <span class="password-field">
+                        <input id="loginPassword" name="password" type="password" autocomplete="current-password" required>
+                        <button type="button" class="toggle-password" data-toggle-password="loginPassword" aria-label="Mostra password">Mostra</button>
+                    </span>
+                    <span class="field-error" data-error-for="password"></span>
+                </label>
+                <div class="login-options">
+                    <label class="checkbox-row" for="rememberLogin">
+                        <input id="rememberLogin" name="remember" type="checkbox">
+                        <span>Ricordami</span>
+                    </label>
+                    <a href="#" id="forgotPasswordLink">Password dimenticata?</a>
+                </div>
+                <button type="submit" class="submit-btn">Accedi</button>
             </form>
-            <p class="form-message"></p>
+            <p class="auth-register-link" id="authRegisterLink">
+                Non hai ancora un account? <a href="../pages/register.html">Registrati come automobilista.</a>
+            </p>
+            <p class="form-message" aria-live="polite"></p>
         </section>
     </main>
 

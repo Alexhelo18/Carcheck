@@ -10,7 +10,9 @@ const api = {
         });
 
         if (!res.ok) {
-            throw new Error("Richiesta non riuscita");
+            const error = new Error("Richiesta non riuscita");
+            error.status = res.status;
+            throw error;
         }
 
         return await res.json();
