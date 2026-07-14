@@ -4,6 +4,10 @@ function register(req, res) {
     const utente = {
         id: utenti.length + 1,
         nome: req.body.nome,
+        nomeProfilo: req.body.nomeProfilo || "",
+        cognome: req.body.cognome || "",
+        username: req.body.username || "",
+        dataNascita: req.body.dataNascita || "",
         email: req.body.email,
         tipo: req.body.tipo || "utente"
     };
@@ -17,6 +21,7 @@ function login(req, res) {
         ok: true,
         utente: {
             email: req.body.email,
+            nome: req.body.nome || "",
             tipo: req.body.tipo || "utente"
         }
     });

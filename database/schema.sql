@@ -1,6 +1,10 @@
 CREATE TABLE utenti (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     nome VARCHAR(100) NOT NULL,
+    nome_profilo VARCHAR(100),
+    cognome VARCHAR(100),
+    username VARCHAR(80) UNIQUE,
+    data_nascita DATE,
     email VARCHAR(150) NOT NULL UNIQUE,
     password_hash VARCHAR(255) NOT NULL,
     tipo VARCHAR(20) NOT NULL DEFAULT 'utente',

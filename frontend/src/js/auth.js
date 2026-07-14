@@ -8,9 +8,16 @@ function getAuthPayload(form) {
         .map((servizio) => servizio.trim())
         .filter(Boolean);
     const servizi = [...new Set([...specializzazioni, ...serviziExtra])];
+    const nomeUtente = [formData.get("nome"), formData.get("cognome")]
+        .filter(Boolean)
+        .join(" ");
 
     return {
-        nome: isMechanic ? formData.get("nomeOfficina") || formData.get("nome") : formData.get("nome"),
+        nome: isMechanic ? formData.get("nomeOfficina") || formData.get("nome") : nomeUtente,
+        nomeProfilo: formData.get("nome"),
+        cognome: formData.get("cognome"),
+        username: formData.get("username"),
+        dataNascita: formData.get("dataNascita"),
         nazione: formData.get("nazione"),
         via: formData.get("via"),
         cap: formData.get("cap"),
