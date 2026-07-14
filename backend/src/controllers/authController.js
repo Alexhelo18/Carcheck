@@ -8,6 +8,10 @@ function register(req, res) {
         cognome: req.body.cognome || "",
         username: req.body.username || "",
         dataNascita: req.body.dataNascita || "",
+        telefono: req.body.telefono || "",
+        marketing: Boolean(req.body.marketing),
+        ragioneSociale: req.body.ragioneSociale || "",
+        partitaIva: req.body.partitaIva || "",
         email: req.body.email,
         tipo: req.body.tipo || "utente"
     };

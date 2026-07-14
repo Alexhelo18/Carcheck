@@ -26,27 +26,252 @@
                 <button type="button" data-role="officina">Officina</button>
             </div>
 
-            <form class="stack-form auth-form" data-mode="registrazione" data-type="registrazione utente">
-                <label class="user-field">Nome <input name="nome" type="text" required></label>
-                <label class="user-field">Cognome <input name="cognome" type="text" required></label>
-                <label class="user-field">Username <input name="username" type="text" required></label>
-                <label class="user-field">Data di nascita <input name="dataNascita" type="date" required></label>
-                <label class="mechanic-field hidden">Nome officina <input name="nomeOfficina" type="text"></label>
-                <label class="mechanic-field hidden">Nazione <input name="nazione" type="text" placeholder="Italia"></label>
-                <label class="mechanic-field hidden">Via <input name="via" type="text" placeholder="Via Roma 10"></label>
-                <label class="mechanic-field hidden">CAP <input name="cap" type="text" placeholder="00100"></label>
-                <label class="mechanic-field hidden">Citta <input name="citta" type="text"></label>
-                <fieldset class="mechanic-field mechanic-options hidden">
-                    <legend>Specializzazioni</legend>
-                    <p>Puoi selezionare una o più categorie principali.</p>
-                    <label><input name="specializzazioni" type="checkbox" value="Meccanico"> Meccanico</label>
-                    <label><input name="specializzazioni" type="checkbox" value="Elettrauto"> Elettrauto</label>
-                    <label><input name="specializzazioni" type="checkbox" value="Gommista"> Gommista</label>
-                </fieldset>
-                <label class="mechanic-field hidden">Altri servizi <input name="servizi" type="text" placeholder="Tagliando, revisione, diagnosi elettronica"></label>
-                <label>Email <input name="email" type="email" required></label>
-                <label>Password <input name="password" type="password" required></label>
-                <button type="submit">Crea account</button>
+            <form class="stack-form auth-form registration-form" data-mode="registrazione" data-type="registrazione utente" novalidate>
+                <section class="user-registration-fields">
+                    <label for="userFirstName">Nome
+                        <input id="userFirstName" name="nome" type="text" autocomplete="given-name" required>
+                        <span class="field-error" data-error-for="nome"></span>
+                    </label>
+                    <label for="userLastName">Cognome
+                        <input id="userLastName" name="cognome" type="text" autocomplete="family-name" required>
+                        <span class="field-error" data-error-for="cognome"></span>
+                    </label>
+                    <label for="userEmail">Email
+                        <input id="userEmail" name="email" type="email" autocomplete="email" required>
+                        <span class="field-error" data-error-for="email"></span>
+                    </label>
+                    <label for="userPhone">Numero di telefono
+                        <input id="userPhone" name="telefono" type="tel" autocomplete="tel" inputmode="tel" required>
+                        <span class="field-error" data-error-for="telefono"></span>
+                    </label>
+                    <label for="userPassword">Password
+                        <span class="password-field">
+                            <input id="userPassword" name="password" type="password" autocomplete="new-password" minlength="8" required>
+                            <button type="button" class="toggle-password" data-toggle-password="userPassword">Mostra</button>
+                        </span>
+                        <span class="field-error" data-error-for="password"></span>
+                    </label>
+                    <label for="userPasswordConfirm">Conferma password
+                        <span class="password-field">
+                            <input id="userPasswordConfirm" name="passwordConfirm" type="password" autocomplete="new-password" minlength="8" required>
+                            <button type="button" class="toggle-password" data-toggle-password="userPasswordConfirm">Mostra</button>
+                        </span>
+                        <span class="field-error" data-error-for="passwordConfirm"></span>
+                    </label>
+                    <label class="checkbox-row" for="userTerms">
+                        <input id="userTerms" name="terms" type="checkbox" required>
+                        <span>Accetto i Termini e Condizioni</span>
+                    </label>
+                    <span class="field-error" data-error-for="terms"></span>
+                    <label class="checkbox-row" for="userPrivacy">
+                        <input id="userPrivacy" name="privacy" type="checkbox" required>
+                        <span>Accetto l'Informativa Privacy</span>
+                    </label>
+                    <span class="field-error" data-error-for="privacy"></span>
+                    <label class="checkbox-row" for="userMarketing">
+                        <input id="userMarketing" name="marketing" type="checkbox">
+                        <span>Voglio ricevere comunicazioni promozionali</span>
+                    </label>
+                    <button type="submit" class="submit-btn">Registrati</button>
+                </section>
+
+                <section class="workshop-registration-fields hidden">
+                    <div class="form-progress" aria-label="Avanzamento registrazione officina">
+                        <div class="form-progress-bar"><span id="workshopProgressBar"></span></div>
+                        <p id="workshopStepLabel">Passaggio 1 di 5</p>
+                    </div>
+
+                    <section class="workshop-step" data-step="1">
+                        <h2>Account del titolare</h2>
+                        <label for="ownerFirstName">Nome
+                            <input id="ownerFirstName" name="ownerNome" type="text" autocomplete="given-name">
+                            <span class="field-error" data-error-for="ownerNome"></span>
+                        </label>
+                        <label for="ownerLastName">Cognome
+                            <input id="ownerLastName" name="ownerCognome" type="text" autocomplete="family-name">
+                            <span class="field-error" data-error-for="ownerCognome"></span>
+                        </label>
+                        <label for="ownerEmail">Email
+                            <input id="ownerEmail" name="ownerEmail" type="email" autocomplete="email">
+                            <span class="field-error" data-error-for="ownerEmail"></span>
+                        </label>
+                        <label for="ownerPhone">Numero di telefono
+                            <input id="ownerPhone" name="ownerTelefono" type="tel" autocomplete="tel" inputmode="tel">
+                            <span class="field-error" data-error-for="ownerTelefono"></span>
+                        </label>
+                        <label for="ownerPassword">Password
+                            <span class="password-field">
+                                <input id="ownerPassword" name="ownerPassword" type="password" autocomplete="new-password" minlength="8">
+                                <button type="button" class="toggle-password" data-toggle-password="ownerPassword">Mostra</button>
+                            </span>
+                            <span class="field-error" data-error-for="ownerPassword"></span>
+                        </label>
+                        <label for="ownerPasswordConfirm">Conferma password
+                            <span class="password-field">
+                                <input id="ownerPasswordConfirm" name="ownerPasswordConfirm" type="password" autocomplete="new-password" minlength="8">
+                                <button type="button" class="toggle-password" data-toggle-password="ownerPasswordConfirm">Mostra</button>
+                            </span>
+                            <span class="field-error" data-error-for="ownerPasswordConfirm"></span>
+                        </label>
+                    </section>
+
+                    <section class="workshop-step hidden" data-step="2">
+                        <h2>Dati dell'officina</h2>
+                        <label for="workshopName">Nome officina
+                            <input id="workshopName" name="nomeOfficina" type="text" autocomplete="organization">
+                            <span class="field-error" data-error-for="nomeOfficina"></span>
+                        </label>
+                        <label for="businessName">Ragione sociale
+                            <input id="businessName" name="ragioneSociale" type="text" autocomplete="organization">
+                            <span class="field-error" data-error-for="ragioneSociale"></span>
+                        </label>
+                        <label for="vatNumber">Partita IVA
+                            <input id="vatNumber" name="partitaIva" type="text" inputmode="numeric" maxlength="11" autocomplete="off">
+                            <span class="field-error" data-error-for="partitaIva"></span>
+                        </label>
+                        <label for="workshopPhone">Telefono officina
+                            <input id="workshopPhone" name="telefonoOfficina" type="tel" autocomplete="tel" inputmode="tel">
+                            <span class="field-error" data-error-for="telefonoOfficina"></span>
+                        </label>
+                        <label for="workshopAddress">Indirizzo
+                            <input id="workshopAddress" name="via" type="text" autocomplete="street-address">
+                            <span class="field-error" data-error-for="via"></span>
+                        </label>
+                        <label for="workshopZip">CAP
+                            <input id="workshopZip" name="cap" type="text" inputmode="numeric" maxlength="5" autocomplete="postal-code">
+                            <span class="field-error" data-error-for="cap"></span>
+                        </label>
+                        <label for="workshopCity">Città
+                            <input id="workshopCity" name="citta" type="text" autocomplete="address-level2">
+                            <span class="field-error" data-error-for="citta"></span>
+                        </label>
+                        <label for="workshopProvince">Provincia
+                            <input id="workshopProvince" name="provincia" type="text" maxlength="2" autocomplete="address-level1">
+                            <span class="field-error" data-error-for="provincia"></span>
+                        </label>
+                    </section>
+
+                    <section class="workshop-step hidden" data-step="3">
+                        <h2>Servizi offerti</h2>
+                        <fieldset class="mechanic-options service-options">
+                            <legend>Seleziona uno o più servizi</legend>
+                            <label><input name="serviziOfferti" type="checkbox" value="Tagliando"> Tagliando</label>
+                            <label><input name="serviziOfferti" type="checkbox" value="Cambio gomme"> Cambio gomme</label>
+                            <label><input name="serviziOfferti" type="checkbox" value="Freni"> Freni</label>
+                            <label><input name="serviziOfferti" type="checkbox" value="Diagnosi"> Diagnosi</label>
+                            <label><input name="serviziOfferti" type="checkbox" value="Revisione"> Revisione</label>
+                            <label><input name="serviziOfferti" type="checkbox" value="Carrozzeria"> Carrozzeria</label>
+                            <label><input name="serviziOfferti" type="checkbox" value="Elettrauto"> Elettrauto</label>
+                            <label><input name="serviziOfferti" type="checkbox" value="Aria condizionata"> Aria condizionata</label>
+                            <label><input name="serviziOfferti" type="checkbox" value="Soccorso stradale"> Soccorso stradale</label>
+                            <label><input id="serviceOther" name="serviziOfferti" type="checkbox" value="Altro"> Altro</label>
+                        </fieldset>
+                        <label id="otherServiceField" class="hidden" for="otherService">Specifica altro servizio
+                            <input id="otherService" name="altroServizio" type="text">
+                            <span class="field-error" data-error-for="altroServizio"></span>
+                        </label>
+                        <span class="field-error" data-error-for="serviziOfferti"></span>
+                    </section>
+
+                    <section class="workshop-step hidden" data-step="4">
+                        <h2>Informazioni officina</h2>
+                        <label for="workshopDescription">Descrizione dell'officina
+                            <textarea id="workshopDescription" name="descrizione" maxlength="500" rows="5"></textarea>
+                            <span class="char-counter" id="descriptionCounter">0/500</span>
+                            <span class="field-error" data-error-for="descrizione"></span>
+                        </label>
+                        <fieldset class="mechanic-options">
+                            <legend>Specializzazione</legend>
+                            <label><input name="specializzazioneTipo" type="radio" value="Multimarca"> Multimarca</label>
+                            <label><input name="specializzazioneTipo" type="radio" value="Marche specifiche"> Marche specifiche</label>
+                        </fieldset>
+                        <label for="brandList">Marche specifiche
+                            <input id="brandList" name="marcheSpecifiche" type="text" placeholder="Fiat, BMW, Toyota">
+                            <span class="field-hint">Inserisci più marche separate da virgola.</span>
+                        </label>
+                        <label for="workshopLogo">Upload logo
+                            <input id="workshopLogo" name="logo" type="file" accept="image/*">
+                            <span class="field-error" data-error-for="logo"></span>
+                        </label>
+                        <div id="logoPreview" class="file-preview"></div>
+                        <label for="workshopPhotos">Upload foto dell'officina
+                            <input id="workshopPhotos" name="fotoOfficina" type="file" accept="image/*" multiple>
+                            <span class="field-hint">Massimo 10 immagini.</span>
+                            <span class="field-error" data-error-for="fotoOfficina"></span>
+                        </label>
+                        <div id="photosPreview" class="file-preview"></div>
+
+                        <fieldset class="opening-hours">
+                            <legend>Orari di apertura</legend>
+                            <div class="hours-row">
+                                <span>Lunedì</span>
+                                <input name="lunediApertura" type="time">
+                                <input name="lunediChiusura" type="time">
+                                <label><input name="lunediChiuso" type="checkbox"> Chiuso</label>
+                            </div>
+                            <div class="hours-row">
+                                <span>Martedì</span>
+                                <input name="martediApertura" type="time">
+                                <input name="martediChiusura" type="time">
+                                <label><input name="martediChiuso" type="checkbox"> Chiuso</label>
+                            </div>
+                            <div class="hours-row">
+                                <span>Mercoledì</span>
+                                <input name="mercolediApertura" type="time">
+                                <input name="mercolediChiusura" type="time">
+                                <label><input name="mercolediChiuso" type="checkbox"> Chiuso</label>
+                            </div>
+                            <div class="hours-row">
+                                <span>Giovedì</span>
+                                <input name="giovediApertura" type="time">
+                                <input name="giovediChiusura" type="time">
+                                <label><input name="giovediChiuso" type="checkbox"> Chiuso</label>
+                            </div>
+                            <div class="hours-row">
+                                <span>Venerdì</span>
+                                <input name="venerdiApertura" type="time">
+                                <input name="venerdiChiusura" type="time">
+                                <label><input name="venerdiChiuso" type="checkbox"> Chiuso</label>
+                            </div>
+                            <div class="hours-row">
+                                <span>Sabato</span>
+                                <input name="sabatoApertura" type="time">
+                                <input name="sabatoChiusura" type="time">
+                                <label><input name="sabatoChiuso" type="checkbox"> Chiuso</label>
+                            </div>
+                            <div class="hours-row">
+                                <span>Domenica</span>
+                                <input name="domenicaApertura" type="time">
+                                <input name="domenicaChiusura" type="time">
+                                <label><input name="domenicaChiuso" type="checkbox"> Chiuso</label>
+                            </div>
+                        </fieldset>
+                    </section>
+
+                    <section class="workshop-step hidden" data-step="5">
+                        <h2>Consensi</h2>
+                        <label class="checkbox-row" for="workshopTerms">
+                            <input id="workshopTerms" name="workshopTerms" type="checkbox">
+                            <span>Accetto i Termini e Condizioni</span>
+                        </label>
+                        <span class="field-error" data-error-for="workshopTerms"></span>
+                        <label class="checkbox-row" for="workshopPrivacy">
+                            <input id="workshopPrivacy" name="workshopPrivacy" type="checkbox">
+                            <span>Accetto l'Informativa Privacy</span>
+                        </label>
+                        <span class="field-error" data-error-for="workshopPrivacy"></span>
+                        <label class="checkbox-row" for="businessTruth">
+                            <input id="businessTruth" name="businessTruth" type="checkbox">
+                            <span>Dichiaro che i dati aziendali inseriti sono corretti</span>
+                        </label>
+                        <span class="field-error" data-error-for="businessTruth"></span>
+                    </section>
+
+                    <div class="step-actions">
+                        <button type="button" class="btn-secondary" id="workshopPrevBtn">Indietro</button>
+                        <button type="button" class="btn-primary" id="workshopNextBtn">Continua</button>
+                    </div>
+                </section>
             </form>
             <p class="form-message"></p>
         </section>

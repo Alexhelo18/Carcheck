@@ -306,7 +306,12 @@
     }
 
     .dashboard-grid,
-    .booking-item {
+    .booking-item,
+    .hours-row {
+        grid-template-columns: 1fr;
+    }
+
+    .service-options {
         grid-template-columns: 1fr;
     }
 
@@ -398,8 +403,14 @@
 
     .hero-search,
     .filter-bar,
-    .stack-form {
+    .stack-form,
+    .step-actions {
         gap: 10px;
+    }
+
+    .step-actions,
+    .password-field {
+        grid-template-columns: 1fr;
     }
 
     .hero-search input,

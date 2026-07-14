@@ -360,11 +360,149 @@
     gap: 16px;
 }
 
-.stack-form label {
+.stack-form label,
+.user-registration-fields,
+.workshop-registration-fields,
+.workshop-step {
     display: grid;
     gap: 8px;
+}
+
+.stack-form label {
     color: var(--ink);
     font-weight: 600;
+}
+
+.field-error {
+    min-height: 18px;
+    color: #b42318;
+    font-size: 0.82rem;
+    font-weight: 600;
+}
+
+.field-hint,
+.char-counter {
+    color: var(--muted);
+    font-size: 0.84rem;
+    font-weight: 500;
+}
+
+.password-field {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 8px;
+}
+
+.toggle-password {
+    min-height: auto;
+    padding: 10px 12px;
+    color: var(--blue);
+    background: #edf3ff;
+}
+
+.checkbox-row {
+    display: flex !important;
+    align-items: flex-start;
+    gap: 10px !important;
+    font-weight: 600;
+}
+
+.checkbox-row input {
+    width: 18px;
+    height: 18px;
+    margin-top: 2px;
+    accent-color: var(--blue);
+}
+
+.form-progress {
+    display: grid;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.form-progress-bar {
+    height: 8px;
+    border-radius: 999px;
+    overflow: hidden;
+    background: #e7ecf3;
+}
+
+.form-progress-bar span {
+    display: block;
+    width: 20%;
+    height: 100%;
+    border-radius: inherit;
+    background: var(--blue);
+    transition: width 0.2s ease;
+}
+
+.form-progress p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+.workshop-step h2 {
+    margin: 0 0 6px;
+    font-size: 1.15rem;
+}
+
+.service-options {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.file-preview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.file-preview span {
+    padding: 7px 10px;
+    border-radius: 8px;
+    color: var(--blue);
+    background: #edf3ff;
+    font-size: 0.84rem;
+    font-weight: 700;
+}
+
+.opening-hours {
+    display: grid;
+    gap: 10px;
+    margin: 0;
+    padding: 16px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+}
+
+.opening-hours legend {
+    padding: 0 6px;
+    font-weight: 700;
+}
+
+.hours-row {
+    display: grid;
+    grid-template-columns: 110px 1fr 1fr auto;
+    gap: 10px;
+    align-items: center;
+}
+
+.hours-row span {
+    font-weight: 700;
+}
+
+.hours-row label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.step-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 8px;
 }
 
 .form-message {
