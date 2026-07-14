@@ -186,6 +186,15 @@
     top: 96px;
 }
 
+.map-status {
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--line);
+    color: var(--muted);
+    font-size: 0.9rem;
+    font-weight: 700;
+    background: white;
+}
+
 .map-panel iframe,
 .map-card iframe {
     width: 100%;

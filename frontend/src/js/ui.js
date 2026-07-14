@@ -11,6 +11,10 @@ function getMapsEmbedUrl(query) {
     return `https://www.google.com/maps?q=${search}&output=embed`;
 }
 
+function getEmptyMapUrl() {
+    return "https://www.google.com/maps?ll=41.8719,12.5674&z=6&output=embed";
+}
+
 function getOfficinaAddress(officina) {
     return [
         officina.nome,
@@ -23,20 +27,30 @@ function getOfficinaAddress(officina) {
 
 function updateResultsMap(officine) {
     const map = document.getElementById("resultsMap");
+    const mapStatus = document.getElementById("mapStatus");
 
     if (!map) {
         return;
     }
 
     if (!officine.length) {
-        map.removeAttribute("src");
-        map.title = "Nessuna officina registrata da mostrare";
+        map.src = getEmptyMapUrl();
+        map.title = "Mappa senza officine registrate";
+
+        if (mapStatus) {
+            mapStatus.textContent = "Nessuna officina registrata in questa ricerca";
+        }
+
         return;
     }
 
     const query = officine.map(getOfficinaAddress).join(" ");
     map.src = getMapsEmbedUrl(query);
     map.title = `Mappa di ${officine.length} officine registrate`;
+
+    if (mapStatus) {
+        mapStatus.textContent = `${officine.length} officine registrate sulla mappa`;
+    }
 }
 
 function filterOfficine(officine, filters) {
