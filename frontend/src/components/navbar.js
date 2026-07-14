@@ -5,6 +5,40 @@ function loadNavbar() {
         return;
     }
 
+    const session = JSON.parse(localStorage.getItem("carcheckUser") || "null");
+    const dashboardLink = session && session.tipo === "officina"
+        ? `<a href="../pages/dashboardOfficina.html">Area officina</a>`
+        : session && session.tipo === "utente"
+            ? `<a href="../pages/dashboardUser.html">Area utente</a>`
+            : "";
+    const authLinks = session
+        ? `<button type="button" class="nav-logout" id="logoutBtn">Esci</button>`
+        : `
+            <a href="../pages/loginUser.html">Accedi utente</a>
+            <a href="../pages/loginOfficina.html">Accedi officina</a>
+            <a href="../pages/registerUser.html" class="register-btn">Registrati</a>
+        `;
+    const mobileAreaLink = session && session.tipo === "officina"
+        ? `
+            <a href="../pages/dashboardOfficina.html">
+                <span class="tab-icon">M</span>
+                <span>Officina</span>
+            </a>
+        `
+        : session && session.tipo === "utente"
+            ? `
+                <a href="../pages/dashboardUser.html">
+                    <span class="tab-icon">P</span>
+                    <span>Utente</span>
+                </a>
+            `
+            : `
+                <a href="../pages/loginUser.html">
+                    <span class="tab-icon">L</span>
+                    <span>Login</span>
+                </a>
+            `;
+
     navbar.innerHTML = `
         <nav class="navbar">
             <a href="../pages/home.html" class="nav-logo">
@@ -18,9 +52,8 @@ function loadNavbar() {
 
             <div class="nav-right">
                 <a href="../pages/ricerca.html">Officine</a>
-                <a href="../pages/dashboardUser.html">Area utente</a>
-                <a href="../pages/dashboardOfficina.html">Area officina</a>
-                <a href="../pages/loginUser.html" class="register-btn">Login</a>
+                ${dashboardLink}
+                ${authLinks}
             </div>
         </nav>
 
@@ -37,14 +70,7 @@ function loadNavbar() {
                 <span class="tab-icon">+</span>
                 <span>Prenota</span>
             </a>
-            <a href="../pages/dashboardUser.html">
-                <span class="tab-icon">P</span>
-                <span>Utente</span>
-            </a>
-            <a href="../pages/dashboardOfficina.html">
-                <span class="tab-icon">M</span>
-                <span>Officina</span>
-            </a>
+            ${mobileAreaLink}
         </nav>
     `;
 
@@ -55,6 +81,15 @@ function loadNavbar() {
             window.location.href = `../pages/ricerca.html?servizio=${query}`;
         }
     });
+
+    const logoutBtn = document.getElementById("logoutBtn");
+
+    if (logoutBtn) {
+        logoutBtn.addEventListener("click", () => {
+            localStorage.removeItem("carcheckUser");
+            window.location.href = "../pages/home.html";
+        });
+    }
 
     const currentPage = window.location.pathname.split("/").pop();
     document.querySelectorAll(".mobile-tabbar a").forEach((link) => {

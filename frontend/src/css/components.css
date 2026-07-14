@@ -68,6 +68,13 @@
     border-radius: 8px;
 }
 
+.nav-logout {
+    min-height: auto;
+    padding: 10px 16px;
+    color: white;
+    background: var(--blue);
+}
+
 .mobile-tabbar {
     display: none;
 }
@@ -443,4 +450,16 @@
 
 .danger-btn {
     background: #b42318;
+}
+
+.access-gate {
+    padding: 24px;
+    border: 1px dashed var(--line);
+    border-radius: 8px;
+    background: #fbfcff;
+}
+
+.access-gate h2,
+.access-gate p {
+    margin: 0 0 12px;
 }

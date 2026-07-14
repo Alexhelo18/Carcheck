@@ -2,6 +2,20 @@ function getSession() {
     return JSON.parse(localStorage.getItem("carcheckUser") || "null");
 }
 
+function renderAccessGate(container, role) {
+    const loginPage = role === "officina" ? "loginOfficina.html" : "loginUser.html";
+    const label = role === "officina" ? "officina" : "utente";
+
+    container.innerHTML = `
+        <div class="access-gate">
+            <p class="eyebrow">Accesso richiesto</p>
+            <h2>Questa area e riservata agli account ${label}</h2>
+            <p>Accedi con il profilo corretto per vedere questa interfaccia.</p>
+            <a href="../pages/${loginPage}" class="btn-primary">Vai al login</a>
+        </div>
+    `;
+}
+
 function formatDate(dateValue) {
     if (!dateValue) {
         return "Data da definire";
@@ -83,6 +97,12 @@ async function loadUserDashboard() {
     const greeting = document.getElementById("userGreeting");
     const nextBookingBtn = document.getElementById("nextBookingBtn");
 
+    if (!session || session.tipo !== "utente") {
+        renderAccessGate(container, "utente");
+        renderCalendar([]);
+        return;
+    }
+
     if (greeting && session && session.nome) {
         greeting.textContent = `Ciao ${session.nome}`;
     }
@@ -91,12 +111,6 @@ async function loadUserDashboard() {
         nextBookingBtn.addEventListener("click", () => {
             window.location.href = "../pages/ricerca.html";
         });
-    }
-
-    if (!session || session.tipo !== "utente") {
-        container.innerHTML = `<p class="empty-state">Accedi come utente per vedere calendario e prenotazioni.</p>`;
-        renderCalendar([]);
-        return;
     }
 
     const bookings = await api.getPrenotazioni({ email: session.email });
@@ -118,13 +132,13 @@ async function loadMechanicDashboard() {
     const greeting = document.getElementById("mechanicGreeting");
     const filter = document.getElementById("bookingStatusFilter");
 
-    if (greeting && session && session.nome) {
-        greeting.textContent = `${session.nome}: prenotazioni`;
+    if (!session || session.tipo !== "officina") {
+        renderAccessGate(container, "officina");
+        return;
     }
 
-    if (!session || session.tipo !== "officina") {
-        container.innerHTML = `<p class="empty-state">Accedi come officina per vedere le prenotazioni ricevute.</p>`;
-        return;
+    if (greeting && session && session.nome) {
+        greeting.textContent = `${session.nome}: prenotazioni`;
     }
 
     const render = async () => {
