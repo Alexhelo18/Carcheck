@@ -4,7 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CarCheck | Trova il meccanico giusto</title>
+    <meta name="description" content="Confronta officine, servizi, disponibilità e recensioni. Prenota online il meccanico più adatto alla tua auto.">
+    <meta property="og:title" content="CarCheck - Trova e prenota officine meccaniche">
+    <meta property="og:description" content="Confronta officine, servizi, disponibilità e recensioni verificate. Prenota online senza telefonate.">
+    <title>CarCheck - Trova e prenota officine meccaniche</title>
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/components.css">
     <link rel="stylesheet" href="../css/responsive.css">
@@ -20,14 +23,63 @@
         <section class="hero">
             <div class="hero-content">
                 <p class="eyebrow">Recensioni e prenotazioni per officine</p>
-                <h1>Trova il miglior meccanico vicino a te</h1>
-                <p>Confronta officine, leggi recensioni verificate e prenota online il servizio per la tua auto.</p>
+                <h1>Trova e prenota l'officina giusta per la tua auto</h1>
+                <p>Confronta officine, servizi, disponibilità e recensioni verificate. Prenota online senza telefonate.</p>
 
                 <form class="hero-search" id="homeSearchForm">
-                    <input id="cityInput" type="text" placeholder="Inserisci la citta">
-                    <input id="serviceInput" type="text" placeholder="Servizio, es. tagliando">
-                    <button type="submit">Cerca</button>
+                    <label for="serviceInput">
+                        <span>Servizio</span>
+                        <select id="serviceInput">
+                            <option value="">Scegli servizio</option>
+                            <option>Tagliando</option>
+                            <option>Cambio gomme</option>
+                            <option>Freni</option>
+                            <option>Diagnosi</option>
+                            <option>Revisione</option>
+                            <option>Carrozzeria</option>
+                            <option>Elettrauto</option>
+                            <option>Aria condizionata</option>
+                        </select>
+                    </label>
+                    <label for="cityInput">
+                        <span>Città, indirizzo o CAP</span>
+                        <input id="cityInput" type="text" placeholder="Es. Milano, Via Roma, 20100">
+                    </label>
+                    <label for="dateInput">
+                        <span>Data</span>
+                        <input id="dateInput" type="date">
+                    </label>
+                    <button type="submit">Trova un'officina</button>
                 </form>
+
+                <div class="hero-actions">
+                    <a href="../pages/ricerca.html" class="btn-primary">Trova un'officina</a>
+                    <a href="../pages/register.html" class="btn-secondary">Registra la tua officina</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="home-section how-section" id="come-funziona">
+            <div class="section-heading">
+                <p class="eyebrow">Come funziona</p>
+                <h2>Prenotare un intervento richiede pochi passaggi</h2>
+            </div>
+            <div class="steps-grid">
+                <article class="info-card">
+                    <span class="step-number">1</span>
+                    <h3>Cerca il servizio</h3>
+                    <p>Scegli il tipo di intervento e la zona in cui vuoi trovare un'officina.</p>
+                </article>
+                <article class="info-card">
+                    <span class="step-number">2</span>
+                    <h3>Confronta le officine</h3>
+                    <p>Valuta servizi, disponibilità, profili completi e recensioni quando presenti.</p>
+                </article>
+                <article class="info-card">
+                    <span class="step-number">3</span>
+                    <h3>Prenota online</h3>
+                    <p>Seleziona giorno e orario e gestisci l'appuntamento dal tuo profilo.</p>
+                </article>
             </div>
         </section>
 
@@ -37,6 +89,73 @@
                 <h2>Officine più apprezzate</h2>
             </div>
             <div id="officine-container" class="officine-grid"></div>
+        </section>
+
+        <section class="home-section benefits-section">
+            <div class="section-heading">
+                <p class="eyebrow">Per automobilisti</p>
+                <h2>Meno telefonate, più controllo sull'appuntamento</h2>
+            </div>
+            <div class="benefits-grid">
+                <article class="info-card">
+                    <h3>Prenotazione gratuita</h3>
+                    <p>La prenotazione su CarCheck è gratuita per l'automobilista.</p>
+                </article>
+                <article class="info-card">
+                    <h3>Confronto semplice</h3>
+                    <p>Confronti più officine per servizi, zona e recensioni disponibili.</p>
+                </article>
+                <article class="info-card">
+                    <h3>Gestione online</h3>
+                    <p>Tieni traccia degli appuntamenti dal tuo account e prepara le recensioni dopo il servizio.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="home-section workshop-section">
+            <div>
+                <p class="eyebrow">Per officine</p>
+                <h2>Più clienti, meno telefonate e un'agenda sempre organizzata</h2>
+                <p>
+                    CarCheck ti aiuta a ricevere prenotazioni online, gestire disponibilità,
+                    appuntamenti, clienti e servizi da un'unica piattaforma.
+                </p>
+                <div class="workshop-actions">
+                    <a href="../pages/register.html" class="btn-primary">Registra gratuitamente la tua officina</a>
+                    <span>Costo di gestione prenotazione: 2 € per appuntamento completato.</span>
+                </div>
+            </div>
+            <div class="workshop-list">
+                <span>Calendario centralizzato</span>
+                <span>Disponibilità e orari</span>
+                <span>Prenotazioni online</span>
+                <span>Promemoria appuntamenti</span>
+                <span>Gestione clienti</span>
+                <span>Recensioni verificate</span>
+            </div>
+        </section>
+
+        <section class="home-section trust-section">
+            <div class="section-heading">
+                <p class="eyebrow">Fiducia e trasparenza</p>
+                <h2>Informazioni chiare prima di prenotare</h2>
+            </div>
+            <div class="trust-layout">
+                <p>
+                    Le officine possono completare il proprio profilo con dati aziendali,
+                    servizi, foto, specializzazioni e certificazioni. Le recensioni possono
+                    essere collegate alle prenotazioni effettuate sulla piattaforma.
+                </p>
+                <p>
+                    La prenotazione su CarCheck è gratuita per l'automobilista. Il prezzo del
+                    servizio viene indicato o confermato direttamente dall'officina.
+                </p>
+                <div class="legal-links">
+                    <a href="#">Termini e Condizioni</a>
+                    <a href="#">Informativa Privacy</a>
+                    <a href="#">Politica di cancellazione</a>
+                </div>
+            </div>
         </section>
     </main>
 

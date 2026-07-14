@@ -97,7 +97,8 @@ async function loadHome() {
             event.preventDefault();
             const citta = encodeURIComponent(document.getElementById("cityInput").value.trim());
             const servizio = encodeURIComponent(document.getElementById("serviceInput").value.trim());
-            window.location.href = `../pages/ricerca.html?citta=${citta}&servizio=${servizio}`;
+            const data = encodeURIComponent(document.getElementById("dateInput").value.trim());
+            window.location.href = `../pages/ricerca.html?citta=${citta}&servizio=${servizio}&data=${data}`;
         });
     }
 }
