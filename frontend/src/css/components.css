@@ -443,21 +443,29 @@
     min-width: 28px;
     padding: 0;
     place-items: center;
-    border: 1px solid var(--blue-light);
+    border: 1px solid #9aa9bd;
     border-radius: 50%;
-    color: var(--blue);
-    background: var(--accent-soft);
+    color: #52647c;
+    background: var(--surface);
     box-shadow: none;
-    font-size: 0.88rem;
-    font-weight: 700;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 0;
+    font-weight: 600;
     line-height: 1;
     cursor: pointer;
 }
 
+.field-help-button::before {
+    content: "?";
+    font-size: 0.9rem;
+    line-height: 1;
+}
+
 .field-help-button:hover,
 .field-help-button[aria-expanded="true"] {
-    color: white;
-    background: var(--blue);
+    border-color: var(--blue);
+    color: var(--blue);
+    background: #f3f6fb;
 }
 
 .field-help-button:focus-visible {
@@ -496,6 +504,14 @@
 
 .field-help-popover p + p {
     margin-top: 8px;
+}
+
+.panel-title-help {
+    display: inline-grid;
+}
+
+.panel-title-help .field-help-popover {
+    top: calc(100% + 10px);
 }
 
 .field-error {
