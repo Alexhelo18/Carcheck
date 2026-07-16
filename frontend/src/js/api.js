@@ -1,4 +1,6 @@
-const API_URL = window.location.protocol === "file:"
+const isLocalFrontend = window.location.protocol === "file:"
+    || ["localhost", "127.0.0.1"].includes(window.location.hostname);
+const API_URL = isLocalFrontend && window.location.port !== "3000"
     ? "http://localhost:3000/api"
     : `${window.location.origin}/api`;
 

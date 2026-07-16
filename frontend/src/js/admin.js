@@ -1,4 +1,8 @@
-const ADMIN_API = window.location.protocol === "file:" ? "http://localhost:3000/api/admin" : `${window.location.origin}/api/admin`;
+const isLocalAdminFrontend = window.location.protocol === "file:"
+    || ["localhost", "127.0.0.1"].includes(window.location.hostname);
+const ADMIN_API = isLocalAdminFrontend && window.location.port !== "3000"
+    ? "http://localhost:3000/api/admin"
+    : `${window.location.origin}/api/admin`;
 
 const adminState = {
     token: localStorage.getItem("carcheckAdminToken") || "",
