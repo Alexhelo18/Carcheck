@@ -367,8 +367,15 @@ function validateAvailabilityOrThrow(workshopId, service, startAt, endAt) {
 }
 
 function serializeBooking(booking) {
-    const demoReviews = readDemoStore().reviews || [];
+    const demoStore = readDemoStore();
+    const demoReviews = demoStore.reviews || [];
     const runtimeReviews = officine.flatMap((workshop) => workshop.recensioni || []);
+    const reviewSource = booking.is_demo ? demoReviews : runtimeReviews;
+    const proposalSource = booking.is_demo ? (demoStore.rescheduleProposals || []) : rescheduleProposals;
+    const proposals = proposalSource.filter((proposal) => (
+        Number(proposal.bookingId) === Number(booking.id)
+        && Number(proposal.workshopId || booking.workshopId) === Number(booking.workshopId)
+    ));
 
     return {
         ...booking,
@@ -381,7 +388,8 @@ function serializeBooking(booking) {
         email: booking.userEmail,
         servizio: booking.serviceName,
         note: booking.customerNotes,
-        reviewed: [...runtimeReviews, ...demoReviews].some((review) => (
+        proposals,
+        reviewed: reviewSource.some((review) => (
             Number(review.bookingId) === Number(booking.id)
             && Number(review.workshopId || booking.workshopId) === Number(booking.workshopId)
         ))

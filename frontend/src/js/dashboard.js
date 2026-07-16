@@ -102,6 +102,11 @@ function bookingActions(booking, mode) {
         if (booking.status === "RESCHEDULE_PROPOSED") {
             const proposal = booking.proposals?.find((item) => item.status === "PENDING");
             return proposal ? `
+                <div class="proposal-summary">
+                    <strong>Nuova proposta dell'officina</strong>
+                    <span>${formatDateTime(proposal.startAt)}</span>
+                    ${proposal.note ? `<p>${proposal.note}</p>` : ""}
+                </div>
                 <button type="button" data-booking-id="${booking.id}" data-proposal-id="${proposal.id}" data-reschedule-action="accept">Accetta proposta</button>
                 <button type="button" data-booking-id="${booking.id}" data-proposal-id="${proposal.id}" data-reschedule-action="reject" class="danger-btn">Rifiuta proposta</button>
             ` : "";

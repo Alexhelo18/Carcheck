@@ -174,6 +174,36 @@ function run() {
     }));
     assert.equal(duplicateReview.statusCode, 403, "non deve accettare due recensioni per la stessa prenotazione");
 
+    const proposalAvailability = call(bookingController.availability, mockReq({
+        params: { id: workshop.id },
+        query: { serviceId: services[1].id, date }
+    }));
+    const proposalBooking = createBooking(
+        workshop.id,
+        services[1].id,
+        date,
+        proposalAvailability.payload.slots[0].time,
+        "proposta@test.it"
+    );
+    const alternativeAvailability = call(bookingController.availability, mockReq({
+        params: { id: workshop.id },
+        query: { serviceId: services[1].id, date }
+    }));
+    const proposed = call(bookingController.createRescheduleProposal, mockReq({
+        params: { id: proposalBooking.payload.booking.id },
+        body: {
+            date,
+            time: alternativeAvailability.payload.slots[0].time,
+            note: "Nuovo orario proposto dall'officina."
+        }
+    }));
+    assert.equal(proposed.statusCode, 201);
+
+    const userBookings = call(bookingController.index, mockReq({ query: { email: "proposta@test.it" } }));
+    assert.equal(userBookings.payload[0].status, "RESCHEDULE_PROPOSED");
+    assert.equal(userBookings.payload[0].proposals.length, 1, "la dashboard utente deve ricevere la proposta attiva");
+    assert.equal(userBookings.payload[0].proposals[0].note, "Nuovo orario proposto dall'officina.");
+
     const invalidTransition = call(bookingController.reject, mockReq({ params: { id: bookingId }, body: {} }));
     assert.equal(invalidTransition.statusCode, 400, "deve bloccare transizioni non consentite");
 

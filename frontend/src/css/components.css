@@ -1103,6 +1103,22 @@
     min-height: 46px;
 }
 
+.proposal-summary {
+    grid-column: 1 / -1;
+    display: grid;
+    gap: 5px;
+    padding: 13px 15px;
+    border: 1px solid #c9d8ee;
+    border-radius: 12px;
+    color: var(--ink);
+    background: #f4f8ff;
+}
+
+.proposal-summary span,
+.proposal-summary p {
+    color: var(--muted);
+}
+
 .reschedule-panel {
     grid-column: 1 / -1;
     display: grid;
