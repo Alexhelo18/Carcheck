@@ -112,7 +112,9 @@ function bookingActions(booking, mode) {
         }
 
         if (booking.status === "COMPLETED") {
-            return `<a class="btn-primary" href="../pages/officina.html?id=${booking.workshopId || booking.officinaId}">Lascia recensione</a>`;
+            return booking.reviewed
+                ? `<span class="review-completed">Recensione inviata</span>`
+                : `<button type="button" data-booking-id="${booking.id}" data-review-toggle aria-expanded="false" aria-controls="review-panel-${booking.id}">Lascia recensione</button>`;
         }
 
         return `<a class="btn-secondary" href="../pages/contatti.html">Richiedi assistenza</a>`;
@@ -194,6 +196,35 @@ function renderBookingCard(booking, mode) {
             <p class="form-message" aria-live="polite"></p>
         </form>
     ` : "";
+    const reviewPanel = mode === "utente" && booking.status === "COMPLETED" && !booking.reviewed ? `
+        <form class="reschedule-panel review-panel" id="review-panel-${booking.id}" data-review-form data-booking-id="${booking.id}" data-workshop-id="${booking.workshopId || booking.officinaId}" hidden>
+            <div class="reschedule-panel-heading">
+                <div>
+                    <p class="eyebrow">La tua esperienza</p>
+                    <h4>Recensisci il lavoro completato</h4>
+                </div>
+                <button type="button" class="reschedule-close" data-close-review aria-label="Chiudi recensione">Chiudi</button>
+            </div>
+            <label>Valutazione
+                <select name="voto" required>
+                    <option value="">Seleziona un voto</option>
+                    <option value="5">5 - Eccellente</option>
+                    <option value="4">4 - Molto buona</option>
+                    <option value="3">3 - Buona</option>
+                    <option value="2">2 - Insufficiente</option>
+                    <option value="1">1 - Pessima</option>
+                </select>
+            </label>
+            <label class="reschedule-note">Recensione
+                <textarea name="testo" rows="4" minlength="10" required placeholder="Racconta puntualità, chiarezza e qualità del servizio"></textarea>
+            </label>
+            <div class="reschedule-form-actions">
+                <button type="button" class="btn-secondary" data-close-review>Annulla</button>
+                <button type="submit">Pubblica recensione</button>
+            </div>
+            <p class="form-message" aria-live="polite"></p>
+        </form>
+    ` : "";
 
     return `
         <article class="booking-item" data-status="${booking.status}">
@@ -215,6 +246,7 @@ function renderBookingCard(booking, mode) {
             ${actions ? `<div class="booking-actions">${actions}</div>` : ""}
             ${reschedulePanel}
             ${cancellationPanel}
+            ${reviewPanel}
         </article>
     `;
 }
@@ -297,19 +329,76 @@ async function loadUserDashboard() {
     };
 
     container.addEventListener("click", async (event) => {
+        const closeReview = event.target.closest("[data-close-review]");
+
+        if (closeReview) {
+            const panel = closeReview.closest("[data-review-form]");
+            const toggle = container.querySelector(`[aria-controls="${panel.id}"]`);
+            panel.hidden = true;
+            panel.classList.remove("open");
+            toggle?.setAttribute("aria-expanded", "false");
+            toggle?.focus();
+            return;
+        }
+
         const button = event.target.closest("button[data-booking-id]");
 
         if (!button) {
             return;
         }
 
-        if (button.dataset.rescheduleAction) {
+        if (button.hasAttribute("data-review-toggle")) {
+            const panel = document.getElementById(button.getAttribute("aria-controls"));
+            const shouldOpen = button.getAttribute("aria-expanded") !== "true";
+
+            container.querySelectorAll('[data-review-toggle][aria-expanded="true"]').forEach((openButton) => {
+                const openPanel = document.getElementById(openButton.getAttribute("aria-controls"));
+                openButton.setAttribute("aria-expanded", "false");
+                openPanel?.classList.remove("open");
+                if (openPanel) openPanel.hidden = true;
+            });
+
+            button.setAttribute("aria-expanded", String(shouldOpen));
+            panel.hidden = !shouldOpen;
+            panel.classList.toggle("open", shouldOpen);
+            if (shouldOpen) panel.querySelector('[name="voto"]')?.focus();
+            return;
+        } else if (button.dataset.rescheduleAction) {
             await api.respondReschedule(button.dataset.bookingId, button.dataset.proposalId, button.dataset.rescheduleAction);
         } else {
             await api.bookingAction(button.dataset.bookingId, button.dataset.action, { actor: "utente" });
         }
 
         render();
+    });
+
+    container.addEventListener("submit", async (event) => {
+        const form = event.target.closest("[data-review-form]");
+
+        if (!form) return;
+
+        event.preventDefault();
+        const data = Object.fromEntries(new FormData(form).entries());
+        const submitButton = form.querySelector('[type="submit"]');
+        const message = form.querySelector(".form-message");
+
+        submitButton.disabled = true;
+        message.textContent = "Pubblicazione in corso...";
+
+        try {
+            await api.createReview({
+                bookingId: Number(form.dataset.bookingId),
+                officinaId: Number(form.dataset.workshopId),
+                email: session.email,
+                autore: session.nome || session.email,
+                voto: Number(data.voto),
+                testo: data.testo.trim()
+            });
+            await render();
+        } catch (err) {
+            message.textContent = err.message || "Non è stato possibile pubblicare la recensione.";
+            submitButton.disabled = false;
+        }
     });
 
     filter?.addEventListener("change", render);

@@ -69,6 +69,13 @@ const api = {
         });
     },
 
+    async createReview(review) {
+        return await this.request("/recensioni", {
+            method: "POST",
+            body: JSON.stringify(review)
+        });
+    },
+
     async getWorkshopServices(workshopId) {
         return await this.request(`/workshops/${workshopId}/services`);
     },

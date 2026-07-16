@@ -1110,6 +1110,25 @@
     box-shadow: inset 3px 0 0 #b42318;
 }
 
+.review-panel {
+    border-color: #c9d8ee;
+    background: #f8fbff;
+    box-shadow: inset 3px 0 0 var(--blue-light);
+}
+
+.review-completed {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    padding: 9px 13px;
+    border: 1px solid #b7d4c1;
+    border-radius: 10px;
+    color: #23633a;
+    background: #f0faf3;
+    font-weight: 700;
+}
+
 .reschedule-panel-heading,
 .reschedule-note,
 .reschedule-form-actions,

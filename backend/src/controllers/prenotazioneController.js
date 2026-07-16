@@ -367,6 +367,9 @@ function validateAvailabilityOrThrow(workshopId, service, startAt, endAt) {
 }
 
 function serializeBooking(booking) {
+    const demoReviews = readDemoStore().reviews || [];
+    const runtimeReviews = officine.flatMap((workshop) => workshop.recensioni || []);
+
     return {
         ...booking,
         stato: booking.status,
@@ -377,7 +380,11 @@ function serializeBooking(booking) {
         nome: booking.customerName,
         email: booking.userEmail,
         servizio: booking.serviceName,
-        note: booking.customerNotes
+        note: booking.customerNotes,
+        reviewed: [...runtimeReviews, ...demoReviews].some((review) => (
+            Number(review.bookingId) === Number(booking.id)
+            && Number(review.workshopId || booking.workshopId) === Number(booking.workshopId)
+        ))
     };
 }
 

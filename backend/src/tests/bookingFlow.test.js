@@ -1,6 +1,7 @@
 const assert = require("assert");
 const officinaController = require("../controllers/officinaController");
 const bookingController = require("../controllers/prenotazioneController");
+const recensioneController = require("../controllers/recensioneController");
 
 function mockReq({ body = {}, query = {}, params = {}, headers = {} } = {}) {
     return { body, query, params, headers };
@@ -147,6 +148,31 @@ function run() {
     assert.equal(checkIn.payload.booking.status, "IN_PROGRESS", "l'arrivo deve avviare direttamente la lavorazione");
     assert.equal(call(bookingController.complete, mockReq({ params: { id: bookingId }, body: {} })).statusCode, 200);
     assert.equal(bookingController.platformFees.length, 1, "la fee deve maturare una sola volta");
+
+    const review = call(recensioneController.create, mockReq({
+        body: {
+            bookingId,
+            officinaId: workshop.id,
+            email: "request@test.it",
+            autore: "Mario Rossi",
+            voto: 5,
+            testo: "Servizio puntuale e lavoro eseguito con cura."
+        }
+    }));
+    assert.equal(review.statusCode, 201, "l'utente deve poter recensire una lavorazione completata");
+    assert.equal(review.payload.recensione.verified, true);
+
+    const duplicateReview = call(recensioneController.create, mockReq({
+        body: {
+            bookingId,
+            officinaId: workshop.id,
+            email: "request@test.it",
+            autore: "Mario Rossi",
+            voto: 4,
+            testo: "Seconda recensione che deve essere rifiutata."
+        }
+    }));
+    assert.equal(duplicateReview.statusCode, 403, "non deve accettare due recensioni per la stessa prenotazione");
 
     const invalidTransition = call(bookingController.reject, mockReq({ params: { id: bookingId }, body: {} }));
     assert.equal(invalidTransition.statusCode, 400, "deve bloccare transizioni non consentite");
