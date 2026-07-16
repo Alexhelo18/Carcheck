@@ -466,6 +466,28 @@ function loadForgotPasswordLink() {
     });
 }
 
+function loadDemoLogin() {
+    const button = document.getElementById("demoLoginBtn");
+
+    if (!button) {
+        return;
+    }
+
+    button.addEventListener("click", async () => {
+        const form = button.closest("form");
+        const isWorkshop = (form.dataset.type || "").includes("officina");
+
+        form.elements.email.value = isWorkshop
+            ? "officina.demo@carcheck.local"
+            : "utente.demo@carcheck.local";
+        form.elements.password.value = isWorkshop
+            ? "DemoOfficina123!"
+            : "DemoUser123!";
+
+        await submitLogin(form);
+    });
+}
+
 function loadWorkshopSteps() {
     const form = document.querySelector(".registration-form");
 
@@ -749,6 +771,7 @@ loadAuthSwitches();
 loadPasswordToggles();
 loadLoginPageMessages();
 loadForgotPasswordLink();
+loadDemoLogin();
 loadWorkshopSteps();
 loadRegistrationEnhancements();
 loadAuthForms();
