@@ -1044,7 +1044,7 @@
 
 .booking-list {
     display: grid;
-    gap: 14px;
+    gap: clamp(14px, 2vw, 18px);
 }
 
 .booking-item {
@@ -1055,6 +1055,17 @@
     border: 1px solid var(--line);
     border-radius: 16px;
     background: #fbfcff;
+    box-shadow: 0 8px 22px rgba(11, 45, 109, 0.05);
+}
+
+.booking-item > * {
+    min-width: 0;
+}
+
+.booking-item > div:not(.booking-actions) {
+    display: grid;
+    align-content: start;
+    gap: 6px;
 }
 
 .booking-item h3,
@@ -1063,7 +1074,7 @@
 }
 
 .booking-item h3 {
-    margin: 8px 0 6px;
+    margin: 2px 0;
 }
 
 .status-pill {
@@ -1082,6 +1093,14 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 140px), 1fr));
     gap: 10px;
+    align-items: stretch;
+}
+
+.booking-actions > button,
+.booking-actions > a,
+.booking-actions > .review-completed {
+    width: 100%;
+    min-height: 46px;
 }
 
 .reschedule-panel {
@@ -1094,6 +1113,7 @@
     border-radius: 14px;
     background: #f7f9fc;
     box-shadow: inset 3px 0 0 var(--blue-light);
+    align-items: start;
 }
 
 .reschedule-panel[hidden] {
@@ -1161,8 +1181,10 @@
 }
 
 .reschedule-panel input,
+.reschedule-panel select,
 .reschedule-panel textarea {
     width: 100%;
+    min-width: 0;
     background: var(--surface);
 }
 
@@ -1181,6 +1203,12 @@
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 10px;
+    margin-top: 2px;
+}
+
+.reschedule-form-actions > button {
+    width: 100%;
+    min-height: 44px;
 }
 
 @keyframes reschedule-panel-in {
