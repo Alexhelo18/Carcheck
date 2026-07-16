@@ -1083,6 +1083,91 @@
     gap: 10px;
 }
 
+.reschedule-panel {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    padding: clamp(16px, 2.5vw, 22px);
+    border: 1px solid #cfd9e8;
+    border-radius: 14px;
+    background: #f7f9fc;
+    box-shadow: inset 3px 0 0 var(--blue-light);
+}
+
+.reschedule-panel[hidden] {
+    display: none;
+}
+
+.reschedule-panel.open {
+    animation: reschedule-panel-in 180ms ease-out;
+}
+
+.reschedule-panel-heading,
+.reschedule-note,
+.reschedule-form-actions,
+.reschedule-panel > .form-message {
+    grid-column: 1 / -1;
+}
+
+.reschedule-panel-heading {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.reschedule-panel-heading .eyebrow,
+.reschedule-panel-heading h4 {
+    margin: 0;
+}
+
+.reschedule-panel-heading h4 {
+    margin-top: 3px;
+    font-size: 1rem;
+}
+
+.reschedule-panel label {
+    display: grid;
+    gap: 7px;
+    color: var(--ink);
+    font-weight: 600;
+}
+
+.reschedule-panel input,
+.reschedule-panel textarea {
+    width: 100%;
+    background: var(--surface);
+}
+
+.reschedule-close {
+    width: auto;
+    min-width: 0;
+    min-height: 34px;
+    padding: 6px 10px;
+    border: 1px solid var(--line);
+    color: var(--muted);
+    background: var(--surface);
+    font-size: 0.8rem;
+}
+
+.reschedule-form-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+}
+
+@keyframes reschedule-panel-in {
+    from {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 .danger-btn {
     background: #b42318;
 }

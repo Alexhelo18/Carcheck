@@ -135,13 +135,43 @@ function bookingActions(booking, mode) {
     };
 
     return (actions[booking.status] || [])
-        .map(([action, label, className]) => `<button type="button" data-booking-id="${booking.id}" data-action="${action}" data-actor="officina" class="${className}">${label}</button>`)
+        .map(([action, label, className]) => {
+            const disclosure = action === "reschedule"
+                ? `aria-expanded="false" aria-controls="reschedule-panel-${booking.id}"`
+                : "";
+            return `<button type="button" data-booking-id="${booking.id}" data-action="${action}" data-actor="officina" class="${className}" ${disclosure}>${label}</button>`;
+        })
         .join("");
 }
 
 function renderBookingCard(booking, mode) {
     const vehicle = booking.vehicle || {};
     const actions = bookingActions(booking, mode);
+    const reschedulePanel = mode === "officina" && booking.status === "PENDING" ? `
+        <form class="reschedule-panel" id="reschedule-panel-${booking.id}" data-reschedule-form data-booking-id="${booking.id}" hidden>
+            <div class="reschedule-panel-heading">
+                <div>
+                    <p class="eyebrow">Proposta alternativa</p>
+                    <h4>Modifica data e orario</h4>
+                </div>
+                <button type="button" class="reschedule-close" data-cancel-reschedule data-booking-id="${booking.id}" aria-label="Chiudi proposta di modifica">Chiudi</button>
+            </div>
+            <label>Nuova data
+                <input name="date" type="date" required>
+            </label>
+            <label>Nuovo orario
+                <input name="time" type="time" required>
+            </label>
+            <label class="reschedule-note">Nota per il cliente
+                <textarea name="note" rows="3" placeholder="Aggiungi un messaggio facoltativo"></textarea>
+            </label>
+            <div class="reschedule-form-actions">
+                <button type="button" class="btn-secondary" data-cancel-reschedule data-booking-id="${booking.id}">Annulla</button>
+                <button type="submit">Invia proposta</button>
+            </div>
+            <p class="form-message" aria-live="polite"></p>
+        </form>
+    ` : "";
 
     return `
         <article class="booking-item" data-status="${booking.status}">
@@ -160,6 +190,7 @@ function renderBookingCard(booking, mode) {
                 ${booking.workshopNotes ? `<p class="muted">${booking.workshopNotes}</p>` : ""}
             </div>
             ${actions ? `<div class="booking-actions">${actions}</div>` : ""}
+            ${reschedulePanel}
         </article>
     `;
 }
@@ -242,7 +273,7 @@ async function loadUserDashboard() {
     };
 
     container.addEventListener("click", async (event) => {
-        const button = event.target.closest("[data-booking-id]");
+        const button = event.target.closest("button[data-booking-id]");
 
         if (!button) {
             return;
@@ -425,20 +456,40 @@ async function loadMechanicDashboard() {
     };
 
     container.addEventListener("click", async (event) => {
-        const button = event.target.closest("[data-booking-id]");
+        const cancelButton = event.target.closest("[data-cancel-reschedule]");
+
+        if (cancelButton) {
+            const panel = cancelButton.closest(".reschedule-panel");
+            const toggle = container.querySelector(`[aria-controls="${panel.id}"]`);
+            panel.hidden = true;
+            panel.classList.remove("open");
+            toggle?.setAttribute("aria-expanded", "false");
+            toggle?.focus();
+            return;
+        }
+
+        const button = event.target.closest("button[data-booking-id]");
 
         if (!button) {
             return;
         }
 
         if (button.dataset.action === "reschedule") {
-            const date = window.prompt("Nuova data (AAAA-MM-GG)");
-            const time = window.prompt("Nuovo orario (HH:MM)");
-            const note = window.prompt("Nota per il cliente") || "";
+            const panel = document.getElementById(button.getAttribute("aria-controls"));
+            const shouldOpen = button.getAttribute("aria-expanded") !== "true";
 
-            if (date && time) {
-                await api.proposeReschedule(button.dataset.bookingId, { date, time, note });
-            }
+            container.querySelectorAll('.booking-actions [aria-expanded="true"]').forEach((openButton) => {
+                const openPanel = document.getElementById(openButton.getAttribute("aria-controls"));
+                openButton.setAttribute("aria-expanded", "false");
+                openPanel?.classList.remove("open");
+                if (openPanel) openPanel.hidden = true;
+            });
+
+            button.setAttribute("aria-expanded", String(shouldOpen));
+            panel.hidden = !shouldOpen;
+            panel.classList.toggle("open", shouldOpen);
+            if (shouldOpen) panel.querySelector('[name="date"]')?.focus();
+            return;
         } else {
             await api.bookingAction(button.dataset.bookingId, button.dataset.action, {
                 actor: button.dataset.actor || "officina"
@@ -446,6 +497,32 @@ async function loadMechanicDashboard() {
         }
 
         render();
+    });
+
+    container.addEventListener("submit", async (event) => {
+        const form = event.target.closest("[data-reschedule-form]");
+
+        if (!form) return;
+
+        event.preventDefault();
+        const data = Object.fromEntries(new FormData(form).entries());
+        const submitButton = form.querySelector('[type="submit"]');
+        const message = form.querySelector(".form-message");
+
+        submitButton.disabled = true;
+        message.textContent = "Invio della proposta in corso...";
+
+        try {
+            await api.proposeReschedule(form.dataset.bookingId, {
+                date: data.date,
+                time: data.time,
+                note: data.note || ""
+            });
+            await render();
+        } catch (err) {
+            message.textContent = err.message || "Non è stato possibile inviare la proposta.";
+            submitButton.disabled = false;
+        }
     });
 
     filter.addEventListener("change", render);

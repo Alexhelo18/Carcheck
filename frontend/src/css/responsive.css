@@ -358,6 +358,17 @@
         grid-template-columns: 1fr;
     }
 
+    .reschedule-panel {
+        grid-template-columns: 1fr;
+    }
+
+    .reschedule-panel-heading,
+    .reschedule-note,
+    .reschedule-form-actions,
+    .reschedule-panel > .form-message {
+        grid-column: auto;
+    }
+
     .service-options {
         grid-template-columns: 1fr;
     }
@@ -598,6 +609,18 @@
         width: 100%;
         max-width: 100%;
         margin-top: 2px;
+    }
+
+    .reschedule-panel-heading {
+        flex-direction: column;
+    }
+
+    .reschedule-close {
+        width: auto;
+    }
+
+    .reschedule-form-actions {
+        grid-template-columns: 1fr;
     }
 
     .panel-heading {
