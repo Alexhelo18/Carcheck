@@ -130,15 +130,18 @@ function bookingActions(booking, mode) {
             ["no-show", "No-show", "btn-secondary"]
         ],
         CHECKED_IN: [["start", "Avvia lavoro", ""]],
-        IN_PROGRESS: [["complete", "Completa lavoro", ""]],
+        IN_PROGRESS: [["complete", "Lavorazione completata", ""]],
         RESCHEDULE_PROPOSED: [["cancel", "Annulla", "danger-btn"]]
     };
 
     return (actions[booking.status] || [])
         .map(([action, label, className]) => {
-            const disclosure = action === "reschedule"
-                ? `aria-expanded="false" aria-controls="reschedule-panel-${booking.id}"`
-                : "";
+            const panelId = action === "reschedule"
+                ? `reschedule-panel-${booking.id}`
+                : action === "cancel" && booking.status === "CONFIRMED"
+                    ? `cancellation-panel-${booking.id}`
+                    : "";
+            const disclosure = panelId ? `aria-expanded="false" aria-controls="${panelId}"` : "";
             return `<button type="button" data-booking-id="${booking.id}" data-action="${action}" data-actor="officina" class="${className}" ${disclosure}>${label}</button>`;
         })
         .join("");
@@ -172,6 +175,25 @@ function renderBookingCard(booking, mode) {
             <p class="form-message" aria-live="polite"></p>
         </form>
     ` : "";
+    const cancellationPanel = mode === "officina" && booking.status === "CONFIRMED" ? `
+        <form class="reschedule-panel cancellation-panel" id="cancellation-panel-${booking.id}" data-cancellation-form data-booking-id="${booking.id}" hidden>
+            <div class="reschedule-panel-heading">
+                <div>
+                    <p class="eyebrow">Annullamento officina</p>
+                    <h4>Indica il motivo dell'annullamento</h4>
+                </div>
+                <button type="button" class="reschedule-close" data-close-booking-panel aria-label="Chiudi annullamento">Chiudi</button>
+            </div>
+            <label class="reschedule-note">Motivo per il cliente
+                <textarea name="reason" rows="3" minlength="10" required placeholder="Spiega perché non puoi più gestire questa prenotazione"></textarea>
+            </label>
+            <div class="reschedule-form-actions">
+                <button type="button" class="btn-secondary" data-close-booking-panel>Annulla</button>
+                <button type="submit" class="danger-btn">Conferma annullamento</button>
+            </div>
+            <p class="form-message" aria-live="polite"></p>
+        </form>
+    ` : "";
 
     return `
         <article class="booking-item" data-status="${booking.status}">
@@ -188,9 +210,11 @@ function renderBookingCard(booking, mode) {
                 <p>${vehicle.marca ? `${vehicle.marca} ${vehicle.modello} · ${maskPlate(vehicle.targa)}` : "Veicolo in aggiornamento"}</p>
                 ${booking.customerNotes ? `<p>${booking.customerNotes}</p>` : ""}
                 ${booking.workshopNotes ? `<p class="muted">${booking.workshopNotes}</p>` : ""}
+                ${booking.cancellationReason ? `<p class="cancellation-reason"><strong>Motivo annullamento:</strong> ${booking.cancellationReason}</p>` : ""}
             </div>
             ${actions ? `<div class="booking-actions">${actions}</div>` : ""}
             ${reschedulePanel}
+            ${cancellationPanel}
         </article>
     `;
 }
@@ -456,7 +480,7 @@ async function loadMechanicDashboard() {
     };
 
     container.addEventListener("click", async (event) => {
-        const cancelButton = event.target.closest("[data-cancel-reschedule]");
+        const cancelButton = event.target.closest("[data-cancel-reschedule], [data-close-booking-panel]");
 
         if (cancelButton) {
             const panel = cancelButton.closest(".reschedule-panel");
@@ -474,7 +498,7 @@ async function loadMechanicDashboard() {
             return;
         }
 
-        if (button.dataset.action === "reschedule") {
+        if (button.dataset.action === "reschedule" || (button.dataset.action === "cancel" && button.hasAttribute("aria-controls"))) {
             const panel = document.getElementById(button.getAttribute("aria-controls"));
             const shouldOpen = button.getAttribute("aria-expanded") !== "true";
 
@@ -500,7 +524,7 @@ async function loadMechanicDashboard() {
     });
 
     container.addEventListener("submit", async (event) => {
-        const form = event.target.closest("[data-reschedule-form]");
+        const form = event.target.closest("[data-reschedule-form], [data-cancellation-form]");
 
         if (!form) return;
 
@@ -508,16 +532,24 @@ async function loadMechanicDashboard() {
         const data = Object.fromEntries(new FormData(form).entries());
         const submitButton = form.querySelector('[type="submit"]');
         const message = form.querySelector(".form-message");
+        const isCancellation = form.hasAttribute("data-cancellation-form");
 
         submitButton.disabled = true;
-        message.textContent = "Invio della proposta in corso...";
+        message.textContent = isCancellation ? "Annullamento in corso..." : "Invio della proposta in corso...";
 
         try {
-            await api.proposeReschedule(form.dataset.bookingId, {
-                date: data.date,
-                time: data.time,
-                note: data.note || ""
-            });
+            if (isCancellation) {
+                await api.bookingAction(form.dataset.bookingId, "cancel", {
+                    actor: "officina",
+                    reason: data.reason.trim()
+                });
+            } else {
+                await api.proposeReschedule(form.dataset.bookingId, {
+                    date: data.date,
+                    time: data.time,
+                    note: data.note || ""
+                });
+            }
             await render();
         } catch (err) {
             message.textContent = err.message || "Non è stato possibile inviare la proposta.";

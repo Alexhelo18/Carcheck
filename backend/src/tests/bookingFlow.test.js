@@ -116,6 +116,20 @@ function run() {
     const duplicate = createBooking(workshop.id, services[0].id, date, firstSlot, "altro@test.it");
     assert.equal(duplicate.statusCode, 409, "deve bloccare doppia prenotazione oltre capacita");
 
+    const missingCancellationReason = call(bookingController.cancel, mockReq({
+        params: { id: instant.payload.booking.id },
+        body: { actor: "officina", reason: "" }
+    }));
+    assert.equal(missingCancellationReason.statusCode, 400, "l'officina deve indicare il motivo dell'annullamento");
+
+    const cancelled = call(bookingController.cancel, mockReq({
+        params: { id: instant.payload.booking.id },
+        body: { actor: "officina", reason: "Postazione non disponibile per un guasto improvviso." }
+    }));
+    assert.equal(cancelled.statusCode, 200);
+    assert.equal(cancelled.payload.booking.status, "CANCELLED_BY_WORKSHOP");
+    assert.equal(cancelled.payload.booking.cancellationReason, "Postazione non disponibile per un guasto improvviso.");
+
     const nextAvailability = call(bookingController.availability, mockReq({
         params: { id: workshop.id },
         query: { serviceId: services[1].id, date }
@@ -128,8 +142,9 @@ function run() {
 
     const bookingId = request.payload.booking.id;
     assert.equal(call(bookingController.confirm, mockReq({ params: { id: bookingId }, body: {} })).statusCode, 200);
-    assert.equal(call(bookingController.checkIn, mockReq({ params: { id: bookingId }, body: {} })).statusCode, 200);
-    assert.equal(call(bookingController.start, mockReq({ params: { id: bookingId }, body: {} })).statusCode, 200);
+    const checkIn = call(bookingController.checkIn, mockReq({ params: { id: bookingId }, body: {} }));
+    assert.equal(checkIn.statusCode, 200);
+    assert.equal(checkIn.payload.booking.status, "IN_PROGRESS", "l'arrivo deve avviare direttamente la lavorazione");
     assert.equal(call(bookingController.complete, mockReq({ params: { id: bookingId }, body: {} })).statusCode, 200);
     assert.equal(bookingController.platformFees.length, 1, "la fee deve maturare una sola volta");
 

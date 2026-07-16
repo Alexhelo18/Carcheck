@@ -1104,6 +1104,12 @@
     animation: reschedule-panel-in 180ms ease-out;
 }
 
+.cancellation-panel {
+    border-color: #e4c5c2;
+    background: #fffafa;
+    box-shadow: inset 3px 0 0 #b42318;
+}
+
 .reschedule-panel-heading,
 .reschedule-note,
 .reschedule-form-actions,
@@ -1171,6 +1177,16 @@
 
 .danger-btn {
     background: #b42318;
+}
+
+.cancellation-reason {
+    margin-top: 10px !important;
+    padding: 10px 12px;
+    border-left: 3px solid #b42318;
+    border-radius: 8px;
+    color: #7a271f;
+    background: #fff4f2;
+    line-height: 1.5;
 }
 
 .access-gate {

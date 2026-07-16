@@ -798,9 +798,14 @@ module.exports = {
     cancel: (req, res) => {
         const actor = req.body.actor === "officina" ? "officina" : "utente";
         const status = actor === "officina" ? BOOKING_STATUS.CANCELLED_BY_WORKSHOP : BOOKING_STATUS.CANCELLED_BY_USER;
+
+        if (actor === "officina" && String(req.body.note || req.body.reason || "").trim().length < 10) {
+            return res.status(400).json({ message: "Inserisci un motivo dell'annullamento di almeno 10 caratteri." });
+        }
+
         return statusAction(status, actor, "booking_cancelled", "Prenotazione annullata.")(req, res);
     },
-    checkIn: statusAction(BOOKING_STATUS.CHECKED_IN, "officina", "booking_checked_in", "Veicolo consegnato in officina."),
+    checkIn: statusAction(BOOKING_STATUS.IN_PROGRESS, "officina", "booking_checked_in", "Arrivo del veicolo confermato. Lavorazione avviata."),
     start: statusAction(BOOKING_STATUS.IN_PROGRESS, "officina", "booking_started", "Lavoro avviato."),
     complete: statusAction(BOOKING_STATUS.COMPLETED, "officina", "booking_completed", "Lavoro completato. Ora puoi lasciare una recensione."),
     noShow: statusAction(BOOKING_STATUS.NO_SHOW, "officina", "booking_no_show", "Cliente segnato come non presentato."),
