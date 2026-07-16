@@ -553,6 +553,20 @@
         padding: 20px;
     }
 
+    .field-help-button {
+        flex-basis: 36px;
+        width: 36px;
+        height: 36px;
+        min-width: 36px;
+    }
+
+    .field-help-popover {
+        position: static;
+        width: 100%;
+        max-width: 100%;
+        margin-top: 2px;
+    }
+
     .panel-heading {
         align-items: stretch;
         flex-direction: column;

@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CarCheck | Area meccanico</title>
     <link rel="stylesheet" href="../css/main.css">
-    <link rel="stylesheet" href="../css/components.css">
-    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="../css/components.css?v=2">
+    <link rel="stylesheet" href="../css/responsive.css?v=2">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -50,18 +50,36 @@
                     <h2>Agenda officina</h2>
                 </div>
                 <form id="agendaForm" class="stack-form compact-form">
-                    <label>Intervallo slot
-                        <select name="slotIntervalMinutes">
+                    <div class="field-help">
+                        <div class="field-help-label"><label for="slotIntervalMinutes">Intervallo slot</label><button class="field-help-button" type="button" aria-label="Spiega la frequenza degli appuntamenti" aria-expanded="false" aria-controls="help-slot-interval">?</button></div>
+                        <select id="slotIntervalMinutes" name="slotIntervalMinutes">
                             <option value="15">15 minuti</option>
                             <option value="30">30 minuti</option>
                             <option value="45">45 minuti</option>
                             <option value="60">60 minuti</option>
                         </select>
-                    </label>
-                    <label>Anticipo minimo ore <input name="minAdvanceHours" type="number" min="0" value="12"></label>
-                    <label>Limite prenotazione giorni <input name="maxFutureDays" type="number" min="1" value="45"></label>
-                    <label>Preparazione tra appuntamenti minuti <input name="preparationMinutes" type="number" min="0" value="0"></label>
-                    <label>Capacita contemporanea <input name="concurrentCapacity" type="number" min="1" value="3"></label>
+                        <div class="field-help-popover" id="help-slot-interval" role="dialog" aria-label="Frequenza degli appuntamenti" hidden><p>Indica ogni quanto possono iniziare nuovi appuntamenti.</p><p><strong>Esempio:</strong> se scegli 30 minuti, i clienti potranno prenotare alle 08:00, 08:30, 09:00, 09:30 e così via.</p></div>
+                    </div>
+                    <div class="field-help">
+                        <div class="field-help-label"><label for="minAdvanceHours">Anticipo minimo ore</label><button class="field-help-button" type="button" aria-label="Spiega l'anticipo minimo della prenotazione" aria-expanded="false" aria-controls="help-min-advance">?</button></div>
+                        <input id="minAdvanceHours" name="minAdvanceHours" type="number" min="0" value="12">
+                        <div class="field-help-popover" id="help-min-advance" role="dialog" aria-label="Anticipo minimo della prenotazione" hidden><p>Indica quanto tempo prima il cliente deve prenotare.</p><p><strong>Esempio:</strong> se imposti 2 ore e sono le 10:00, il primo appuntamento disponibile sarà dalle 12:00.</p></div>
+                    </div>
+                    <div class="field-help">
+                        <div class="field-help-label"><label for="maxFutureDays">Limite prenotazione giorni</label><button class="field-help-button" type="button" aria-label="Spiega la prenotazione massima in anticipo" aria-expanded="false" aria-controls="help-max-future">?</button></div>
+                        <input id="maxFutureDays" name="maxFutureDays" type="number" min="1" value="45">
+                        <div class="field-help-popover" id="help-max-future" role="dialog" aria-label="Prenotazione massima in anticipo" hidden><p>Indica fino a quanti giorni nel futuro possono prenotare i clienti.</p><p><strong>Esempio:</strong> se imposti 45 giorni, nessuno potrà prenotare oltre i prossimi 45 giorni.</p></div>
+                    </div>
+                    <div class="field-help">
+                        <div class="field-help-label"><label for="preparationMinutes">Preparazione tra appuntamenti minuti</label><button class="field-help-button" type="button" aria-label="Spiega il tempo tra gli appuntamenti" aria-expanded="false" aria-controls="help-preparation">?</button></div>
+                        <input id="preparationMinutes" name="preparationMinutes" type="number" min="0" value="0">
+                        <div class="field-help-popover" id="help-preparation" role="dialog" aria-label="Tempo tra gli appuntamenti" hidden><p>È il tempo lasciato libero tra un appuntamento e quello successivo.</p><p><strong>Esempio:</strong> serve per spostare il veicolo, preparare la postazione o recuperare eventuali ritardi.</p></div>
+                    </div>
+                    <div class="field-help">
+                        <div class="field-help-label"><label for="concurrentCapacity">Capacita contemporanea</label><button class="field-help-button" type="button" aria-label="Spiega i veicoli gestibili contemporaneamente" aria-expanded="false" aria-controls="help-capacity">?</button></div>
+                        <input id="concurrentCapacity" name="concurrentCapacity" type="number" min="1" value="3">
+                        <div class="field-help-popover" id="help-capacity" role="dialog" aria-label="Veicoli gestibili contemporaneamente" hidden><p>Indica quante auto puoi lavorare nello stesso momento.</p><p><strong>Esempio:</strong> se imposti 3, CarCheck potrà accettare fino a tre prenotazioni sovrapposte, se gli altri vincoli lo consentono.</p></div>
+                    </div>
                     <button type="submit">Salva agenda</button>
                     <p class="form-message" id="agendaMessage" aria-live="polite"></p>
                 </form>
@@ -75,7 +93,11 @@
                     <label>Titolo <input name="title" type="text" required></label>
                     <label>Inizio <input name="startAt" type="datetime-local" required></label>
                     <label>Fine <input name="endAt" type="datetime-local" required></label>
-                    <label>Capacita bloccata <input name="capacityBlocked" type="number" min="1" value="1"></label>
+                    <div class="field-help">
+                        <div class="field-help-label"><label for="capacityBlocked">Capacita bloccata</label><button class="field-help-button" type="button" aria-label="Spiega le postazioni da bloccare" aria-expanded="false" aria-controls="help-capacity-blocked">?</button></div>
+                        <input id="capacityBlocked" name="capacityBlocked" type="number" min="1" value="1">
+                        <div class="field-help-popover" id="help-capacity-blocked" role="dialog" aria-label="Postazioni da bloccare" hidden><p>Indica quante postazioni vuoi rendere indisponibili durante questo periodo.</p><p><strong>Esempio:</strong> se l'officina può gestire 3 veicoli e blocchi 1 postazione, ne rimarranno disponibili 2. Se le blocchi tutte, nessun cliente potrà prenotare.</p></div>
+                    </div>
                     <label>Nota <textarea name="note" rows="2"></textarea></label>
                     <button type="submit">Aggiungi blocco</button>
                     <p class="form-message" id="blockMessage" aria-live="polite"></p>
@@ -101,7 +123,7 @@
     <script src="../components/navbar.js"></script>
     <script src="../components/footer.js"></script>
     <script src="../js/api.js"></script>
-    <script src="../js/dashboard.js"></script>
+    <script src="../js/dashboard.js?v=2"></script>
 </body>
 
 </html>

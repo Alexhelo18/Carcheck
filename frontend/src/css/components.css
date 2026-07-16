@@ -418,6 +418,86 @@
     font-weight: 600;
 }
 
+.field-help {
+    position: relative;
+    display: grid;
+    min-width: 0;
+    gap: 8px;
+}
+
+.field-help-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.field-help-label label {
+    display: inline;
+}
+
+.field-help-button {
+    display: inline-grid;
+    flex: 0 0 28px;
+    width: 28px;
+    height: 28px;
+    min-width: 28px;
+    padding: 0;
+    place-items: center;
+    border: 1px solid var(--blue-light);
+    border-radius: 50%;
+    color: var(--blue);
+    background: var(--accent-soft);
+    box-shadow: none;
+    font-size: 0.88rem;
+    font-weight: 700;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.field-help-button:hover,
+.field-help-button[aria-expanded="true"] {
+    color: white;
+    background: var(--blue);
+}
+
+.field-help-button:focus-visible {
+    outline: 3px solid rgba(23, 71, 159, 0.3);
+    outline-offset: 2px;
+}
+
+.field-help-popover {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    z-index: 20;
+    width: min(340px, calc(100vw - 48px));
+    max-width: 100%;
+    padding: 14px 16px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    color: var(--ink);
+    background: var(--surface);
+    box-shadow: var(--shadow-md);
+    font-size: 0.88rem;
+    line-height: 1.5;
+}
+
+.field-help-popover[hidden] {
+    display: none;
+}
+
+.field-help-popover.open {
+    display: block;
+}
+
+.field-help-popover p {
+    margin: 0;
+}
+
+.field-help-popover p + p {
+    margin-top: 8px;
+}
+
 .field-error {
     min-height: 18px;
     color: #b42318;

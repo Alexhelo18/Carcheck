@@ -14,6 +14,49 @@ const statusLabels = {
     DISPUTED: "Contestata"
 };
 
+function initFieldHelpPopovers() {
+    const closePopover = (button) => {
+        const popover = document.getElementById(button.getAttribute("aria-controls"));
+
+        button.setAttribute("aria-expanded", "false");
+        popover?.classList.remove("open");
+        if (popover) popover.hidden = true;
+    };
+
+    const closeAll = (except = null) => {
+        document.querySelectorAll('.field-help-button[aria-expanded="true"]').forEach((button) => {
+            if (button !== except) closePopover(button);
+        });
+    };
+
+    document.addEventListener("click", (event) => {
+        const button = event.target.closest(".field-help-button");
+
+        if (button) {
+            const popover = document.getElementById(button.getAttribute("aria-controls"));
+            const shouldOpen = button.getAttribute("aria-expanded") !== "true";
+
+            closeAll(button);
+            button.setAttribute("aria-expanded", String(shouldOpen));
+            if (popover) {
+                popover.hidden = !shouldOpen;
+                popover.classList.toggle("open", shouldOpen);
+            }
+            return;
+        }
+
+        if (!event.target.closest(".field-help-popover")) closeAll();
+    });
+
+    document.addEventListener("keydown", (event) => {
+        if (event.key !== "Escape") return;
+
+        const openButton = document.querySelector('.field-help-button[aria-expanded="true"]');
+        closeAll();
+        openButton?.focus();
+    });
+}
+
 function getSession() {
     return JSON.parse(localStorage.getItem("carcheckUser") || "null");
 }
@@ -386,5 +429,6 @@ async function loadMechanicDashboard() {
     render();
 }
 
+initFieldHelpPopovers();
 loadUserDashboard();
 loadMechanicDashboard();
