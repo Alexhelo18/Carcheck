@@ -437,10 +437,14 @@
 
 .field-help-button {
     display: inline-grid;
-    flex: 0 0 28px;
+    flex: 0 0 auto;
     width: 28px;
     height: 28px;
     min-width: 28px;
+    min-height: 28px;
+    max-width: 28px;
+    max-height: 28px;
+    aspect-ratio: 1 / 1;
     padding: 0;
     place-items: center;
     border: 1px solid #9aa9bd;
