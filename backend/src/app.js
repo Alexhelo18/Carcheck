@@ -1,6 +1,33 @@
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
+const crypto = require("crypto");
+
+const { readDemoStore } = require("./data/demoStore");
+
+function ensureDemoAccounts() {
+    if (readDemoStore().users.length > 0) {
+        return;
+    }
+
+    const defaults = {
+        ALLOW_DEMO_SEED: "true",
+        DEMO_USER_EMAIL: "utente.demo@carcheck.local",
+        DEMO_USER_PASSWORD: "DemoUser123!",
+        DEMO_WORKSHOP_EMAIL: "officina.demo@carcheck.local",
+        DEMO_WORKSHOP_PASSWORD: "DemoOfficina123!",
+        SUPER_ADMIN_EMAIL: "admin.demo@carcheck.local",
+        SUPER_ADMIN_PASSWORD: crypto.randomBytes(32).toString("hex")
+    };
+
+    Object.entries(defaults).forEach(([key, value]) => {
+        process.env[key] ||= value;
+    });
+
+    require("./scripts/seedDemo").run();
+}
+
+ensureDemoAccounts();
 
 const authController = require("./controllers/authController");
 const officinaController = require("./controllers/officinaController");

@@ -314,9 +314,13 @@ function run() {
     console.log(`- ticket/segnalazioni demo: ${store.tickets.length + store.reports.length}`);
 }
 
-try {
-    run();
-} catch (err) {
-    console.error(err.message);
-    process.exit(1);
+if (require.main === module) {
+    try {
+        run();
+    } catch (err) {
+        console.error(err.message);
+        process.exit(1);
+    }
 }
+
+module.exports = { run };
