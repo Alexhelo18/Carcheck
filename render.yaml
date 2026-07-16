@@ -3,5 +3,20 @@ services:
     name: carcheck
     runtime: node
     plan: free
-    buildCommand: npm run build
+    buildCommand: npm run build && npm run seed:demo
     startCommand: npm start
+    envVars:
+      - key: ALLOW_DEMO_SEED
+        value: "true"
+      - key: DEMO_USER_EMAIL
+        value: utente.demo@carcheck.local
+      - key: DEMO_USER_PASSWORD
+        value: DemoUser123!
+      - key: DEMO_WORKSHOP_EMAIL
+        value: officina.demo@carcheck.local
+      - key: DEMO_WORKSHOP_PASSWORD
+        value: DemoOfficina123!
+      - key: SUPER_ADMIN_EMAIL
+        value: admin.demo@carcheck.local
+      - key: SUPER_ADMIN_PASSWORD
+        generateValue: true
