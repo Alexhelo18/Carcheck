@@ -636,8 +636,12 @@ async function submitLegacyAuth(form) {
 function getLoginErrorMessage(error) {
     const status = error.status || error.code;
 
-    if (status === 401 || status === 404 || status === "invalid_credentials") {
+    if (status === 401 || status === "invalid_credentials") {
         return "Email o password non corrette.";
+    }
+
+    if (status === 404) {
+        return "Endpoint di login non trovato: controlla il collegamento al backend.";
     }
 
     if (status === 403 || status === "wrong_role") {

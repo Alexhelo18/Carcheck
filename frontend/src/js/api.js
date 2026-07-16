@@ -1,7 +1,10 @@
-const isLocalFrontend = window.location.protocol === "file:"
-    || ["localhost", "127.0.0.1"].includes(window.location.hostname);
-const API_URL = isLocalFrontend && window.location.port !== "3000"
-    ? "http://localhost:3000/api"
+const isDevelopmentFrontend = window.location.protocol === "file:"
+    || (window.location.port && !["80", "443", "3000"].includes(window.location.port));
+const backendHostname = ["", "0.0.0.0", "::1"].includes(window.location.hostname)
+    ? "localhost"
+    : window.location.hostname;
+const API_URL = isDevelopmentFrontend
+    ? `http://${backendHostname}:3000/api`
     : `${window.location.origin}/api`;
 
 const api = {
