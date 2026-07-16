@@ -17,6 +17,11 @@
     box-sizing: border-box;
 }
 
+html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
 body {
     margin: 0;
     font-family: Poppins, sans-serif;
@@ -25,6 +30,25 @@ body {
         linear-gradient(180deg, #f8fbff 0, var(--background) 260px),
         var(--background);
     overflow-x: hidden;
+    line-height: 1.55;
+}
+
+img,
+video,
+iframe,
+svg {
+    max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+h4 {
+    text-wrap: balance;
+}
+
+p {
+    overflow-wrap: anywhere;
 }
 
 a {
@@ -200,7 +224,7 @@ button,
 .popular-section,
 .page-shell,
 .home-section {
-    width: min(1160px, calc(100% - 40px));
+    width: min(1160px, calc(100% - clamp(24px, 5vw, 40px)));
     margin: 0 auto;
 }
 
@@ -225,7 +249,7 @@ button,
 }
 
 .page-shell {
-    padding: 40px 0 64px;
+    padding: clamp(28px, 5vw, 48px) 0 clamp(48px, 7vw, 72px);
 }
 
 .page-shell.narrow {
@@ -235,9 +259,9 @@ button,
 .search-panel,
 .booking-card {
     margin-bottom: 28px;
-    padding: 30px;
+    padding: clamp(20px, 4vw, 32px);
     border: 1px solid var(--line);
-    border-radius: 12px;
+    border-radius: 18px;
     background: var(--surface);
     box-shadow: var(--shadow-sm);
 }
@@ -271,8 +295,8 @@ button,
 .steps-grid,
 .benefits-grid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 18px;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+    gap: clamp(14px, 2.5vw, 20px);
 }
 
 .info-card {
@@ -280,9 +304,9 @@ button,
     display: grid;
     gap: 12px;
     align-content: start;
-    padding: 24px;
+    padding: clamp(18px, 3vw, 26px);
     border: 1px solid var(--line);
-    border-radius: 12px;
+    border-radius: 18px;
     background: white;
     box-shadow: var(--shadow-sm);
 }

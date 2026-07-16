@@ -700,6 +700,117 @@
     }
 }
 
+/* Normalizzazione fluida condivisa tra tutte le pagine */
+@media (max-width: 920px) {
+    .page-shell,
+    .page-shell.narrow,
+    .home-section,
+    .popular-section {
+        width: min(100% - 28px, 1160px);
+    }
+
+    .detail-side,
+    .map-panel,
+    .info-index {
+        position: static;
+    }
+
+    .detail-layout,
+    .results-layout,
+    .info-layout,
+    .admin-content-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .map-panel iframe,
+    .map-card iframe {
+        height: clamp(220px, 45vw, 360px);
+    }
+}
+
+@media (max-width: 700px) {
+    .page-shell,
+    .page-shell.narrow,
+    .home-section,
+    .popular-section {
+        width: min(100% - 24px, 1160px);
+    }
+
+    .hero,
+    .info-hero,
+    .dashboard-hero,
+    .workshop-section {
+        padding-inline: clamp(18px, 5vw, 24px);
+    }
+
+    .search-panel,
+    .booking-card,
+    .dashboard-panel,
+    .detail-main,
+    .detail-side,
+    .info-section,
+    .legal-section {
+        min-width: 0;
+        padding: clamp(16px, 5vw, 22px);
+    }
+
+    .panel-heading,
+    .section-heading,
+    .card-topline,
+    .review div {
+        min-width: 0;
+        flex-wrap: wrap;
+    }
+
+    .hero-actions,
+    .workshop-actions,
+    .info-actions,
+    .form-actions {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr));
+        width: 100%;
+    }
+
+    input,
+    select,
+    textarea,
+    button {
+        min-width: 0;
+    }
+
+    .admin-table-wrap,
+    .table-wrap {
+        max-width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+}
+
+@media (max-width: 430px) {
+    .page-shell,
+    .page-shell.narrow,
+    .home-section,
+    .popular-section {
+        width: min(100% - 16px, 1160px);
+    }
+
+    .hero-actions,
+    .workshop-actions,
+    .info-actions,
+    .form-actions,
+    .booking-actions,
+    .card-actions {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-hero h1,
+    .info-hero h1,
+    .booking-card h1,
+    .search-panel h1 {
+        font-size: clamp(1.45rem, 8vw, 1.9rem);
+    }
+}
+
 @media (max-width: 920px) {
     .workshop-section,
     .trust-layout,
