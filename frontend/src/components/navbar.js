@@ -53,20 +53,20 @@ function loadNavbar() {
         `;
     const mobilePrivateLinks = session && session.tipo === "officina"
         ? `
-            <a href="../pages/dashboardOfficina.html">
+            <a href="../pages/dashboardOfficina.html" data-mobile-tab="account">
                 <span class="tab-icon">${icon.garage}</span>
                 <span>Officina</span>
             </a>
         `
         : session && session.tipo === "utente"
             ? `
-                <a href="../pages/dashboardUser.html">
+                <a href="../pages/dashboardUser.html" data-mobile-tab="account">
                     <span class="tab-icon">${icon.user}</span>
                     <span>Utente</span>
                 </a>
             `
             : `
-                <button type="button" class="mobile-account-btn" id="mobileAccountBtn">
+                <button type="button" class="mobile-account-btn" id="mobileAccountBtn" data-mobile-tab="account">
                     <span class="tab-icon">${icon.account}</span>
                     <span>Account</span>
                 </button>
@@ -103,15 +103,15 @@ function loadNavbar() {
         </nav>
 
         <nav class="mobile-tabbar" aria-label="Navigazione mobile">
-            <a href="../pages/home.html">
+            <a href="../pages/home.html" data-mobile-tab="home">
                 <span class="tab-icon">${icon.home}</span>
                 <span>Home</span>
             </a>
-            <a href="../pages/ricerca.html">
+            <a href="../pages/ricerca.html" data-mobile-tab="search">
                 <span class="tab-icon">${icon.search}</span>
                 <span>Cerca</span>
             </a>
-            <a href="../pages/ricerca.html">
+            <a href="../pages/ricerca.html?azione=prenota" data-mobile-tab="booking">
                 <span class="tab-icon">${icon.calendar}</span>
                 <span>Prenota</span>
             </a>
@@ -154,12 +154,23 @@ function loadNavbar() {
         mobileAccountBtn.classList.add("active");
     }
 
-    document.querySelectorAll(".mobile-tabbar a").forEach((link) => {
-        const linkPage = link.getAttribute("href").split("/").pop();
+    const mobileTabByPage = {
+        "home.html": "home",
+        "ricerca.html": new URLSearchParams(window.location.search).get("azione") === "prenota" ? "booking" : "search",
+        "officina.html": "search",
+        "prenotazione.html": "booking",
+        "dashboardUser.html": "account",
+        "dashboardOfficina.html": "account",
+        "login.html": "account",
+        "register.html": "account"
+    };
+    const activeMobileTab = mobileTabByPage[currentPage];
 
-        if (linkPage === currentPage) {
-            link.classList.add("active");
-        }
+    document.querySelectorAll(".mobile-tabbar > a, .mobile-tabbar > button").forEach((item) => {
+        const marker = item.dataset.mobileTab || item.querySelector("[data-mobile-tab]")?.dataset.mobileTab;
+        const isActive = marker === activeMobileTab;
+        item.classList.toggle("active", isActive);
+        if (isActive) item.setAttribute("aria-current", "page");
     });
 }
 

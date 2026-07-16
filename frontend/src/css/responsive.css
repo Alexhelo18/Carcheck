@@ -923,3 +923,113 @@
         width: 100%;
     }
 }
+
+/* Esperienza mobile simile a un'app nativa */
+@media (max-width: 700px) {
+    body {
+        padding-bottom: calc(96px + env(safe-area-inset-bottom));
+        background: #f3f6fa;
+        overscroll-behavior-y: contain;
+    }
+
+    .navbar {
+        min-height: 64px;
+        padding-top: max(10px, env(safe-area-inset-top));
+        padding-bottom: 10px;
+        background: rgba(255, 255, 255, 0.96);
+        backdrop-filter: blur(16px);
+    }
+
+    .mobile-tabbar {
+        bottom: max(10px, env(safe-area-inset-bottom));
+        min-height: 68px;
+        padding: 7px;
+        border-radius: 24px;
+        box-shadow: 0 16px 38px rgba(11, 45, 109, 0.2);
+    }
+
+    .mobile-tabbar > a,
+    .mobile-tabbar > button {
+        min-width: 0;
+        min-height: 54px;
+        transition: color 160ms ease, background-color 160ms ease, transform 160ms ease;
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+    }
+
+    .mobile-tabbar > a:active,
+    .mobile-tabbar > button:active {
+        transform: scale(0.96);
+    }
+
+    .mobile-tabbar > [aria-current="page"] {
+        color: var(--blue);
+        background: #edf3ff;
+    }
+
+    .mobile-account-panel {
+        bottom: calc(88px + env(safe-area-inset-bottom));
+    }
+
+    .page-shell {
+        padding-top: 20px;
+    }
+
+    .dashboard-hero,
+    .dashboard-panel,
+    .booking-card,
+    .search-panel,
+    .officina-card,
+    .detail-main,
+    .detail-side,
+    .info-hero,
+    .info-section,
+    .legal-section {
+        border-radius: 20px;
+    }
+
+    .dashboard-panel,
+    .booking-card,
+    .officina-card,
+    .detail-main,
+    .detail-side {
+        border-color: rgba(220, 226, 236, 0.72);
+        box-shadow: 0 10px 26px rgba(11, 45, 109, 0.07);
+    }
+
+    .booking-item {
+        border-radius: 18px;
+        background: var(--surface);
+    }
+
+    button,
+    .btn-primary,
+    .btn-secondary,
+    input,
+    select {
+        min-height: 46px;
+        touch-action: manipulation;
+    }
+}
+
+@media (max-width: 430px) {
+    .navbar {
+        grid-template-columns: auto minmax(0, 1fr);
+        padding-inline: 12px;
+    }
+
+    .nav-logo span {
+        display: none;
+    }
+
+    .search-bar {
+        min-width: 0;
+    }
+
+    .page-shell,
+    .page-shell.narrow,
+    .home-section,
+    .popular-section {
+        width: min(100% - 16px, 1160px);
+    }
+}
