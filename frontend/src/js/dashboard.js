@@ -264,6 +264,10 @@ async function loadUserDashboard() {
 function serviceEditorRow(service = {}, index = 0) {
     return `
         <article class="service-editor" data-service-index="${index}">
+            <div class="service-editor-heading">
+                <h3>Servizio ${index + 1}</h3>
+                <button type="button" class="service-delete-button" data-delete-service aria-label="Elimina servizio ${index + 1}">Elimina servizio</button>
+            </div>
             <label>Nome <input name="nome" type="text" value="${service.nome || ""}" required></label>
             <label>Categoria
                 <select name="categoria">
@@ -286,6 +290,14 @@ function serviceEditorRow(service = {}, index = 0) {
             <label class="wide">Descrizione <textarea name="descrizione" rows="2">${service.descrizione || ""}</textarea></label>
         </article>
     `;
+}
+
+function refreshServiceEditorLabels(container) {
+    Array.from(container.querySelectorAll(".service-editor")).forEach((row, index) => {
+        row.dataset.serviceIndex = index;
+        row.querySelector(".service-editor-heading h3").textContent = `Servizio ${index + 1}`;
+        row.querySelector("[data-delete-service]").setAttribute("aria-label", `Elimina servizio ${index + 1}`);
+    });
 }
 
 function readServicesEditor() {
@@ -321,12 +333,24 @@ async function bindWorkshopSettings(workshopId) {
         });
         const services = await api.getWorkshopServices(workshopId);
         servicesEditor.innerHTML = services.map(serviceEditorRow).join("");
+        refreshServiceEditorLabels(servicesEditor);
     } catch (err) {
         servicesEditor.innerHTML = serviceEditorRow({}, 0);
     }
 
     document.getElementById("addServiceBtn")?.addEventListener("click", () => {
         servicesEditor.insertAdjacentHTML("beforeend", serviceEditorRow({}, servicesEditor.children.length));
+        refreshServiceEditorLabels(servicesEditor);
+    });
+
+    servicesEditor.addEventListener("click", (event) => {
+        const deleteButton = event.target.closest("[data-delete-service]");
+
+        if (!deleteButton) return;
+
+        deleteButton.closest(".service-editor")?.remove();
+        refreshServiceEditorLabels(servicesEditor);
+        document.getElementById("servicesMessage").textContent = "Servizio rimosso dall'elenco. Premi Salva servizi per confermare.";
     });
 
     agendaForm.addEventListener("submit", async (event) => {

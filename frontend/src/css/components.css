@@ -533,7 +533,7 @@
 
 #agendaForm,
 #calendarBlockForm {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr));
     gap: 14px;
 }
 
@@ -680,17 +680,53 @@
 
 .services-editor {
     display: grid;
-    gap: 14px;
+    gap: clamp(14px, 2vw, 20px);
 }
 
 .service-editor {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 12px;
-    padding: 16px;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 190px), 1fr));
+    gap: clamp(12px, 1.8vw, 16px);
+    padding: clamp(14px, 2.4vw, 20px);
     border: 1px solid var(--line);
-    border-radius: 12px;
-    background: #f8fafc;
+    border-radius: 16px;
+    background: #fafbfd;
+    box-shadow: 0 8px 20px rgba(11, 45, 109, 0.05);
+}
+
+.service-editor-heading {
+    display: flex;
+    grid-column: 1 / -1;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--line);
+}
+
+.service-editor-heading h3 {
+    margin: 0;
+    font-size: 1rem;
+}
+
+.service-delete-button {
+    width: auto;
+    min-width: 0;
+    min-height: 36px;
+    padding: 7px 11px;
+    border: 1px solid #d5a4a0;
+    border-radius: 9px;
+    color: #9f2d26;
+    background: #fff;
+    font-size: 0.82rem;
+    box-shadow: none;
+}
+
+.service-delete-button:hover,
+.service-delete-button:focus-visible {
+    border-color: #9f2d26;
+    color: #fff;
+    background: #9f2d26;
 }
 
 .service-editor .wide {

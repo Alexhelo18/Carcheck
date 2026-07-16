@@ -367,6 +367,15 @@
         grid-template-columns: 1fr;
     }
 
+    .service-editor-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .service-delete-button {
+        width: auto;
+    }
+
     .booking-summary dl div {
         grid-template-columns: 1fr;
         gap: 3px;
