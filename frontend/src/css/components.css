@@ -436,6 +436,7 @@
 }
 
 .field-help-button {
+    position: relative;
     display: inline-grid;
     flex: 0 0 auto;
     width: 28px;
@@ -447,10 +448,10 @@
     aspect-ratio: 1 / 1;
     padding: 0;
     place-items: center;
-    border: 1px solid #9aa9bd;
+    border: 0;
     border-radius: 50%;
     color: #52647c;
-    background: var(--surface);
+    background: transparent;
     box-shadow: none;
     font-family: Georgia, "Times New Roman", serif;
     font-size: 0;
@@ -461,14 +462,26 @@
 
 .field-help-button::before {
     content: "?";
+    display: grid;
+    width: 24px;
+    height: 24px;
+    place-items: center;
+    border: 1px solid #8c9bb0;
+    border-radius: 50%;
+    background: var(--surface);
     font-size: 0.9rem;
     line-height: 1;
 }
 
 .field-help-button:hover,
 .field-help-button[aria-expanded="true"] {
-    border-color: var(--blue);
     color: var(--blue);
+    background: transparent;
+}
+
+.field-help-button:hover::before,
+.field-help-button[aria-expanded="true"]::before {
+    border-color: var(--blue);
     background: #f3f6fb;
 }
 
@@ -516,6 +529,43 @@
 
 .panel-title-help .field-help-popover {
     top: calc(100% + 10px);
+}
+
+#agendaForm,
+#calendarBlockForm {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+}
+
+#agendaForm > .field-help,
+#calendarBlockForm > .field-help,
+#calendarBlockForm > label {
+    min-width: 0;
+    padding: 13px;
+    border: 1px solid #e4e9f1;
+    border-radius: 12px;
+    background: #fafbfd;
+}
+
+#agendaForm input,
+#agendaForm select,
+#calendarBlockForm input,
+#calendarBlockForm textarea {
+    width: 100%;
+    background: var(--surface);
+}
+
+#agendaForm > button,
+#agendaForm > .form-message,
+#calendarBlockForm > button,
+#calendarBlockForm > .form-message,
+#calendarBlockForm > label:last-of-type {
+    grid-column: 1 / -1;
+}
+
+#agendaForm > button,
+#calendarBlockForm > button {
+    margin-top: 2px;
 }
 
 .field-error {
